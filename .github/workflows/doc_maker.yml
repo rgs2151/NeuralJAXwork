@@ -36,3 +36,8 @@ jobs:
           python_version: '3.10'  # Version of Python
           sphinx_version: '5.3'  # Version of Sphinx
           cache: true  # Enable cache to speed up documentation building
+        
+# Set concurrency group to avoid multiple builds
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true

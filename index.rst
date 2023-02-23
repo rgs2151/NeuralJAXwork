@@ -6,8 +6,24 @@
 Welcome to NeuralJAXwork's documentation!
 =========================================
 
+.. include:: README.md
+
+Test Text here
+========================
+
+This project is a developed by `Shengyu Zhang`__,
+as part of **The Sphinx Notes Project**.
+
+
+__ https://github.com/SilverRainZ
+
 .. toctree::
+   :caption: The Test Notes Project
    :maxdepth: 2
+
+   Home <https://sphinx.silverrainz.me/>
+   Blog <https://silverrainz.me/blog/category/sphinx.html>
+   PyPI <https://pypi.org/search/?q=sphinxnotes>
 
    README.md
 
