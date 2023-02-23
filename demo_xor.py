@@ -1,5 +1,5 @@
 # Import JAX's version of NumPy
-import jax.numpy as jnp 
+import numpy as np 
 
 from njax.layers import Dense
 from njax.activations import Tanh
@@ -7,8 +7,8 @@ from njax.losses.losses import mse, mse_prime
 from njax.network import train, predict
 
 # XOR dataset
-X = jnp.reshape(jnp.array([[0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [1.0, 1.0]]), (4, 2, 1))
-Y = jnp.reshape(jnp.array([[0.0], [1.0], [1.0], [0.0]]), (4, 1, 1))
+X = np.reshape([[0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [1.0, 1.0]], (4, 2, 1))
+Y = np.reshape([[0.0], [1.0], [1.0], [0.0]], (4, 1, 1))
 
 network = [
     Dense(2, 3),
@@ -22,12 +22,12 @@ train(network, mse, mse_prime, X, Y, epochs=100, learning_rate=0.1)
 
 # decision boundary plot
 points = []
-for x in jnp.linspace(0, 1, 20):
-    for y in jnp.linspace(0, 1, 20):
+for x in np.linspace(0, 1, 20):
+    for y in np.linspace(0, 1, 20):
         z = predict(network, [[x], [y]])
         points.append([x, y, z[0,0]])
 
-points = jnp.array(points)
+points = np.array(points)
 print(f"The outputs are: {points}")
 
 # if you want to plot the decision boundary in 3D

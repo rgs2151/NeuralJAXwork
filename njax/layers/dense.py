@@ -1,14 +1,11 @@
 # Import JAX's version of NumPy
 import jax.numpy as jnp 
 
-# Import the Layer class
-from njax import Layer
-
 # Imoprt JAX's random number generator
 from jax import random
 
-# Import JAX's device_put function
-from jax import device_put
+# Import the Layer class
+from njax import Layer
 
 # Set the JAX random number generator's seed
 jax_key = random.PRNGKey(0)
@@ -31,8 +28,8 @@ class Dense(Layer):
         """
         
         # Initialize the weights and bias
-        self.weights = device_put(random.uniform(jax_key, (output_size, input_size)))
-        self.bias = device_put(random.uniform(jax_key, (output_size, 1)))
+        self.weights = random.uniform(jax_key, (output_size, input_size))
+        self.bias = random.uniform(jax_key, (output_size, 1))
 
     def forward(self, input):
         """
