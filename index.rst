@@ -6,28 +6,24 @@
 Welcome to NeuralJAXwork's documentation!
 =========================================
 
-.. include:: README.md
-
-
-__ https://github.com/SilverRainZ
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
 
 .. automodule:: njax
    :members:
 
-.. automodule:: njax.activation
+.. automodule:: demo_xor
    :members:
 
-.. toctree::
-   :caption: This is the sidebar
-   :maxdepth: 2
+.. automodule:: test
+   :members:
 
-   Home <https://sphinx.silverrainz.me/>
-   Blog <https://silverrainz.me/blog/category/sphinx.html>
-   PyPI <https://pypi.org/search/?q=sphinxnotes>
+.. myst::
+   ```{include} README.md
 
-Indices and tables
+### Indices and tables
 ==================
-
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
