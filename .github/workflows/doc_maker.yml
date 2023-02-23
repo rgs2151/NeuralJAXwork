@@ -32,7 +32,7 @@ jobs:
         uses: sphinx-notes/pages@v3
         with:
           documentation_path: '.'  # Path to Sphinx source files
-          requirements_path: './requirements_doc.txt'  # Path to requirements file
+          requirements_path: './requirements.txt'  # Path to requirements file
           python_version: '3.10'  # Version of Python
           sphinx_version: '5.3'  # Version of Sphinx
           cache: true  # Enable cache to speed up documentation building

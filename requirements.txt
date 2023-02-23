@@ -137,3 +137,5 @@ websocket-client==1.5.1
 y-py==0.5.5
 ypy-websocket==0.8.2
 zipp==3.14.0
+furo
+myst-parser
