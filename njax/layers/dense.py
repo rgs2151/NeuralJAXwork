@@ -1,19 +1,23 @@
 # Import JAX's version of NumPy
 import jax.numpy as jnp 
 
-# Import JAX's functions for compilation and differentiation
-from jax import jit
-
 # Import the Layer class
 from njax import Layer
+
+# Imoprt JAX's random number generator
+from jax import random
+
+# Import JAX's device_put function
+from jax import device_put
+
+# Set the JAX random number generator's seed
+jax_key = random.PRNGKey(0)
 
 class Dense(Layer):
     """
     This class implements a dense layer.
     """
 
-    # Decorate with jit to compile this function into XLA-optimized code
-    @jit
     def __init__(self, input_size, output_size):
         """
         Initialize the weights and bias of the dense layer.
@@ -27,11 +31,9 @@ class Dense(Layer):
         """
         
         # Initialize the weights and bias
-        self.weights = jnp.random.randn(output_size, input_size)
-        self.bias = jnp.random.randn(output_size, 1)
+        self.weights = device_put(random.uniform(jax_key, (output_size, input_size)))
+        self.bias = device_put(random.uniform(jax_key, (output_size, 1)))
 
-    # Decorate with jit to compile this function into XLA-optimized code
-    @jit
     def forward(self, input):
         """
         Compute the forward pass of the dense layer.
@@ -46,13 +48,11 @@ class Dense(Layer):
         """
 
         # Save the input for the backward pass
-        self.input = input
+        self.input = jnp.array(input)
 
         # Compute the dot product of the weights and the input plus the bias
         return jnp.dot(self.weights, self.input) + self.bias
 
-    # Decorate with jit to compile this function into XLA-optimized code
-    @jit
     def backward(self, output_gradient, learning_rate):
         """
         Compute the backward pass of the dense layer.
