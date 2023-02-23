@@ -1,5 +1,12 @@
 
 class SequentialModel:
+
+    """
+    An Implementation of a Sequential Model
+    Register layers in the order they should be executed
+    Has a forward and backward method
+    And many utulity methods for training, predicting and printing
+    """
     
     def __init__(self, layers):
         self.layers = layers
