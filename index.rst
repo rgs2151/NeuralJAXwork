@@ -7,23 +7,11 @@ Welcome to NeuralJAXwork's documentation!
 =========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
-.. automodule:: njax
+.. automodule:: njax.Layer
    :members:
 
-.. automodule:: demo_xor
-   :members:
-
-.. automodule:: test
-   :members:
-
-.. myst::
-   ```{include} README.md
-
-### Indices and tables
-==================
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. include:: include.md
+   :parser: myst_parser.sphinx_
