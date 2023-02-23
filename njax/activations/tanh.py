@@ -1,14 +1,15 @@
-from njax.activation import Activation
-
 # Import JAX's version of NumPy
 import jax.numpy as jnp 
 
 # Import JAX's functions for compilation and differentiation
 from jax import jit
 
+# Import the Activation Layer class
+from njax.activation import Activation
+
 class Tanh(Activation):
     """
-    The Tanh activation function.
+    This class implements the Tanh activation function.
     """
     def __init__(self):
 
@@ -23,11 +24,13 @@ class Tanh(Activation):
 
             Returns:
                 The Tanh activation of the input tensor.
+
+                > jnp.tanh(x)
             """
-            
+
             # Use JAX's tanh function
-            return jnp.tanh(x) 
-        
+            return jnp.tanh(x)
+
         # Decorate with jit to compile this function into XLA-optimized code
         @jit
         def tanh_prime(x):
