@@ -40,7 +40,7 @@ class Tanh(Activation):
             Returns:
                 The gradient of the Tanh activation function.
 
-                > return 1 - jnp.tanh(x) ** 2
+                > 1 - jnp.tanh(x) ** 2
             """
             
             # Use grad to automatically differentiate tanh

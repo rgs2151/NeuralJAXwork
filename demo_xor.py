@@ -6,8 +6,8 @@ from njax.activations.activations import Tanh
 from njax.losses.losses import mse, mse_prime
 from njax.network import train, predict
 
-X = np.reshape([[0, 0], [0, 1], [1, 0], [1, 1]], (4, 2, 1))
-Y = np.reshape([[0], [1], [1], [0]], (4, 1, 1))
+X = np.reshape([[0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [1.0, 1.0]], (4, 2, 1))
+Y = np.reshape([[0.0], [1.0], [1.0], [0.0]], (4, 1, 1))
 
 network = [
     Dense(2, 3),
