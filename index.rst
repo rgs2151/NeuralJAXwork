@@ -16,7 +16,12 @@ Welcome to NeuralJAXwork's documentation!
 
    njax
 
-.. .. toctree::
-..    :maxdepth: 3
-..    :caption: Contents:
+.. toctree::
+   :maxdepth: 2
+   :caption: Email me: rgs2151@columbia.edu
+
+   LinkedIn <https://www.linkedin.com/in/rudramanisingha/>
+   GitHub <https://github.com/rgs2151>
+   Portfolio <https://www.rudramanisingha.com/>
+   
 
