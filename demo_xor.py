@@ -1,8 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
-
 from njax.layers.dense import Dense
-from njax.activations.activations import Tanh
+from njax.activations import Tanh
 from njax.losses.losses import mse, mse_prime
 from njax.network import train, predict
 
@@ -29,7 +27,13 @@ for x in np.linspace(0, 1, 20):
 points = np.array(points)
 print(f"The outputs are: {points}")
 
-# fig = plt.figure()
-# ax = fig.add_subplot(111, projection="3d")
-# ax.scatter(points[:, 0], points[:, 1], points[:, 2], c=points[:, 2], cmap="winter")
-# plt.show()
+# if you want to plot the decision boundary in 3D
+# when you run this script, uncomment the following lines
+# and install matplotlib
+# if __name__ == "__main__":
+#     import matplotlib.pyplot as plt
+#     
+#     fig = plt.figure()
+#     ax = fig.add_subplot(111, projection="3d")
+#     ax.scatter(points[:, 0], points[:, 1], points[:, 2], c=points[:, 2], cmap="winter")
+#     plt.show()
