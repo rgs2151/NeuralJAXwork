@@ -18,6 +18,7 @@ author = 'Rudramani Singha'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+import sphinx.ext.autodoc
 
 extensions = [sphinx.ext.autodoc]
 

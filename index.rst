@@ -7,10 +7,18 @@ Welcome to NeuralJAXwork's documentation!
 =========================================
 
 .. toctree::
-   :maxdepth: 3
-   :caption: Contents:
+   :maxdepth: 2
 
+   README.md
 
+   njax/activation
+   njax/layer
+   njax/loss
+   njax/model
+   njax/network
+   demo_xor
+
+   test
 
 Indices and tables
 ==================
