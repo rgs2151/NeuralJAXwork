@@ -2,11 +2,11 @@
 from jax import jit
 
 class Loss:
-    '''
+    """
     Parent class for all loss functions.
     It is used to store the loss function and its derivative.
     It is also used to call the loss function and its derivative when needed.
-    '''
+    """
 
     def __init__(self, loss, loss_prime):
         """
