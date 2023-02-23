@@ -12,7 +12,7 @@ def train(network, loss, x_train, y_train, epochs = 1000, learning_rate = 0.01, 
             output = predict(network, x)
 
             # error
-            error += loss(y, output)
+            error += loss.loss(y, output)
 
             # backward
             grad = loss.prime(y, output)

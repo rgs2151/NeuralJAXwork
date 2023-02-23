@@ -6,13 +6,17 @@
 Welcome to NeuralJAXwork's documentation!
 =========================================
 
-.. automodule:: njax
-   :members:
-
 .. include:: README.md
    :parser: myst_parser.sphinx_
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Contents:
+
+.. autosummary::
+   :toctree: _autosummary
+   :recursive:
+
+   njax
+
+.. .. toctree::
+..    :maxdepth: 3
+..    :caption: Contents:
 

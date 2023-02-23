@@ -9,15 +9,19 @@ class Loss:
     """
 
     def __init__(self, loss, loss_prime):
-        """
+        """ Initialize the loss function and its derivative.
+
+        It also compiles the loss function and its derivative with JAX's jit
+        to speed up the training process
+        and store it
+
         Args:
             loss: The loss function.
             loss_prime: The loss function's derivative.
-        """
         
-        # Compile the loss function with JAX's jit
-        # to speed up the training process
-        # and store it
+        Raises:
+            Exception: If the loss function or its derivative could not be compiled with JAX's jit.
+        """
 
         # Try to compile the loss function
         # If it fails, raise an error
@@ -26,10 +30,6 @@ class Loss:
         except:
             raise Exception("NJAX: The loss function could not be compiled with JAX's jit.")
 
-        # Compile the loss function's derivative with JAX's jit
-        # to speed up the training process
-        # and store it
-
         # Try to compile the loss function's derivative
         # If it fails, raise an error
         try:
@@ -37,13 +37,16 @@ class Loss:
         except:
             raise Exception("NJAX: The loss function's derivative could not be compiled with JAX's jit.")
 
-    def __call__(self, y_true, y_pred):
+    def loss(self, y_true, y_pred):
         """
         Call the loss function.
 
         Args:
             y_true: The true labels.
             y_pred: The predicted labels.
+
+        Returns:
+            The loss function's output.
         """
         # Return the loss function
         return self.loss(y_true, y_pred)
@@ -56,6 +59,9 @@ class Loss:
         Args:
             y_true: The true labels.
             y_pred: The predicted labels.
+        
+        Returns:
+            The loss function's derivative's output.
         """
         # Return the loss function's derivative
         return self.loss_prime(y_true, y_pred)

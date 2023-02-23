@@ -34,7 +34,7 @@ class SequentialModel:
                 output = self.forward(x)
 
                 # error
-                error += loss(y, output)
+                error += loss.loss(y, output)
 
                 # backward
                 grad = loss.prime(y, output)
