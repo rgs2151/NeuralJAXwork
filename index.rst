@@ -6,7 +6,7 @@
 Welcome to NeuralJAXwork's documentation!
 =========================================
 
-.. automodule:: njax
+.. automodule:: njax.Loss
    :members:
 
 .. include:: README.md
