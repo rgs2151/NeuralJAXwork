@@ -44,6 +44,6 @@ class Tanh(Activation):
             """
             
             # Use grad to automatically differentiate tanh
-            return grad(self.tanh)(x)
+            return grad(tanh)(x)
             
         super().__init__(tanh, tanh_prime)
