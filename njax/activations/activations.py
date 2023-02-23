@@ -4,7 +4,7 @@ from njax.activation import Activation
 import jax.numpy as jnp 
 
 # Import JAX's functions for compilation and differentiation
-from jax import jit, grad 
+from jax import jit, elementwise_grad
 
 class Tanh(Activation):
     """
@@ -44,6 +44,6 @@ class Tanh(Activation):
             """
             
             # Use grad to automatically differentiate tanh
-            return grad(tanh)(x)
+            return elementwise_grad(tanh)(x)
             
         super().__init__(tanh, tanh_prime)
