@@ -30,7 +30,7 @@ class Tanh(Activation):
         
         # Decorate with jit to compile this function into XLA-optimized code
         @jit
-        def tanh_prime():
+        def tanh_prime(x):
             """
             Compute the gradient of the Tanh activation function using Autograd.
 
@@ -44,6 +44,6 @@ class Tanh(Activation):
             """
             
             # Use grad to automatically differentiate tanh
-            return grad(self.tanh) 
+            return grad(self.tanh)(x)
             
         super().__init__(tanh, tanh_prime)
