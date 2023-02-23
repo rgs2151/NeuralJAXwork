@@ -1,3 +1,6 @@
+# Import jit from JAX
+from jax import jit
+
 class Loss:
     '''
     Parent class for all loss functions.
@@ -11,9 +14,28 @@ class Loss:
             loss: The loss function.
             loss_prime: The loss function's derivative.
         """
-        # Store the loss function and its derivative
-        self.loss = loss
-        self.loss_prime = loss_prime
+        
+        # Compile the loss function with JAX's jit
+        # to speed up the training process
+        # and store it
+
+        # Try to compile the loss function
+        # If it fails, raise an error
+        try:
+            self.loss = jit(loss)
+        except:
+            raise Exception("NJAX: The loss function could not be compiled with JAX's jit.")
+
+        # Compile the loss function's derivative with JAX's jit
+        # to speed up the training process
+        # and store it
+
+        # Try to compile the loss function's derivative
+        # If it fails, raise an error
+        try:
+            self.loss_prime = jit(loss_prime)
+        except:
+            raise Exception("NJAX: The loss function's derivative could not be compiled with JAX's jit.")
 
     def __call__(self, y_true, y_pred):
         """
@@ -25,7 +47,8 @@ class Loss:
         """
         # Return the loss function
         return self.loss(y_true, y_pred)
-    
+
+
     def prime(self, y_true, y_pred):
         """
         Call the loss function's derivative.

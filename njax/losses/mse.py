@@ -1,8 +1,8 @@
 # Import JAX's version of NumPy
 import jax.numpy as jnp
 
+# Import the parent Loss class
 from njax import Loss
-
 
 class MSE(Loss):
     '''
@@ -25,6 +25,7 @@ class MSE(Loss):
                 > $MSE = \frac{1}{n} \sum_{i=1}^{n} (y_{true} - y_{pred})^2$
             '''
 
+            # Return the mean squared error
             return jnp.mean(jnp.power(y_true - y_pred, 2))
 
         def mse_prime(y_true, y_pred):
@@ -41,8 +42,10 @@ class MSE(Loss):
                 > $\frac{\partial MSE}{\partial y_{pred}} = \frac{2}{n} (y_{pred} - y_{true})$
             '''
 
+            # Return the derivative of the mean squared error
             return 2 * (y_pred - y_true) / jnp.size(y_true)
         
+        # Call the parent class's constructor
         super().__init__(mse, mse_prime)
 
 
