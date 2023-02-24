@@ -7,3 +7,13 @@ with tqdm(total=100, desc="Processing...", leave=True) as pbar:
         time.sleep(0.1)
         pbar.set_description(f"Processing file {i}")
         pbar.update(1)
+
+
+#    NeuralJAXwork.Activation
+#    NeuralJAXwork.Layer
+#    NeuralJAXwork.Loss
+
+#    NeuralJAXwork.activations.Tanh
+#    NeuralJAXwork.layers.Dense
+#    NeuralJAXwork.losses.MSE
+#    NeuralJAXwork.losses.BinaryCrossEntropy

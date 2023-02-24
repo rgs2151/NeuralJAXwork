@@ -1,5 +1,5 @@
 import numpy as np
-from njax.layer import Layer
+from NeuralJAXwork.layer import Layer
 
 class Activation(Layer):
     def __init__(self, activation, activation_prime):

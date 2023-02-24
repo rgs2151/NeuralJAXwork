@@ -1,24 +1,29 @@
-.. NeuralJAXwork documentation master file, created by
-   sphinx-quickstart on Thu Feb 23 16:00:24 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to NeuralJAXwork's documentation!
 =========================================
-
-.. include:: README.md
-   :parser: myst_parser.sphinx_
-
 
 .. autosummary::
    :toctree: _autosummary
    :recursive:
 
-   njax
+   NeuralJAXwork
 
+.. include:: README.md
+   :parser: myst_parser.sphinx_
+   :start-line: 2
+
+.. include:: _autosummary/NeuralJAXwork.rst
+
+Indices and tables
+==================
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
+Reach me at
+===========
 .. toctree::
-   :maxdepth: 2
-   :caption: Email me: rgs2151@columbia.edu
+   :maxdepth: 3
+   :caption: Email: rgs2151@columbia.edu
 
    LinkedIn <https://www.linkedin.com/in/rudramanisingha/>
    GitHub <https://github.com/rgs2151>

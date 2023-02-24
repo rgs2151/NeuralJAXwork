@@ -5,7 +5,7 @@ import jax.numpy as jnp
 from jax import random
 
 # Import the Layer class
-from njax import Layer
+from NeuralJAXwork.layer import Layer
 
 # Set the JAX random number generator's seed
 jax_key = random.PRNGKey(0)
@@ -13,6 +13,7 @@ jax_key = random.PRNGKey(0)
 class Dense(Layer):
     """
     This class implements a dense layer.
+    
     """
 
     def __init__(self, input_size, output_size):
@@ -25,6 +26,7 @@ class Dense(Layer):
         
         Returns:
             None
+        
         """
         
         # Initialize the weights and bias
@@ -41,7 +43,8 @@ class Dense(Layer):
         Returns:
             The dot product of the weights and the input plus the bias.
             
-            > $\hat{Y}$ = $W \cdot X$ + $b$
+            >$\hat{Y}$ = $W \cdot X$ + $b$
+        
         """
 
         # Save the input for the backward pass
@@ -61,7 +64,8 @@ class Dense(Layer):
         Returns:
             The gradient of the input of the dense layer.
             
-            > $\frac{\partial L}{\partial X} = \frac{\partial L}{\partial \hat{Y}} \cdot \frac{\partial \hat{Y}}{\partial X}$
+            >
+        
         """
 
         # Compute the gradient of the weights and bias

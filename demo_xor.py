@@ -1,9 +1,9 @@
 import numpy as np 
 
-from njax.layers import Dense
-from njax.activations import Tanh
-from njax.losses import MSE
-from njax.network import train, predict
+from NeuralJAXwork.layers import Dense
+from NeuralJAXwork.activations import Tanh
+from NeuralJAXwork.losses import MSE
+from NeuralJAXwork.network import train, predict
 
 # XOR dataset
 X = np.reshape([[0, 0], [0, 1], [1, 0], [1, 1]], (4, 2, 1))

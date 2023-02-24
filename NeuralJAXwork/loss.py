@@ -28,14 +28,14 @@ class Loss:
         try:
             self.loss = jit(loss)
         except:
-            raise Exception("NJAX: The loss function could not be compiled with JAX's jit.")
+            raise Exception("NeuralJAXwork: The loss function could not be compiled with JAX's jit.")
 
         # Try to compile the loss function's derivative
         # If it fails, raise an error
         try:
             self.loss_prime = jit(loss_prime)
         except:
-            raise Exception("NJAX: The loss function's derivative could not be compiled with JAX's jit.")
+            raise Exception("NeuralJAXwork: The loss function's derivative could not be compiled with JAX's jit.")
 
     def loss(self, y_true, y_pred):
         """
