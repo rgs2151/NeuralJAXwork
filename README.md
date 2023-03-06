@@ -1,45 +1,45 @@
 # 🐇NeuralJAXwork: GPU Accelerated Lightweight ML Framework from Scratch with JAX
 
-| **`Documentation`**                                                                              | `Colab Examples`                                                                                                                                                                     |
-| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`Documentation`**                                                                                  | `Colab Examples`                                                                                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb) |
 
-NeuralJAXwork is a lightweight machine learning framework built from scratch with the JAX library, designed to accelerate model training on GPUs. It provides a flexible and easy-to-use framework for building and training neural networks.
+NeuralJAXwork is a lightweight machine learning framework built from scratch using the JAX library, designed to accelerate model training on GPUs. It provides a high-level interface for building and training neural networks with ease, while also allowing for flexibility and customization through its low-level JAX API. With its efficient GPU acceleration and streamlined design, NeuralJAXwork is an ideal choice for researchers and practitioners looking to quickly prototype and experiment with new machine learning models. Its user-friendly interface and comprehensive documentation make it accessible to both novice and advanced users, while its performance and flexibility make it a powerful tool for a wide range of machine learning tasks.
 
 ## Framework Skeleton
 
-The framework is organized into four main modules: `activation.py`, `layer.py`, `loss.py`, and `model.py`, as well as a `network.py` file that brings all the modules together. The `__init__.py` file is used to make the modules importable as a package.
+The framework is organized into four main modules: `activation.py`, `layer.py`, `loss.py`, and `model.py`, as well as a `network.py` file that brings all the modules together.
 
-The framework skeleton exists and we encourage contributions to the corresponding directories by adding new classes. For example, you can add new activation functions such as `relu`, `sigmoid` and their derivatives using Jax for derivatives. Currently, only the `tanh` activation function exists.
+The framework skeleton exists and we encourage contributions to the corresponding directories by adding new classes. For example, you can add new activation functions such as `relu`, `sigmoid` and their derivatives that can be `jit-compiled`.
 
 ### Losses
 
-The losses directory contains code for various loss functions used in neural networks, including:
-
-- Binary Crossentropy
-- Hinge Loss
-- Mean Squared Error (MSE)
-- Mean Absolute Error (MAE)
-- Smooth Mean Absolute Error (SMAE)
+| Loss Function                     | Implementation File | Status          |
+| --------------------------------- | ------------------- | --------------- |
+| Binary Crossentropy               |                     | Implemented ✅     |
+| Hinge Loss                        |                     | Not Implemented |
+| Mean Squared Error (MSE)          |                     | Implemented ✅     |
+| Mean Absolute Error (MAE)         |                     | Implemented ✅     |
+| Smooth Mean Absolute Error (SMAE) |                     | Implemented ✅     |
 
 ### Activation
 
-The activations directory contains code for various activation functions used in neural networks, including:
-
-- Sigmoid
-- ReLU
-- Linear
-- Leaky ReLU
-- Binary Step
-- Softmax
+| Activation Function | Implementation File | Status      |
+| ------------------- | ------------------- | ----------- |
+| Sigmoid             |                     | Implemented ✅ |
+| ReLU                |                     | Implemented ✅ |
+| Linear              |                     | Implemented ✅ |
+| Leaky ReLU          |                     | Implemented ✅ |
+| Binary Step         |                     | Implemented ✅ |
+| Softmax             |                     | Implemented ✅ |
 
 ### Layers
 
-The layers directory contains code for various layers used in neural networks, including:
-
-- Dense
-- Convolutions
-- LSTMs (if time permits)
+| Layer        | Implementation                | Status          |
+| ------------ | ----------------------------- | --------------- |
+| Dense        | NeuralJAXwork/layers/dense.py | Implemented ✅     |
+| Convolutions |                               | Not Implemented |
+| LSTMs        |                               | Not Implemented |
 
 ## Usage
 
