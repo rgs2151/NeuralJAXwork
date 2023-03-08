@@ -24,30 +24,30 @@ In addition to the four main modules, the framework provides comprehensive docum
 
 | Loss Function                     | Implementation                                                                                       | Prime                                                                                                                                                                                                                      | Status         |
 | --------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| Binary Crossentropy               | $BCE = -\frac{1}{n}\sum_{i=1}^{n} [y_{i}\log(\hat{y_{i}}) + (1-y_{i})\log(1-\hat{y_{i}})]$           | $\frac{\partial BCE}{\partial y_{pred}} = \frac{y_{pred}-y_{true}}{y_{pred}(1-y_{pred})}$                                                                                                                                  | Implemented ✅ |
-| Mean Squared Error (MSE)          | $MSE = \frac{1}{n} \sum_{i=1}^{n} (y_{true} - y_{pred})^2$                                           | $\frac{\partial MSE}{\partial y_{pred}} = \frac{2}{n} (y_{pred} - y_{true})$                                                                                                                                               | Implemented ✅ |
-| Mean Absolute Error (MAE)         | $MAE = \frac{1}{n}\sum_{i=1}^{n}\|y_{true}-y_{pred}\|$                                               | $\frac{\partial MAE}{\partial y_{pred}} = \frac{1}{n} * sign(y_{pred} - y_{true})$                                                                                                                                         | Implemented ✅ |
-| Smooth Mean Absolute Error (sMAE) | $sMAE = \frac{1}{n} \sum_{i=1}^{n} (\sqrt{(y_{true} - y_{pred})^2 + \delta^2})$                      | $\frac{\partial sMAE}{\partial y_{pred}} = \frac{y_{pred} - y_{true}}{\sqrt{(y_{pred} - y_{true})^2 + \delta^2}}$                                                                                                          | Implemented ✅ |
-| Hinge Loss                        | $HL = \max(0, 1-y_{true}*y_{pred})$                                                                  | $\frac{\partial HL}{\partial y_{pred}} = \begin{cases} -y_{true}, & \text{if } y_{true}*y_{pred}<1 \\ \text{any value in } [-1, 0], & \text{if } y_{true}*y_{pred}=1 \\ 0, & \text{if } y_{true}*y_{pred}>1 \end{cases}$   | Implemented ✅ |
+| Binary Crossentropy               | $BCE = -\frac{1}{n}\sum_{i=1}^{n} [y_{i}\log(\hat{y_{i}}) + (1-y_{i})\log(1-\hat{y_{i}})]$           | $\frac{\partial BCE}{\partial y_{pred}} = \frac{y_{pred}-y_{true}}{y_{pred}(1-y_{pred})}$                                                                                                                                  | ✅ |
+| Mean Squared Error (MSE)          | $MSE = \frac{1}{n} \sum_{i=1}^{n} (y_{true} - y_{pred})^2$                                           | $\frac{\partial MSE}{\partial y_{pred}} = \frac{2}{n} (y_{pred} - y_{true})$                                                                                                                                               | ✅ |
+| Mean Absolute Error (MAE)         | $MAE = \frac{1}{n}\sum_{i=1}^{n}\|y_{true}-y_{pred}\|$                                               | $\frac{\partial MAE}{\partial y_{pred}} = \frac{1}{n} * sign(y_{pred} - y_{true})$                                                                                                                                         | ✅ |
+| Smooth Mean Absolute Error (sMAE) | $sMAE = \frac{1}{n} \sum_{i=1}^{n} (\sqrt{(y_{true} - y_{pred})^2 + \delta^2})$                      | $\frac{\partial sMAE}{\partial y_{pred}} = \frac{y_{pred} - y_{true}}{\sqrt{(y_{pred} - y_{true})^2 + \delta^2}}$                                                                                                          | ✅ |
+| Hinge Loss                        | $HL = \max(0, 1-y_{true}*y_{pred})$                                                                  | ![Hinge Loss derivative equation](https://latex.codecogs.com/svg.image?\frac{\partial&space;HL}{\partial&space;y_{pred}}&space;=&space;\begin{cases}&space;-y_{true},&space;&\text{if&space;}&space;y_{true}*y_{pred}<1&space;\\&space;\text{any&space;value&space;in&space;}&space;[-1,&space;0],&space;&\text{if&space;}&space;y_{true}*y_{pred}=1&space;\\&space;0,&space;&\text{if&space;}&space;y_{true}*y_{pred}>1&space;\end{cases})  | ✅ |
 
 ### Activation
 
 | Activation Function | Implementation | Status         |
 | ------------------- | -------------- | -------------- |
-| Sigmoid             |                | Implemented ✅ |
-| ReLU                |                | Implemented ✅ |
-| Linear              |                | Implemented ✅ |
-| Leaky ReLU          |                | Implemented ✅ |
-| Binary Step         |                | Implemented ✅ |
-| Softmax             |                | Implemented ✅ |
+| Sigmoid             |                | ✅ |
+| ReLU                |                | ✅ |
+| Linear              |                | ✅ |
+| Leaky ReLU          |                | ✅ |
+| Binary Step         |                | ✅ |
+| Softmax             |                | ✅ |
 
 ### Layers
 
 | Layer        | Implementation                | Status          |
 | ------------ | ----------------------------- | --------------- |
-| Dense        | NeuralJAXwork/layers/dense.py | Implemented ✅  |
-| Convolutions |                               | Not Implemented |
-| LSTMs        |                               | Not Implemented |
+| Dense        | NeuralJAXwork/layers/dense.py | ✅ |
+| Convolutions |                               | ✅ |
+| LSTMs        |                               | ✅ |
 
 ## Usage
 
