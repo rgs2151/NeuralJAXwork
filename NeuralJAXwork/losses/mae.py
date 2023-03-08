@@ -22,7 +22,7 @@ class MAE(Loss):
             Returns:
                 The mean absolute error.
 
-                > $MAE = \frac{1}{n} \sum_{i=1}^{n} |y_{true} - y_{pred}|$
+                > $MAE = \frac{1}{n} \\sum_{i=1}^{n} |y_{true} - y_{pred}|$
             """
 
             # Return the mean absolute error
