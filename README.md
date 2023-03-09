@@ -1,4 +1,4 @@
-<a href="url"><img src="http://url.to/image.png" align="left" height="48" width="48" ></a>
+<a href="url"><img src="https://raw.githubusercontent.com/rgs2151/NeuralJAXwork/main/logo/JAX_logo.png" align="center" height="500" width="500" ></a>
 
 # 🐇NeuralJAXwork: GPU Accelerated Lightweight ML Framework from Scratch with JAX
 
