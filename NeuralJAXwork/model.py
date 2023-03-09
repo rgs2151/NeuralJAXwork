@@ -1,16 +1,10 @@
+class Model:
 
-class SequentialModel:
-
-    """
-    An Implementation of a Sequential Model
-    Register layers in the order they should be executed
-    Has a forward and backward method
-    And many utulity methods for training, predicting and printing
-    """
-    
-    def __init__(self, layers):
+    def configure(self, layers = [], loss = None):
         self.layers = layers
-
+        self.loss = loss
+        pass
+    
     def forward(self, x):
         for layer in self.layers:
             x = layer.forward(x)
@@ -20,13 +14,8 @@ class SequentialModel:
         for layer in reversed(self.layers):
             grad = layer.backward(grad)
         return grad
-
-    # def params(self):
-    #     for layer in self.layers:
-    #         for param in layer.params():
-    #             yield param
-
-    def train(self, loss, x_train, y_train, epochs = 1000, learning_rate = 0.01, verbose = True):
+    
+    def train(self, x_train, y_train, epochs = 1000, learning_rate = 0.01, verbose = True):
         for e in range(epochs):
             error = 0
             for x, y in zip(x_train, y_train):
@@ -34,13 +23,14 @@ class SequentialModel:
                 output = self.forward(x)
 
                 # error
-                error += loss.loss(y, output)
+                error += self.loss.loss(y, output)
 
                 # backward
-                grad = loss.prime(y, output)
+                grad = self.loss.prime(y, output)
                 self.backward(grad)
 
             error /= len(x_train)
+
             if verbose:
                 print(f"{e + 1}/{epochs}, error={error}")
 
@@ -48,4 +38,4 @@ class SequentialModel:
         return self.forward(x)
 
     def __repr__(self):
-        return f'SequentialModel({self.layers})'
+        return f'SequentialModel({zip(enumerate(self.layers))})'

@@ -12,3 +12,9 @@ from .activation import Activation
 
 # Import the Loss class
 from .loss import Loss
+
+# Import the Model class
+from .model import Model
+
+# Import errors
+from .errors import Errors

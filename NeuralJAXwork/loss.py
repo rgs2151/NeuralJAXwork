@@ -1,5 +1,6 @@
 # Import jit from JAX
 from jax import jit
+from NeuralJAXwork import Errors
 
 class Loss:
     """
@@ -24,18 +25,21 @@ class Loss:
         """
 
         # Try to compile the loss function
-        # If it fails, raise an error
+        # If it fails, switch to regular Python interpreator
         try:
             self.loss = jit(loss)
         except:
-            raise Exception("NeuralJAXwork: The loss function could not be compiled with JAX's jit.")
+            print(Errors.jit_error)
+            self.loss = loss
+        
 
         # Try to compile the loss function's derivative
-        # If it fails, raise an error
+        # If it fails, switch to regular Python interpreator
         try:
             self.loss_prime = jit(loss_prime)
         except:
-            raise Exception("NeuralJAXwork: The loss function's derivative could not be compiled with JAX's jit.")
+            print(Errors.jit_error)
+            self.loss = loss_prime
 
     def loss(self, y_true, y_pred):
         """
