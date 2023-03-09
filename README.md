@@ -52,7 +52,7 @@ In addition to the four main modules, the framework provides comprehensive docum
 | Linear              | $f(x) = x$                                            | $f'(x) = 1$                                                                               | ✅     |
 | Softmax             | $Softmax(x_i) = \frac{e^{x_i}}{\sum_{j=1}^n e^{x_j}}$ | $\frac{\partial Softmax(x_i)}{\partial x_j} = Softmax(x_i)(\delta_{ij} - Softmax(x_j))$   | ✅     |
 | ReLU                | $ReLU(x) = max(0,x)$                                  | $ReLU'(x) = \frac{1}{2} \cdot (1 + \operatorname{sign}(x))$                               | ✅     |
-| Leaky ReLU          | $LeakyReLU(x) = \frac{1}{2}(x + |x|a)$                | $LeakyReLU'(x) = \frac{1}{2}(1 + \operatorname{sign}(x) + a(1 - \operatorname{sign}(x)))$ | ✅     |
+| Leaky ReLU          | $LeakyReLU(x) = \frac{1}{2}(x + \|x\|a)$              | $LeakyReLU'(x) = \frac{1}{2}(1 + \operatorname{sign}(x) + a(1 - \operatorname{sign}(x)))$ | ✅     |
 
 ### Layers
 
