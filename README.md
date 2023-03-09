@@ -51,7 +51,7 @@ In addition to the four main modules, the framework provides comprehensive docum
 | Sigmoid             | $tanh(x) = (e^x - e^-x) / (e^x + e^-x)$                               | $tanh'(x) = 1 - tanh(x)^2$                                                              | ✅     |
 | Linear              | $f(x) = x$                                                            | $f'(x) = 1$                                                                             | ✅     |
 | Softmax             | $Softmax(x_i) = \frac{e^{x_i}}{\sum_{j=1}^n e^{x_j}}$                 | $\frac{\partial Softmax(x_i)}{\partial x_j} = Softmax(x_i)(\delta_{ij} - Softmax(x_j))$ | ✅     |
-| ReLU                | $ReLU(x) = max(0,x)$                                                  | $ReLU'(x) = \begin{cases} 0& x <0 \\ 1& x \geq 0 \end{cases}$                           | ✅     |
+| ReLU                | $ReLU(x) = max(0,x)$                                                  | $ReLU'(x) = \\begin{cases} 0& x <0 \\\\ 1& x \\geq 0 \\end{cases}$                      | ✅     |
 | Leaky ReLU          | $LeakyReLU(x) = \begin{cases} x & x \geq 0 \\ ax & x < 0 \end{cases}$ | $LeakyReLU'(x) = \begin{cases} 1 & x \geq 0 \\ a & x < 0 \end{cases}$                   | ✅     |
 
 ### Layers
