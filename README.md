@@ -1,12 +1,12 @@
 # 🐇NeuralJAXwork: GPU Accelerated Lightweight ML Framework from Scratch with JAX
 
-[![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/) ![Documentation](https://img.shields.io/badge/ONNX-supported-purple.svg) ![Documentation](https://img.shields.io/badge/JIT-compiled-yellow.svg)  ![Documentation](https://img.shields.io/badge/python-3.7_|_3.8_|_3.9_|_3.10-blue.svg)
+[![Documentation](https://img.shields.io/badge/Complete-documentation-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/) [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/_autosummary/NeuralJAXwork.html) ![Documentation](https://img.shields.io/badge/ONNX-supported-orange.svg) ![Documentation](https://img.shields.io/badge/GPU-supported-brightgreen.svg) ![Documentation](https://img.shields.io/badge/JIT-compiled-yellow.svg) ![Documentation](https://img.shields.io/badge/python-3.7_|_3.8_|_3.9_|_3.10-blue.svg)
 
 NeuralJAXwork is a lightweight machine learning framework built from scratch using the JAX library, designed to accelerate model training on GPUs. It provides a high-level interface for building and training neural networks with ease, while also allowing for flexibility and customization through its low-level JAX API. With its efficient GPU acceleration and streamlined design, NeuralJAXwork is an ideal choice for researchers and practitioners looking to quickly prototype and experiment with new machine learning models. Its user-friendly interface and comprehensive documentation make it accessible to both novice and advanced users, while its performance and flexibility make it a powerful tool for a wide range of machine learning tasks.
 
-**Colab Examples:**
-
 ---
+
+**Colab Examples:**
 
 | `MNIST`                                                                                                                                                                              | `XOR`                                                                                                                                                                                | `Titanic`                                                                                                                                                                            | `Cats & Dogs`                                                                                                                                                                        | `RegNet18`                                                             |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
@@ -32,6 +32,8 @@ In addition to the four main modules, the framework provides comprehensive docum
 
 #### Functional
 
+## Implementations
+
 ### Losses
 
 | Loss Function                     | Implementation                                                                               | Prime                                                                                                               | Status |
@@ -44,13 +46,13 @@ In addition to the four main modules, the framework provides comprehensive docum
 
 ### Activations
 
-| Activation Function | Implementation                                                         | Prime                                                                                     | Status |
-| ------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------ |
-| Sigmoid             | $tanh(x) = (e^x - e^-x) / (e^x + e^-x)$                              | $tanh'(x) = 1 - tanh(x)^2$                                                              | ✅     |
-| ReLU                | $ReLU(x) = max(0,x)$                                                 | $ReLU'(x) = \begin{cases} 0 & x < 0 \ 1 & x \geq 0 \end{cases}$                         | ✅     |
-| Linear              | $f(x) = x$                                                           | $f'(x) = 1$                                                                             | ✅     |
-| Leaky ReLU          | $LeakyReLU(x) = \begin{cases} x & x \geq 0 \ ax & x < 0 \end{cases}$ | $LeakyReLU'(x) = \begin{cases} 1 & x \geq 0 \ a & x < 0 \end{cases}$                    | ✅     |
-| Softmax             | $Softmax(x_i) = \frac{e^{x_i}}{\sum_{j=1}^n e^{x_j}}$                | $\frac{\partial Softmax(x_i)}{\partial x_j} = Softmax(x_i)(\delta_{ij} - Softmax(x_j))$ | ✅     |
+| Activation Function | Implementation                                                          | Prime                                                                                     | Status |
+| ------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------ |
+| Sigmoid             | $tanh(x) = (e^x - e^-x) / (e^x + e^-x)$                               | $tanh'(x) = 1 - tanh(x)^2$                                                              | ✅     |
+| Linear              | $f(x) = x$                                                            | $f'(x) = 1$                                                                             | ✅     |
+| Softmax             | $Softmax(x_i) = \frac{e^{x_i}}{\sum_{j=1}^n e^{x_j}}$                 | $\frac{\partial Softmax(x_i)}{\partial x_j} = Softmax(x_i)(\delta_{ij} - Softmax(x_j))$ | ✅     |
+| ReLU                | $ReLU(x) = max(0,x)$                                                  | $ReLU'(x) = \begin{cases} 0& x <0 \\ 1& x \geq 0 \end{cases}$                           | ✅     |
+| Leaky ReLU          | $LeakyReLU(x) = \begin{cases} x & x \geq 0 \\ ax & x < 0 \end{cases}$ | $LeakyReLU'(x) = \begin{cases} 1 & x \geq 0 \\ a & x < 0 \end{cases}$                   | ✅     |
 
 ### Layers
 
