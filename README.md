@@ -1,10 +1,16 @@
 # 🐇NeuralJAXwork: GPU Accelerated Lightweight ML Framework from Scratch with JAX
 
-| **`Documentation`**                                                                                  | `Colab Examples`                                                                                                                                                                     |
-| ------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb) |
+[![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/) ![Documentation](https://img.shields.io/badge/ONNX-supported-purple.svg) ![Documentation](https://img.shields.io/badge/JIT-compiled-yellow.svg)  ![Documentation](https://img.shields.io/badge/python-3.7_|_3.8_|_3.9_|_3.10-blue.svg)
 
 NeuralJAXwork is a lightweight machine learning framework built from scratch using the JAX library, designed to accelerate model training on GPUs. It provides a high-level interface for building and training neural networks with ease, while also allowing for flexibility and customization through its low-level JAX API. With its efficient GPU acceleration and streamlined design, NeuralJAXwork is an ideal choice for researchers and practitioners looking to quickly prototype and experiment with new machine learning models. Its user-friendly interface and comprehensive documentation make it accessible to both novice and advanced users, while its performance and flexibility make it a powerful tool for a wide range of machine learning tasks.
+
+**Colab Examples:**
+
+---
+
+| `MNIST`                                                                                                                                                                              | `XOR`                                                                                                                                                                                | `Titanic`                                                                                                                                                                            | `Cats & Dogs`                                                                                                                                                                        | `RegNet18`                                                             |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb) | ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg) |
 
 ## Framework Skeleton
 
@@ -20,34 +26,39 @@ Finally, the `model.py` module provides a high-level interface for building and 
 
 In addition to the four main modules, the framework provides comprehensive documentation and examples to help users get started and contribute to the project. The framework is designed to be lightweight and efficient, with a focus on GPU acceleration using the JAX library. It is an ideal choice for researchers and practitioners looking to quickly prototype and experiment with new machine learning models while having the flexibility to customize and extend the framework as needed.
 
+### Models
+
+#### Sqeuential
+
+#### Functional
+
 ### Losses
 
-| Loss Function                     | Implementation                                                                                       | Prime                                                                                                                                                                                                                      | Status         |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| Binary Crossentropy               | $BCE = -\frac{1}{n}\sum_{i=1}^{n} [y_{i}\log(\hat{y_{i}}) + (1-y_{i})\log(1-\hat{y_{i}})]$           | $\frac{\partial BCE}{\partial y_{pred}} = \frac{y_{pred}-y_{true}}{y_{pred}(1-y_{pred})}$                                                                                                                                  | ✅ |
-| Mean Squared Error (MSE)          | $MSE = \frac{1}{n} \sum_{i=1}^{n} (y_{true} - y_{pred})^2$                                           | $\frac{\partial MSE}{\partial y_{pred}} = \frac{2}{n} (y_{pred} - y_{true})$                                                                                                                                               | ✅ |
-| Mean Absolute Error (MAE)         | $MAE = \frac{1}{n}\sum_{i=1}^{n}\|y_{true}-y_{pred}\|$                                               | $\frac{\partial MAE}{\partial y_{pred}} = \frac{1}{n} * sign(y_{pred} - y_{true})$                                                                                                                                         | ✅ |
-| Smooth Mean Absolute Error (sMAE) | $sMAE = \frac{1}{n} \sum_{i=1}^{n} (\sqrt{(y_{true} - y_{pred})^2 + \delta^2})$                      | $\frac{\partial sMAE}{\partial y_{pred}} = \frac{y_{pred} - y_{true}}{\sqrt{(y_{pred} - y_{true})^2 + \delta^2}}$                                                                                                          | ✅ |
-| Hinge Loss                        | $HL = \max(0, 1-y_{true}*y_{pred})$                                                                  | ![Hinge Loss derivative equation](https://latex.codecogs.com/svg.image?\frac{\partial&space;HL}{\partial&space;y_{pred}}&space;=&space;\begin{cases}&space;-y_{true},&space;&\text{if&space;}&space;y_{true}\cdot&space;y_{pred}&space;<&space;1&space;\\&space;\text{any&space;value&space;in&space;}&space;[-1,&space;0],&space;&\text{if&space;}&space;y_{true}\cdot&space;y_{pred}&space;=&space;1&space;\\&space;0,&space;&\text{if&space;}&space;y_{true}\cdot&space;y_{pred}&space;>&space;1&space;\end{cases}) | ✅ |
+| Loss Function                     | Implementation                                                                               | Prime                                                                                                               | Status |
+| --------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------ |
+| Binary Crossentropy               | $BCE = -\frac{1}{n}\sum_{i=1}^{n} [y_{i}\log(\hat{y_{i}}) + (1-y_{i})\log(1-\hat{y_{i}})]$ | $\frac{\partial BCE}{\partial y_{pred}} = \frac{y_{pred}-y_{true}}{y_{pred}(1-y_{pred})}$                         | ✅     |
+| Categorical Cross Entropy         | $CCE(y, \hat{y}) = - \sum_{i=1}^n y_i log(\hat{y_i})$                                      | $\frac{\partial CCE(y, \hat{y})}{\partial \hat{y_i}} = -\frac{y_i}{\hat{y_i}}$                                    | ✅     |
+| Mean Squared Error (MSE)          | $MSE = \frac{1}{n} \sum_{i=1}^{n} (y_{true} - y_{pred})^2$                                 | $\frac{\partial MSE}{\partial y_{pred}} = \frac{2}{n} (y_{pred} - y_{true})$                                      | ✅     |
+| Mean Absolute Error (MAE)         | $MAE = \frac{1}{n}\sum_{i=1}^{n}\|y_{true}-y_{pred}\|$                                     | $\frac{\partial MAE}{\partial y_{pred}} = \frac{1}{n} * sign(y_{pred} - y_{true})$                                | ✅     |
+| Smooth Mean Absolute Error (sMAE) | $sMAE = \frac{1}{n} \sum_{i=1}^{n} (\sqrt{(y_{true} - y_{pred})^2 + \delta^2})$            | $\frac{\partial sMAE}{\partial y_{pred}} = \frac{y_{pred} - y_{true}}{\sqrt{(y_{pred} - y_{true})^2 + \delta^2}}$ | ✅     |
 
-### Activation
+### Activations
 
-| Activation Function | Implementation | Status         |
-| ------------------- | -------------- | -------------- |
-| Sigmoid             |                | ✅ |
-| ReLU                |                | ✅ |
-| Linear              |                | ✅ |
-| Leaky ReLU          |                | ✅ |
-| Binary Step         |                | ✅ |
-| Softmax             |                | ✅ |
+| Activation Function | Implementation                                                         | Prime                                                                                     | Status |
+| ------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------ |
+| Sigmoid             | $tanh(x) = (e^x - e^-x) / (e^x + e^-x)$                              | $tanh'(x) = 1 - tanh(x)^2$                                                              | ✅     |
+| ReLU                | $ReLU(x) = max(0,x)$                                                 | $ReLU'(x) = \begin{cases} 0 & x < 0 \ 1 & x \geq 0 \end{cases}$                         | ✅     |
+| Linear              | $f(x) = x$                                                           | $f'(x) = 1$                                                                             | ✅     |
+| Leaky ReLU          | $LeakyReLU(x) = \begin{cases} x & x \geq 0 \ ax & x < 0 \end{cases}$ | $LeakyReLU'(x) = \begin{cases} 1 & x \geq 0 \ a & x < 0 \end{cases}$                    | ✅     |
+| Softmax             | $Softmax(x_i) = \frac{e^{x_i}}{\sum_{j=1}^n e^{x_j}}$                | $\frac{\partial Softmax(x_i)}{\partial x_j} = Softmax(x_i)(\delta_{ij} - Softmax(x_j))$ | ✅     |
 
 ### Layers
 
-| Layer        | Implementation                | Status          |
-| ------------ | ----------------------------- | --------------- |
-| Dense        | NeuralJAXwork/layers/dense.py | ✅ |
-| Convolutions |                               | ✅ |
-| LSTMs        |                               | ✅ |
+| Layer        | Implementation                      | Prime                                                                                                             | Status |
+| ------------ | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------ |
+| Dense        | $\hat{Y}$ = $W \cdot X$ + $b$ | $\frac{\partial L}{\partial X} = \frac{\partial L}{\partial \hat{Y}} \cdot \frac{\partial \hat{Y}}{\partial X}$ | ✅     |
+| Convolutions |                                     |                                                                                                                   | ✅     |
+| LSTMs        |                                     |                                                                                                                   | 🚧     |
 
 ## Usage
 

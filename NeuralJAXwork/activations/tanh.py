@@ -25,7 +25,7 @@ class Tanh(Activation):
             Returns:
                 The Tanh activation of the input tensor.
 
-                > jnp.tanh(x)
+                > tanh(x) = (e^x - e^-x) / (e^x + e^-x)
             """
 
             # Use JAX's tanh function
@@ -43,7 +43,7 @@ class Tanh(Activation):
             Returns:
                 The gradient of the Tanh activation function.
 
-                > 1 - jnp.tanh(x) ** 2
+                > tanh'(x) = 1 - tanh(x)^2
             """
             
             # Differentiate tanh using JAX's numpy

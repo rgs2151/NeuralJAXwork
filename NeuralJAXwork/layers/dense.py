@@ -64,7 +64,7 @@ class Dense(Layer):
         Returns:
             The gradient of the input of the dense layer.
             
-            >
+            > $\frac{\partial L}{\partial X} = \frac{\partial L}{\partial \hat{Y}} \cdot \frac{\partial \hat{Y}}{\partial X}$
         
         """
 
