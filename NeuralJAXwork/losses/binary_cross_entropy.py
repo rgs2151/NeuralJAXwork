@@ -22,7 +22,7 @@ class BinaryCrossEntropy(Loss):
             Returns:
                 The binary cross entropy.
 
-                > $BCE = -\frac{1}{n} \sum_{i=1}^{n} (y_{true} \log(y_{pred}) + (1 - y_{true}) \log(1 - y_{pred}))$
+                $BCE = -\frac{1}{n} \sum_{i=1}^{n} (y_{true} \log(y_{pred}) + (1 - y_{true}) \log(1 - y_{pred}))$
             """
 
             # Return the binary cross entropy
@@ -39,7 +39,7 @@ class BinaryCrossEntropy(Loss):
             Returns:
                 The derivative of the binary cross entropy.
 
-                > $\frac{\partial BCE}{\partial y_{pred}} = \frac{1}{n} \frac{y_{true}}{y_{pred}} - \frac{1 - y_{true}}{1 - y_{pred}}$
+                $\frac{\partial BCE}{\partial y_{pred}} = \frac{1}{n} \frac{y_{true}}{y_{pred}} - \frac{1 - y_{true}}{1 - y_{pred}}$
             """
 
             # Return the derivative of the binary cross entropy

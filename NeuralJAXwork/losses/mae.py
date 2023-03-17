@@ -22,7 +22,7 @@ class MAE(Loss):
             Returns:
                 The mean absolute error.
 
-                > $MAE = \frac{1}{n} \\sum_{i=1}^{n} |y_{true} - y_{pred}|$
+                $MAE = \frac{1}{n} \\sum_{i=1}^{n} |y_{true} - y_{pred}|$
             """
 
             # Return the mean absolute error
@@ -39,7 +39,7 @@ class MAE(Loss):
             Returns:
                 The derivative of the mean absolute error.
 
-                > $\frac{\partial MAE}{\partial y_{pred}} = \frac{1}{n} * sign(y_{pred} - y_{true})$
+                $\frac{\partial MAE}{\partial y_{pred}} = \frac{1}{n} * sign(y_{pred} - y_{true})$
             """
 
             # Return the derivative of the mean absolute error

@@ -22,7 +22,7 @@ class MSE(Loss):
             Returns:
                 The mean squared error.
 
-                > $MSE = \frac{1}{n} \sum_{i=1}^{n} (y_{true} - y_{pred})^2$
+                $MSE = \frac{1}{n} \sum_{i=1}^{n} (y_{true} - y_{pred})^2$
             """
 
             # Return the mean squared error
@@ -39,7 +39,7 @@ class MSE(Loss):
             Returns:
                 The derivative of the mean squared error.
 
-                > $\frac{\partial MSE}{\partial y_{pred}} = \frac{2}{n} (y_{pred} - y_{true})$
+                $\frac{\partial MSE}{\partial y_{pred}} = \frac{2}{n} (y_{pred} - y_{true})$
             """
 
             # Return the derivative of the mean squared error

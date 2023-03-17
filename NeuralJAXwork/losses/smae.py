@@ -23,7 +23,7 @@ class SMAE(Loss):
             Returns:
                 The smooth mean absolute error.
 
-                > $SMAE = \frac{1}{n} \sum_{i=1}^{n} (\sqrt{(y_{true} - y_{pred})^2 + \delta^2})$
+                $SMAE = \frac{1}{n} \sum_{i=1}^{n} (\sqrt{(y_{true} - y_{pred})^2 + \delta^2})$
             """
 
             # Return the smooth mean absolute error
@@ -40,7 +40,7 @@ class SMAE(Loss):
             Returns:
                 The derivative of the smooth mean absolute error.
 
-                > $\frac{\partial SMAE}{\partial y_{pred}} = \frac{y_{pred} - y_{true}}{\sqrt{(y_{pred} - y_{true})^2 + \delta^2}}$
+                $\frac{\partial SMAE}{\partial y_{pred}} = \frac{y_{pred} - y_{true}}{\sqrt{(y_{pred} - y_{true})^2 + \delta^2}}$
             """
 
             # Return the derivative of the smooth mean absolute error
