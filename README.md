@@ -89,6 +89,6 @@ loss_fn = MSE()
 # Create the model
 model = Model(layers=layers, loss_fn=loss_fn)
 
-# Train the models
+# Train the model
 model.train(X_train, y_train, epochs=10, batch_size=32, learning_rate=0.001)
 ```
