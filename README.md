@@ -46,16 +46,6 @@ In addition to the four main modules, the framework provides comprehensive docum
 | Mean Absolute Error (MAE)         | $MAE = \frac{1}{n}\sum_{i=1}^{n}\|y_{true}-y_{pred}\|$                                     | $\frac{\partial MAE}{\partial y_{pred}} = \frac{1}{n} * sign(y_{pred} - y_{true})$                                | ✅     |
 | Smooth Mean Absolute Error (sMAE) | $sMAE = \frac{1}{n} \sum_{i=1}^{n} (\sqrt{(y_{true} - y_{pred})^2 + \delta^2})$            | $\frac{\partial sMAE}{\partial y_{pred}} = \frac{y_{pred} - y_{true}}{\sqrt{(y_{pred} - y_{true})^2 + \delta^2}}$ | ✅     |
 
-### Activations
-
-| Activation Function | Implementation                                          | Prime                                                                                       | Status |
-| ------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------ |
-| Sigmoid             | $tanh(x) = (e^x - e^-x) / (e^x + e^-x)$               | $tanh'(x) = 1 - tanh(x)^2$                                                                | ✅     |
-| Linear              | $f(x) = x$                                            | $f'(x) = 1$                                                                               | ✅     |
-| Softmax             | $Softmax(x_i) = \frac{e^{x_i}}{\sum_{j=1}^n e^{x_j}}$ | $\frac{\partial Softmax(x_i)}{\partial x_j} = Softmax(x_i)(\delta_{ij} - Softmax(x_j))$   | ✅     |
-| ReLU                | $ReLU(x) = max(0,x)$                                  | $ReLU'(x) = \frac{1}{2} \cdot (1 + \operatorname{sign}(x))$                               | ✅     |
-| Leaky ReLU          | $LeakyReLU(x) = \frac{1}{2}(x + \|x\|a)$              | $LeakyReLU'(x) = \frac{1}{2}(1 + \operatorname{sign}(x) + a(1 - \operatorname{sign}(x)))$ | ✅     |
-
 ### Layers
 
 | Layer        | Implementation                      | Prime                                                                                                             | Status |
