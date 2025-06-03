@@ -1,6 +1,6 @@
 # Import jit from JAX
 from jax import jit
-from NeuralJAXwork import Errors
+from .errors import Errors
 
 class Loss:
     """
@@ -37,9 +37,9 @@ class Loss:
         # If it fails, switch to regular Python interpreator
         try:
             self.loss_prime = jit(loss_prime)
-        except:
+        except Exception:
             print(Errors.jit_error)
-            self.loss = loss_prime
+            self.loss_prime = loss_prime
 
     def loss(self, y_true, y_pred):
         """

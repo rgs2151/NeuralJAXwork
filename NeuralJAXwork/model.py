@@ -10,9 +10,18 @@ class Model:
             x = layer.forward(x)
         return x
 
-    def backward(self, grad):
+    def backward(self, grad, learning_rate):
+        """Propagate the gradient through the network.
+
+        Parameters
+        ----------
+        grad: jax.numpy.ndarray
+            Gradient of the loss with respect to the network output.
+        learning_rate: float
+            Learning rate used to update the parameters of each layer.
+        """
         for layer in reversed(self.layers):
-            grad = layer.backward(grad)
+            grad = layer.backward(grad, learning_rate)
         return grad
     
     def train(self, x_train, y_train, epochs = 1000, learning_rate = 0.01, verbose = True):
@@ -27,7 +36,7 @@ class Model:
 
                 # backward
                 grad = self.loss.prime(y, output)
-                self.backward(grad)
+                self.backward(grad, learning_rate)
 
             error /= len(x_train)
 
@@ -38,4 +47,5 @@ class Model:
         return self.forward(x)
 
     def __repr__(self):
-        return f'SequentialModel({zip(enumerate(self.layers))})'
+        layers_repr = ", ".join(layer.__class__.__name__ for layer in self.layers)
+        return f"SequentialModel([{layers_repr}])"
