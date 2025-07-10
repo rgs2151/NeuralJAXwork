@@ -1,6 +1,6 @@
 <p align="center"><a href="https://rgs2151.github.io/NeuralJAXwork/"><img src="https://raw.githubusercontent.com/rgs2151/NeuralJAXwork/main/logo/JAX_logo.png" align="center" width="237" height="241" alt="NeuralJAXwork" title="NeuralJAXwork" /></a></p>
 
-# 🐇NeuralJAXwork: GPU Accelerated Lightweight ML Framework from Scratch with JAX
+# 🐇NeuralJAXwork: GPU Accelerated Lightweight ML Framework in JAX
 
 [![Documentation](https://img.shields.io/badge/Complete-documentation-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/) [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/_autosummary/NeuralJAXwork.html) ![Documentation](https://img.shields.io/badge/ONNX-supported-orange.svg) ![Documentation](https://img.shields.io/badge/GPU-supported-brightgreen.svg) ![Documentation](https://img.shields.io/badge/JIT-compiled-yellow.svg) [![Documentation](https://img.shields.io/badge/Habanero_HPC_Cluster-supported-green.svg)](https://confluence.columbia.edu/confluence/display/rcs/Habanero+HPC+Cluster+User+Documentation) ![Documentation](https://img.shields.io/badge/python-3.7_|_3.8_|_3.9_|_3.10-blue.svg)
 
