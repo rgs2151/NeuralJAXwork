@@ -1,43 +1,66 @@
-name: Deploy Sphinx documentation to Pages
-
-# Controls when the workflow will run
+name: Tutorial book and GitHub Pages
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [main]
   pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-jobs:
-  # This workflow contains a single job called "pages"
-  pages:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
+permissions:
+  contents: read
 
-    # Environment variables
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      JAX_PLATFORMS: cpu
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install package and executable book dependencies
+        run: python -m pip install '.[dev,docs]'
+      - name: Register the documentation kernel
+        run: python -m ipykernel install --sys-prefix --name python3
+      - name: Run small API and architecture tests
+        run: python -m pytest
+      - name: Execute all tutorial notebooks and build the book
+        run: python -m sphinx -W --keep-going -b html . _build/html
+      - name: Verify notebook pages, outputs, and navigation
+        run: python scripts/check_docs.py _build/html
+      - name: Upload reviewable documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: tutorial-book
+          path: _build/html
+      - name: Configure GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+      - name: Upload Pages site
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _build/html
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       pages: write
       id-token: write
-    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      # use the latest version of the checkout action
-      - id: deployment
-        uses: sphinx-notes/pages@v3
-        with:
-          documentation_path: '.'  # Path to Sphinx source files
-          requirements_path: './requirements.txt'  # Path to requirements file
-          python_version: '3.10'  # Version of Python
-          sphinx_version: '5.3'  # Version of Sphinx
-          cache: true  # Enable cache to speed up documentation building
-        
-# Set concurrency group to avoid multiple builds
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
+      - name: Publish tutorial book
+        id: deployment
+        uses: actions/deploy-pages@v4

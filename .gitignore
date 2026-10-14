@@ -3,3 +3,13 @@ env
 build
 _build
 _autosummary
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+data/
+runs/
+.ipynb_checkpoints/
+
+.jupyter_cache/

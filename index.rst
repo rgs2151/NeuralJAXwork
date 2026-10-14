@@ -1,32 +1,35 @@
-Welcome to NeuralJAXwork's documentation!
-=========================================
+NeuralJAXwork: the tutorial book
+================================
 
-.. autosummary::
-   :toctree: _autosummary
-   :recursive:
+Build neural networks with a PyTorch-style module API, JAX automatic
+differentiation, and explicit training loops. This book combines a getting-started
+guide, **seven executable architecture tutorials**, and the Python API reference.
 
-   NeuralJAXwork
+Version 0.1.0 is an installable alpha. The tutorial outputs shown here are generated
+by small **offline synthetic smoke runs** during the documentation build. They
+verify that the examples work; they are not benchmark scores or trained-model
+quality claims. Each tutorial explains how to switch to its real experiment.
 
-.. include:: README.md
-   :parser: myst_parser.sphinx_
-   :start-line: 2
-
-.. include:: _autosummary/NeuralJAXwork.rst
-
-Indices and tables
-==================
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
-Reach me at
-===========
 .. toctree::
-   :maxdepth: 3
-   :caption: Email: rgs2151@columbia.edu
+   :maxdepth: 2
+   :caption: Start here
 
-   LinkedIn <https://www.linkedin.com/in/rudramanisingha/>
-   GitHub <https://github.com/rgs2151>
-   Portfolio <https://www.rudramanisingha.com/>
-   
+   docs/quickstart
+   docs/tutorials
 
+.. toctree::
+   :maxdepth: 2
+   :caption: User guide
+
+   docs/api
+   docs/examples
+   docs/state
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Reference and development
+
+   docs/reference
+   docs/development
+   docs/validation
+   docs/publishing

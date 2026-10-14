@@ -1,84 +1,154 @@
-<p align="center"><a href="https://rgs2151.github.io/NeuralJAXwork/"><img src="https://raw.githubusercontent.com/rgs2151/NeuralJAXwork/main/logo/JAX_logo.png" align="center" width="237" height="241" alt="NeuralJAXwork" title="NeuralJAXwork" /></a></p>
+# NeuralJAXwork
 
-# 🐇NeuralJAXwork: GPU Accelerated Lightweight ML Framework in JAX
+[Read the tutorial book](https://rgs2151.github.io/NeuralJAXwork/) ·
+[Architecture tutorials](https://rgs2151.github.io/NeuralJAXwork/docs/tutorials.html)
 
-[![Documentation](https://img.shields.io/badge/Complete-documentation-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/) [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/_autosummary/NeuralJAXwork.html) ![Documentation](https://img.shields.io/badge/ONNX-supported-orange.svg) ![Documentation](https://img.shields.io/badge/GPU-supported-brightgreen.svg) ![Documentation](https://img.shields.io/badge/JIT-compiled-yellow.svg) [![Documentation](https://img.shields.io/badge/Habanero_HPC_Cluster-supported-green.svg)](https://confluence.columbia.edu/confluence/display/rcs/Habanero+HPC+Cluster+User+Documentation) ![Documentation](https://img.shields.io/badge/python-3.7_|_3.8_|_3.9_|_3.10-blue.svg)
+**Composable neural networks on JAX, with PyTorch-style model definitions and
+explicit training loops.** Build a model with `nn.Module` and `forward`, compute
+gradients with `value_and_grad`, then apply them with an optimizer. Flax NNX handles
+state-aware transformations; JAX computes gradients; Optax supplies optimizer math.
 
-NeuralJAXwork is a lightweight machine learning framework built from scratch using the JAX library, designed to accelerate model training on GPUs. It provides a high-level interface for building and training neural networks with ease, while also allowing for flexibility and customization through its low-level JAX API. With its efficient GPU acceleration and streamlined design, NeuralJAXwork is an ideal choice for researchers and practitioners looking to quickly prototype and experiment with new machine learning models. Its user-friendly interface and comprehensive documentation make it accessible to both novice and advanced users, while its performance and flexibility make it a powerful tool for a wide range of machine learning tasks.
+Version **0.1.0 — alpha**. This repository is installable from source; it has not
+been published to PyPI. CPU behavior is tested. Accelerator execution uses JAX,
+but this release does not claim GPU benchmark or multi-device coverage.
 
----
+## Install
 
-**Colab Examples:**
+Python 3.10–3.13; the tested local environment is Python 3.10 with JAX 0.5.3,
+Flax 0.10.4, and Optax 0.2.4. The dependency bounds intentionally preserve this
+NNX API generation. Use a fresh virtual environment.
 
-| `MNIST`                                                                                                                                                                              | `XOR`                                                                                                                                                                                | `Titanic`                                                                                                                                                                            | `Cats & Dogs`                                                                                                                                                                        | `RegNet18`                                                             |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb) | ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg) |
+```bash
+python -m pip install "git+https://github.com/rgs2151/NeuralJAXwork.git"
+```
 
-## Framework Skeleton
+That command installs the remote repository revision; local changes must first
+be committed and pushed to be available there. To install this checkout now:
 
-NeuralJAXwork is a well-structured and modular framework that is designed to be easily extensible with new classes and functions. The framework consists of four main modules: `activation.py`, `layer.py`, `loss.py`, and `model.py`, each of which plays a critical role in building and training neural networks. The `network.py` file serves as a bridge that brings all the modules together to create a complete and functional neural network.
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev,examples]'
+```
 
-The `activation.py` module contains code for various activation functions used in neural networks. The current implementation includes the popular `tanh` function, and the framework welcomes contributions of new activation functions, such as `sigmoid`, `relu`, and their derivatives. To ensure efficient computation, all activation functions can be `jit-compiled` for optimal performance on GPUs.
+Plotting, pandas, and scikit-learn are optional. Add `.[notebooks]` for Jupyter,
+or `.[docs]` for Sphinx. Core imports do not load notebook or plotting libraries.
 
-The `layer.py` module provides code for various layers used in neural networks. The current implementation includes the `Dense` layer, which is commonly used in fully connected neural networks. In addition to the `Dense` layer, the framework encourages contributions of other types of layers, such as convolutional layers, recurrent layers, and any other layer types required by specific models.
-
-The `loss.py` module contains code for various loss functions used in neural networks. The current implementation includes popular loss functions, such as binary crossentropy, mean squared error (MSE), and mean absolute error (MAE). The framework also welcomes contributions of new loss functions, such as hinge loss, or any other loss functions that are required by specific models.
-
-Finally, the `model.py` module provides a high-level interface for building and training neural networks using the classes and functions provided by the other modules. The `Model` class provides a simple and intuitive API that allows users to build, train, and evaluate neural networks with ease.
-
-In addition to the four main modules, the framework provides comprehensive documentation and examples to help users get started and contribute to the project. The framework is designed to be lightweight and efficient, with a focus on GPU acceleration using the JAX library. It is an ideal choice for researchers and practitioners looking to quickly prototype and experiment with new machine learning models while having the flexibility to customize and extend the framework as needed.
-
-### Models
-
-#### Sqeuential
-
-#### Functional
-
-## Implementations
-
-### Losses
-
-| Loss Function                     | Implementation                                                                               | Prime                                                                                                               | Status |
-| --------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------ |
-| Binary Crossentropy               | $BCE = -\frac{1}{n}\sum_{i=1}^{n} [y_{i}\log(\hat{y_{i}}) + (1-y_{i})\log(1-\hat{y_{i}})]$ | $\frac{\partial BCE}{\partial y_{pred}} = \frac{y_{pred}-y_{true}}{y_{pred}(1-y_{pred})}$                         | ✅     |
-| Categorical Cross Entropy         | $CCE(y, \hat{y}) = - \sum_{i=1}^n y_i log(\hat{y_i})$                                      | $\frac{\partial CCE(y, \hat{y})}{\partial \hat{y_i}} = -\frac{y_i}{\hat{y_i}}$                                    | ✅     |
-| Mean Squared Error (MSE)          | $MSE = \frac{1}{n} \sum_{i=1}^{n} (y_{true} - y_{pred})^2$                                 | $\frac{\partial MSE}{\partial y_{pred}} = \frac{2}{n} (y_{pred} - y_{true})$                                      | ✅     |
-| Mean Absolute Error (MAE)         | $MAE = \frac{1}{n}\sum_{i=1}^{n}\|y_{true}-y_{pred}\|$                                     | $\frac{\partial MAE}{\partial y_{pred}} = \frac{1}{n} * sign(y_{pred} - y_{true})$                                | ✅     |
-| Smooth Mean Absolute Error (sMAE) | $sMAE = \frac{1}{n} \sum_{i=1}^{n} (\sqrt{(y_{true} - y_{pred})^2 + \delta^2})$            | $\frac{\partial sMAE}{\partial y_{pred}} = \frac{y_{pred} - y_{true}}{\sqrt{(y_{pred} - y_{true})^2 + \delta^2}}$ | ✅     |
-
-### Layers
-
-| Layer        | Implementation                      | Prime                                                                                                             | Status |
-| ------------ | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------ |
-| Dense        | $\hat{Y}$ = $W \cdot X$ + $b$ | $\frac{\partial L}{\partial X} = \frac{\partial L}{\partial \hat{Y}} \cdot \frac{\partial \hat{Y}}{\partial X}$ | ✅     |
-| Convolutions |                                     |                                                                                                                   | ✅     |
-| LSTMs        |                                     |                                                                                                                   | 🚧     |
-
-## Usage
-
-To use NeuralJAXwork, you can import the required modules and classes, and build your model as follows:
+## Define a model and train it
 
 ```python
-from NeuralJAXwork.layers import Dense
-from NeuralJAXwork.activations import ReLU
-from NeuralJAXwork.losses import MSE
-from NeuralJAXwork.model import Model
+import jax.numpy as jnp
+import neuraljaxwork as nj
+from neuraljaxwork import nn, optim
+from neuraljaxwork.nn import functional as F
 
-# Define the layers of the model
-layers = [
-    Dense(64),
-    ReLU(),
-    Dense(32),
-    ReLU(),
-    Dense(10)
-]
+class Regressor(nn.Module):
+    def __init__(self, *, rngs):
+        super().__init__()
+        self.hidden = nn.Linear(2, 8, rngs=rngs)
+        self.head = nn.Linear(8, 1, rngs=rngs)
 
-# Define the loss function
-loss_fn = MSE()
+    def forward(self, x):
+        return self.head(F.relu(self.hidden(x)))
 
-# Create the model
-model = Model(layers=layers, loss_fn=loss_fn)
+model = Regressor(rngs=nj.Rngs(params=42))
+optimizer = optim.Adam(model.parameters(), lr=0.01)
 
-# Train the model
-model.train(X_train, y_train, epochs=10, batch_size=32, learning_rate=0.001)
+@nj.jit
+def train_step(model, optimizer, x, y):
+    loss, grads = nj.value_and_grad(lambda m: F.mse_loss(m(x), y))(model)
+    optimizer.step(grads)
+    return loss
+
+x = jnp.array([[0., 1.], [1., 0.], [1., 1.]])
+y = jnp.array([[1.], [1.], [2.]])
+model.train()
+for _ in range(50):
+    loss = train_step(model, optimizer, x, y)
+model.eval()
+print(model(x))
 ```
+
+There is no `loss.backward()` or accumulated `.grad` state. Use `nj.jit` around
+functions that take modules, optimizers, and RNGs as explicit arguments; raw
+`jax.jit` is for pure array functions. Model mode and gradient selection are
+independent: evaluation mode still permits input gradients, as required by GANs.
+
+## What's included
+
+- Dense, convolutional and transpose-convolution layers, normalization, dropout,
+  pooling, embeddings, RNN/LSTM cells and scanned sequence layers, masked attention.
+- Reference MLP, digit CNN, RGB CNN, RNN/LSTM forecaster, LSTM classifier,
+  transformer language model, dense/convolutional autoencoders, GAN components.
+- SGD, Adam, AdamW, gradient clipping, deterministic batching, safe NPZ checkpoints,
+  named parameters, JSON architecture hierarchy, local experiment records.
+- Optional manual-optimization `Task`/`Trainer` and best-checkpoint callback.
+- Tiny offline smoke tests and runnable dataset examples with plots.
+
+All families share `nn.Module`; custom branches, residual paths, shared modules,
+and structured outputs are ordinary Python composition.
+
+## Examples
+
+Run these from the repository root after installing `.[examples]`:
+
+| Model | Example | Visual evidence |
+| --- | --- | --- |
+| Dense | `python -m examples.run titanic --download` | Held-out confusion matrix, ROC, calibration, subgroup report |
+| CNN | `python -m examples.run cnn --download` | MNIST accuracy, confusion matrix, misclassified digits |
+| RNN | `python -m examples.run rnn` | Sine next-value predictions and persistence baseline |
+| LSTM | `python -m examples.run lstm` | Same forecasting task for comparison |
+| Transformer | `python -m examples.run transformer` | Character loss/perplexity and sampled text |
+| Autoencoder | `python -m examples.run autoencoder --download` | MNIST original/reconstruction pairs and latent codes |
+| GAN | `python -m examples.run gan --download` | Fashion-MNIST fixed-noise sample grids and both losses |
+
+Defaults use small subsets and two epochs for exploration, **not trained-model
+quality claims**. Set `--epochs`, `--limit`, `--batch-size`, `--seed`, and `--output`.
+`--limit` caps image/text training subsets and sets synthetic sequence count;
+Titanic uses its full training split. `--smoke --epochs 1` uses tiny synthetic
+inputs and no downloads. Synthetic smoke results are not dataset benchmarks.
+
+The transformer includes an original repeated tiny corpus to work offline. For a
+meaningful experiment pass `--text-file your-corpus.txt` (ASCII text you may use).
+Its demo loss does not establish general language ability. GAN training can fail
+or collapse; inspect fixed-noise samples rather than interpreting loss as quality.
+
+Each run saves config, split/preprocessing metadata, architecture hierarchy,
+metrics, checkpoints, plots, and a report under `runs/`. Existing run directories
+are not silently overwritten. See [the example guide](docs/examples.md) and
+[notebooks](notebooks/README.md).
+
+## Fast verification
+
+```bash
+JAX_PLATFORMS=cpu python -m pytest
+python -m build
+python -m ipykernel install --sys-prefix --name python3
+python -m sphinx -W --keep-going -b html . _build/html
+python scripts/check_docs.py _build/html
+```
+
+Tests use tiny batches, no downloads, and one or a few updates. They check actual
+state/gradient behavior, not model convergence on full datasets. The notebook
+and dataset runs are intentionally outside the default test suite. Documentation
+CI separately executes all seven notebooks in offline smoke mode, renders them
+into the Sphinx book, and deploys successful main-branch builds to GitHub Pages.
+
+## Documentation and status
+
+- [API and semantics](docs/api.md)
+- [Examples, datasets, and visualization](docs/examples.md)
+- [Checkpoints and reproducibility](docs/state.md)
+- [Development and support boundaries](docs/development.md)
+- [Validation record](docs/validation.md)
+- [Original design proposal](design/README.md) and [implementation status](design/IMPLEMENTATION.md)
+
+Full operation-level architecture rendering, arbitrary model reconstruction from
+JSON, parameter groups/freezing, bidirectional recurrence, KV caches, mixed
+precision, and distributed training remain future work. The implementation-status
+page records design differences explicitly.
+
+The 2023 prototype is preserved in `legacy/` and excluded from the package.
+The new lowercase import is `neuraljaxwork`; legacy checkpoints/API are incompatible.
+
+MIT licensed. Dataset licenses and attribution are separate; see the example guide.
