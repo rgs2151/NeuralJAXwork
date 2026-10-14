@@ -22,7 +22,7 @@ html_theme_options = {
 # Training and notebook execution happen locally, never during a docs build.
 nb_execution_mode = 'off'
 nb_merge_streams = True
-exclude_patterns = ['.venv/**', '_build/**', 'legacy/**', 'design/**',
+exclude_patterns = ['.venv/**', '_build/**', 'legacy/**', 'design/**', 'maintainers/**',
                     'data/**', 'runs/**', 'build/**', 'dist/**', '.pytest_cache/**',
                     '.jupyter_cache/**', '**/.ipynb_checkpoints/**',
                     'README.md', 'docs/_templates/**', 'notebooks/README.md', 'examples/README.md']

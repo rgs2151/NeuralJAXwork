@@ -15,7 +15,7 @@ python -m pip install -e '.[dev,examples]'
 ```
 
 Use Python 3.10–3.13. The supported dependency range is pinned around JAX 0.5.3
-and Flax NNX 0.10.4; see the [development guide](development.md) for limits.
+and Flax NNX 0.10.4; see the [compatibility guide](compatibility.md) for limits.
 
 ## Your first explicit training step
 

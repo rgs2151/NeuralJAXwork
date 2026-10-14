@@ -98,7 +98,7 @@ and structured outputs are ordinary Python composition.
 
 ## Examples
 
-The [published results](https://rgs2151.github.io/NeuralJAXwork/docs/results.html)
+The [model tutorials](https://rgs2151.github.io/NeuralJAXwork/docs/tutorials.html)
 come from local RTX 5090 training: 98.94% MNIST test accuracy, 81.22% Titanic
 holdout accuracy, recurrent forecasting comparisons, MNIST reconstructions,
 Tiny Shakespeare generation, and convolutional Fashion-MNIST samples. The
@@ -153,8 +153,8 @@ GitHub Pages. Training is a separate, local GPU workflow.
 - [API and semantics](docs/api.md)
 - [Examples, datasets, and visualization](docs/examples.md)
 - [Checkpoints and reproducibility](docs/state.md)
-- [Development and support boundaries](docs/development.md)
-- [Validation record](docs/validation.md)
+- [Compatibility and limitations](docs/compatibility.md)
+- [Contributor and maintainer records](maintainers/README.md)
 - [Original design proposal](design/README.md) and [implementation status](design/IMPLEMENTATION.md)
 
 Full operation-level architecture rendering, arbitrary model reconstruction from

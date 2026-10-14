@@ -1,7 +1,8 @@
 # Examples and datasets
 
 The published notebooks use the complete local GPU recipes in
-`examples/train_gallery.py`; measured results are in [Training results](results.md).
+`examples/train_gallery.py`. Each [model tutorial](tutorials.rst) includes its
+training configuration, evaluation, and saved figures.
 The commands below describe how to start or customize a run.
 
 All commands run from the repository root with `pip install -e '.[examples]'`.

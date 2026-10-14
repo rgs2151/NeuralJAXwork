@@ -5,10 +5,7 @@ Each example documents its data, architecture, objective, training configuration
 and evaluation. The displayed results were produced locally on one GPU and saved
 in the notebook. Checkpoints and downloaded datasets remain outside Git.
 
-Use the :doc:`results` page to compare run configurations and measured outcomes.
-The :doc:`examples` guide explains dataset provenance and limitations. Training
-quality is assessed with held-out metrics or generated samples, not successful
-execution alone.
+The :doc:`examples` guide explains dataset provenance and limitations.
 
 .. toctree::
    :maxdepth: 1

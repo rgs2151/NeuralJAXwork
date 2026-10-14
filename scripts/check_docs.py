@@ -44,6 +44,13 @@ for chapter in chapters:
     assert list((root / "_downloads").rglob(chapter.name)), f"Missing download: {chapter.name}"
 assert (root / ".nojekyll").exists()
 assert "jax_logo_min.png" in (root / "index.html").read_text(), "Original logo is missing"
+for section in ("guide", "learning", "api_reference"):
+    assert f"docs/{section}.html" in (root / "index.html").read_text()
+for internal in ("results", "validation", "publishing", "development"):
+    assert not (root / "docs" / f"{internal}.html").exists(), (
+        f"Maintainer-only page published: {internal}; build into a clean directory"
+    )
+assert not (root / "_static" / "results.json").exists(), "Internal run record published"
 print(
     f"Validated {len(chapters)} saved notebooks, rendered pages, downloads, and original logo. No code executed."
 )

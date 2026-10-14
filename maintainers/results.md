@@ -3,7 +3,7 @@
 These results were produced locally on **GPU 0, NVIDIA GeForce RTX 5090**, using
 Python 3.10, JAX 0.5.3, Flax NNX 0.10.4, and the CUDA 12 plugin. GPU 1 was not used.
 All runs use seed 0. Checkpoints and downloaded data are gitignored; saved notebook
-outputs and the {download}`run records <_static/results.json>` preserve the
+outputs and the [run records](results.json) preserve the
 configurations, metrics, histories, hardware, and checkpoint hashes.
 
 | Example | Epochs | Training examples | Test examples | Held-out result |

@@ -1,6 +1,6 @@
 # Documentation workflow
 
-Sphinx, MyST-NB, and the Sphinx Book Theme render the documentation. Notebook
+Sphinx, MyST-NB, and the PyData Sphinx Theme render the documentation. Notebook
 execution is disabled with `nb_execution_mode = 'off'`. This setting applies to
 local documentation builds and GitHub Actions alike. Saved cell outputs are the
 published record; rendering never starts training.
