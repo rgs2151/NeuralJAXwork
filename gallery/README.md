@@ -2,7 +2,7 @@
 
 Five approved SVG animations, implemented in dependency-free JavaScript. The canonical individual sources are frozen; `frozen.json` records their SHA-256 hashes. Composite layout and exports live separately under `composite/`.
 
-Open `assets/composite.html` for the complete row, or reuse any of the self-contained `assets/{cnn,rnn,transformer,autoencoder,gan}.html` files. These are packaged copies of the same final versions, not alternative designs. The obsolete composite GIF has been removed; the README links to the corrected interactive bundle.
+Open `assets/composite.html` for the complete row, or reuse any of the self-contained `assets/{cnn,rnn,transformer,autoencoder,gan}.html` files. These are packaged copies of the same final versions, not alternative designs. The README and docs landing page display `composite/gallery.gif`, rendered at the approved 1248 × 270 proportions.
 
 See [composite export instructions](composite/README.md) for layout, playback, and reproduction.
 
@@ -33,3 +33,9 @@ Create a self-contained chat preview from the same files:
 ```bash
 python3 gallery/cnn/build_preview.py /absolute/output/cnn.html
 ```
+
+## Additional datasets
+
+[Brain MRI CNN and GAN](neuroscience/README.md) are separate trained content variants.
+Their [composite GIF](neuroscience/gallery.gif) uses the same layout; the original
+five animations and their composite remain unchanged.

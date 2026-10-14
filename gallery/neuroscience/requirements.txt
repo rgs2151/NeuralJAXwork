@@ -1,0 +1,3 @@
+# Additional local data-preparation dependencies; not needed to view animations.
+h5py>=3.10,<4
+nibabel>=5.2,<6

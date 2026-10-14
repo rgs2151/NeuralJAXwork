@@ -1,0 +1,46 @@
+{
+  "dataset": "Cheng brain tumor MRI",
+  "classes": [
+    "Meningioma",
+    "Glioma",
+    "Pituitary"
+  ],
+  "seed": 42,
+  "best_epoch": 31,
+  "selection": "validation balanced accuracy",
+  "test": {
+    "accuracy": 0.9333333333333333,
+    "balanced_accuracy": 0.9212722605911461,
+    "confusion_matrix": [
+      [
+        129,
+        21,
+        6
+      ],
+      [
+        10,
+        274,
+        1
+      ],
+      [
+        1,
+        4,
+        199
+      ]
+    ]
+  },
+  "splits": {
+    "train": {
+      "images": 1883,
+      "patients": 139
+    },
+    "validation": {
+      "images": 536,
+      "patients": 47
+    },
+    "test": {
+      "images": 645,
+      "patients": 47
+    }
+  }
+}
