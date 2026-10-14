@@ -20,7 +20,7 @@ examples and visualizations for learning and experimentation.
 
 ## Gallery
 
-![CNN, RNN, Transformer, Autoencoder, and GAN animations](gallery/composite/gallery.gif)
+![CNN, RNN, Autoencoder, GAN, and Transformer animations](gallery/composite/gallery.gif)
 
 ## Install
 

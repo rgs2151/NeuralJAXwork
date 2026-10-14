@@ -1,8 +1,8 @@
 # Composite gallery
 
-The row contains CNN, RNN, Transformer, Autoencoder, and GAN, in that order. All panels have a 240-pixel overall height, 18-pixel Arial bold titles, and 6-pixel horizontal gaps. Widths follow each plot's proportions; the complete row is approximately 1149×240 pixels. A single outer SVG contains the five mounted SVG renderers. Its width scales responsively while retaining the horizontal arrangement.
+The row contains CNN, RNN, Autoencoder, GAN, and Transformer, in that order. All panels have a 240-pixel overall height, 18-pixel Arial bold titles, and 6-pixel horizontal gaps. Widths follow each plot's proportions; the complete row is approximately 1149×240 pixels. A single outer SVG contains the five mounted SVG renderers. Its width scales responsively while retaining the horizontal arrangement.
 
-`animation.js` mounts the canonical renderers and arranges their output without editing their source files. The RNN legend is reproduced in SVG so the entire row can be captured consistently. The live composite uses the original timings. `window.gallery.seek(milliseconds)` provides deterministic capture.
+`animation.js` mounts the canonical renderers and arranges their output without editing their source files. The RNN “now” label is fixed at the same 18-pixel display size as the legend, overriding its standalone resize attribute only in the composite. The RNN legend is reproduced in SVG so the entire row can be captured consistently. The live composite uses the original timings. `window.gallery.seek(milliseconds)` provides deterministic capture.
 
 ## Files
 

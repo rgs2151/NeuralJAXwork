@@ -5,14 +5,14 @@
     const specs=[
       ['cnn',mountCNN,CNN_SAMPLES,216,216,'#000'],
       ['rnn',mountRNN,RNN_SAMPLES,201*254/214,201,'#fff'],
-      ['transformer',mountTransformer,TRANSFORMER_SAMPLES,216,216,'#fff'],
       ['autoencoder',mountAutoencoder,AE_SAMPLES,216*240/218,216,'#fff'],
-      ['gan',mountGAN,GAN_SAMPLES,216,216,'#000']
+      ['gan',mountGAN,GAN_SAMPLES,216,216,'#000'],
+      ['transformer',mountTransformer,TRANSFORMER_SAMPLES,216,216,'#fff']
     ];
     const gap=6,height=240,width=specs.reduce((sum,s)=>sum+s[3],0)+gap*(specs.length-1);
     const svg=document.createElementNS(NS,'svg');
     svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.setAttribute('role','img');
-    svg.setAttribute('aria-label','NeuralJAXlib gallery: CNN, RNN, Transformer, Autoencoder, GAN.');
+    svg.setAttribute('aria-label','NeuralJAXlib gallery: CNN, RNN, Autoencoder, GAN, Transformer.');
     svg.style.cssText='display:block;width:100%;height:auto;background:#fff;color:#171717;font-family:Arial,sans-serif';root.append(svg);
     function el(tag,attrs){const n=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);svg.append(n);return n;}
     const mounts=[],controllers=[];let x=0;
@@ -26,6 +26,9 @@
       plot.setAttribute('width',w);plot.setAttribute('height',h);
       plot.style.width=w+'px';plot.style.height=h+'px';svg.append(plot);
       if(name==='rnn'){
+        // Nested SVG bounding boxes reflect artwork, not the allocated viewport.
+        // Override the standalone resize attribute with a fixed composite size.
+        plot.querySelectorAll('text').forEach(node=>node.style.fontSize=(18*254/w)+'px');
         const legend=host.lastElementChild;
         const labels=[...legend.children].map(item=>item.textContent);
         const widths=labels.map(label=>label==='Forecast'?92:50),total=widths[0]+14+widths[1];let left=x+(w-total)/2;
