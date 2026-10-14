@@ -1,4 +1,4 @@
-from NeuralJAXwork import Model
+from NeuralJAXlib import Model
 
 class SequentialModel(Model):
     

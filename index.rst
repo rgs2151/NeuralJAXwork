@@ -1,7 +1,7 @@
-NeuralJAXwork
+NeuralJAXlib
 =============
 
-NeuralJAXwork provides composable neural-network modules, automatic
+NeuralJAXlib provides composable neural-network modules, automatic
 differentiation, explicit optimization, and reproducible training state on JAX.
 This documentation covers the public API, practical workflows, and trained
 examples. Version 0.1.0 is an alpha release.

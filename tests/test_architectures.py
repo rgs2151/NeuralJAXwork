@@ -3,8 +3,8 @@ import jax.numpy as jnp
 import numpy as np
 import pytest
 
-import neuraljaxwork as nj
-from neuraljaxwork import models, nn, optim, training
+import neuraljaxlib as nj
+from neuraljaxlib import models, nn, optim, training
 
 
 @pytest.mark.parametrize("kind", ["rnn", "lstm"])

@@ -27,7 +27,7 @@ Notebook execution is now local-only; CI renders saved outputs.
    runtime RNGs, `ParameterSet` identity, joint graph transforms, and transactional
    updates? Prototype this before committing to the public names. If not, revise
    the public interface or implementation scope.
-2. **Package identity:** use lowercase `neuraljaxwork` for new code? Decide whether
+2. **Package identity:** use lowercase `neuraljaxlib` for new code? Decide whether
    the old uppercase package is archived, removed in a major version, or retained
    briefly with migration guidance. No migration is performed by these documents.
 3. **Learning versus infrastructure:** how much layer math should be implemented
@@ -130,7 +130,7 @@ accurately; tracing/capture cannot perturb subsequent training.
 
 ```text
 design/                         # these documents; decisions and API sketches
-src/neuraljaxwork/
+src/neuraljaxlib/
   core/                         # graph/state adapter, variables, RNGs, transforms
   nn/
     module.py

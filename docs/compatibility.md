@@ -1,8 +1,8 @@
 # Compatibility and limitations
 
-NeuralJAXwork 0.1.0 is an alpha release. Install it from a repository checkout;
+NeuralJAXlib 0.1.0 is an alpha release. Install it from a repository checkout;
 it is not yet published to PyPI. The installed package uses the lowercase
-`neuraljaxwork` import. The archived 2023 API and its checkpoints are incompatible.
+`neuraljaxlib` import. The archived 2023 API and its checkpoints are incompatible.
 
 ## Runtime
 
@@ -32,6 +32,8 @@ that a same-shaped gradient tree came from the intended model.
 ## Serialization and inspection
 
 Checkpoint loading requires a matching architecture and optimizer configuration.
+The loader recognizes type names saved before the package rename, so existing
+checkpoints remain usable when the architecture matches.
 Architecture JSON describes module ownership, shapes, and aliases; it is not an
 executable model format or a full operation graph. There is no ONNX export or
 pretrained model registry.

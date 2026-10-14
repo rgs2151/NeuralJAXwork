@@ -8,7 +8,7 @@ import jax
 import jax.numpy as jnp
 import numpy as np
 
-from neuraljaxwork import Rngs, checkpoint, models
+from neuraljaxlib import Rngs, checkpoint, models
 
 ROOT = Path(__file__).resolve().parents[2]
 RUN = ROOT / "runs/gallery-four-layer/cnn"

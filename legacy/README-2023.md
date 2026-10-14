@@ -1,10 +1,10 @@
-<p align="center"><a href="https://rgs2151.github.io/NeuralJAXwork/"><img src="https://raw.githubusercontent.com/rgs2151/NeuralJAXwork/main/logo/JAX_logo.png" align="center" width="237" height="241" alt="NeuralJAXwork" title="NeuralJAXwork" /></a></p>
+<p align="center"><a href="https://rgs2151.github.io/NeuralJAXlib/"><img src="https://raw.githubusercontent.com/rgs2151/NeuralJAXlib/main/logo/JAX_logo.png" align="center" width="237" height="241" alt="NeuralJAXlib" title="NeuralJAXlib" /></a></p>
 
-# 🐇NeuralJAXwork: GPU Accelerated Lightweight ML Framework in JAX
+# 🐇NeuralJAXlib: GPU Accelerated Lightweight ML Framework in JAX
 
-[![Documentation](https://img.shields.io/badge/Complete-documentation-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/) [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://rgs2151.github.io/NeuralJAXwork/_autosummary/NeuralJAXwork.html) ![Documentation](https://img.shields.io/badge/ONNX-supported-orange.svg) ![Documentation](https://img.shields.io/badge/GPU-supported-brightgreen.svg) ![Documentation](https://img.shields.io/badge/JIT-compiled-yellow.svg) [![Documentation](https://img.shields.io/badge/Habanero_HPC_Cluster-supported-green.svg)](https://confluence.columbia.edu/confluence/display/rcs/Habanero+HPC+Cluster+User+Documentation) ![Documentation](https://img.shields.io/badge/python-3.7_|_3.8_|_3.9_|_3.10-blue.svg)
+[![Documentation](https://img.shields.io/badge/Complete-documentation-blue.svg)](https://rgs2151.github.io/NeuralJAXlib/) [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://rgs2151.github.io/NeuralJAXlib/_autosummary/NeuralJAXlib.html) ![Documentation](https://img.shields.io/badge/ONNX-supported-orange.svg) ![Documentation](https://img.shields.io/badge/GPU-supported-brightgreen.svg) ![Documentation](https://img.shields.io/badge/JIT-compiled-yellow.svg) [![Documentation](https://img.shields.io/badge/Habanero_HPC_Cluster-supported-green.svg)](https://confluence.columbia.edu/confluence/display/rcs/Habanero+HPC+Cluster+User+Documentation) ![Documentation](https://img.shields.io/badge/python-3.7_|_3.8_|_3.9_|_3.10-blue.svg)
 
-NeuralJAXwork is a lightweight machine learning framework built from scratch using the JAX library, designed to accelerate model training on GPUs. It provides a high-level interface for building and training neural networks with ease, while also allowing for flexibility and customization through its low-level JAX API. With its efficient GPU acceleration and streamlined design, NeuralJAXwork is an ideal choice for researchers and practitioners looking to quickly prototype and experiment with new machine learning models. Its user-friendly interface and comprehensive documentation make it accessible to both novice and advanced users, while its performance and flexibility make it a powerful tool for a wide range of machine learning tasks.
+NeuralJAXlib is a lightweight machine learning framework built from scratch using the JAX library, designed to accelerate model training on GPUs. It provides a high-level interface for building and training neural networks with ease, while also allowing for flexibility and customization through its low-level JAX API. With its efficient GPU acceleration and streamlined design, NeuralJAXlib is an ideal choice for researchers and practitioners looking to quickly prototype and experiment with new machine learning models. Its user-friendly interface and comprehensive documentation make it accessible to both novice and advanced users, while its performance and flexibility make it a powerful tool for a wide range of machine learning tasks.
 
 ---
 
@@ -16,7 +16,7 @@ NeuralJAXwork is a lightweight machine learning framework built from scratch usi
 
 ## Framework Skeleton
 
-NeuralJAXwork is a well-structured and modular framework that is designed to be easily extensible with new classes and functions. The framework consists of four main modules: `activation.py`, `layer.py`, `loss.py`, and `model.py`, each of which plays a critical role in building and training neural networks. The `network.py` file serves as a bridge that brings all the modules together to create a complete and functional neural network.
+NeuralJAXlib is a well-structured and modular framework that is designed to be easily extensible with new classes and functions. The framework consists of four main modules: `activation.py`, `layer.py`, `loss.py`, and `model.py`, each of which plays a critical role in building and training neural networks. The `network.py` file serves as a bridge that brings all the modules together to create a complete and functional neural network.
 
 The `activation.py` module contains code for various activation functions used in neural networks. The current implementation includes the popular `tanh` function, and the framework welcomes contributions of new activation functions, such as `sigmoid`, `relu`, and their derivatives. To ensure efficient computation, all activation functions can be `jit-compiled` for optimal performance on GPUs.
 
@@ -56,13 +56,13 @@ In addition to the four main modules, the framework provides comprehensive docum
 
 ## Usage
 
-To use NeuralJAXwork, you can import the required modules and classes, and build your model as follows:
+To use NeuralJAXlib, you can import the required modules and classes, and build your model as follows:
 
 ```python
-from NeuralJAXwork.layers import Dense
-from NeuralJAXwork.activations import ReLU
-from NeuralJAXwork.losses import MSE
-from NeuralJAXwork.model import Model
+from NeuralJAXlib.layers import Dense
+from NeuralJAXlib.activations import ReLU
+from NeuralJAXlib.losses import MSE
+from NeuralJAXlib.model import Model
 
 # Define the layers of the model
 layers = [

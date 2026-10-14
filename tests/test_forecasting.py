@@ -4,10 +4,10 @@ import jax.numpy as jnp
 import numpy as np
 import pytest
 
-import neuraljaxwork as nj
+import neuraljaxlib as nj
 from examples.forecast_data import market_windows, weather_windows
 from examples.forecasting import ForecastModel, train_step
-from neuraljaxwork import optim
+from neuraljaxlib import optim
 
 
 def test_weather_horizon_and_training_only_scaling():

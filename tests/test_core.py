@@ -3,9 +3,9 @@ import jax.numpy as jnp
 import numpy as np
 import pytest
 
-import neuraljaxwork as nj
-from neuraljaxwork import nn, optim
-from neuraljaxwork.nn import functional as F
+import neuraljaxlib as nj
+from neuraljaxlib import nn, optim
+from neuraljaxlib.nn import functional as F
 
 
 def test_explicit_training_eager_and_jit():

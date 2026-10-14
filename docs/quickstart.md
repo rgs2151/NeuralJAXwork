@@ -1,14 +1,14 @@
 # Installation
 
-NeuralJAXwork combines familiar module composition with JAX's explicit gradients
+NeuralJAXlib combines familiar module composition with JAX's explicit gradients
 and state-aware compilation. This alpha installs from the repository; it is not
 yet published to PyPI.
 
 ## Install a checkout
 
 ```bash
-git clone https://github.com/rgs2151/NeuralJAXwork.git
-cd NeuralJAXwork
+git clone https://github.com/rgs2151/NeuralJAXlib.git
+cd NeuralJAXlib
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[dev,examples]'
@@ -21,9 +21,9 @@ and Flax NNX 0.10.4; see the [compatibility guide](compatibility.md) for limits.
 
 ```python
 import jax.numpy as jnp
-import neuraljaxwork as nj
-from neuraljaxwork import nn, optim
-from neuraljaxwork.nn import functional as F
+import neuraljaxlib as nj
+from neuraljaxlib import nn, optim
+from neuraljaxlib.nn import functional as F
 
 class Regressor(nn.Module):
     def __init__(self, *, rngs):

@@ -1,6 +1,6 @@
 # Import jit from JAX
 from jax import jit
-from NeuralJAXwork import Errors
+from NeuralJAXlib import Errors
 
 class Loss:
     """

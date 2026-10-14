@@ -1,4 +1,4 @@
-"""NeuralJAXwork: explicit, composable neural networks on JAX."""
+"""NeuralJAXlib: explicit, composable neural networks on JAX."""
 
 from . import nn, optim
 from .core import (

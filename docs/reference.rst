@@ -3,56 +3,56 @@ Python reference
 
 Core transforms
 ---------------
-.. automodule:: neuraljaxwork.core
+.. automodule:: neuraljaxlib.core
    :members:
 
 Module composition
 ------------------
-.. automodule:: neuraljaxwork.nn.module
+.. automodule:: neuraljaxlib.nn.module
    :members:
 
 Layers
 ------
-.. automodule:: neuraljaxwork.nn.layers
+.. automodule:: neuraljaxlib.nn.layers
    :members:
 
 Recurrent layers
 ----------------
-.. automodule:: neuraljaxwork.nn.recurrent
+.. automodule:: neuraljaxlib.nn.recurrent
    :members:
 
 Attention
 ---------
-.. automodule:: neuraljaxwork.nn.attention
+.. automodule:: neuraljaxlib.nn.attention
    :members:
 
 Loss functions
 --------------
-.. automodule:: neuraljaxwork.nn.functional
+.. automodule:: neuraljaxlib.nn.functional
    :members:
 
 Optimizers
 ----------
-.. automodule:: neuraljaxwork.optim
+.. automodule:: neuraljaxlib.optim
    :members:
 
 Reference models
 ----------------
-.. automodule:: neuraljaxwork.models
+.. automodule:: neuraljaxlib.models
    :members:
 
 Data and training
 -----------------
-.. automodule:: neuraljaxwork.data
+.. automodule:: neuraljaxlib.data
    :members:
-.. automodule:: neuraljaxwork.training
+.. automodule:: neuraljaxlib.training
    :members:
 
 Checkpoints and inspection
 --------------------------
-.. automodule:: neuraljaxwork.checkpoint
+.. automodule:: neuraljaxlib.checkpoint
    :members:
-.. automodule:: neuraljaxwork.inspection
+.. automodule:: neuraljaxlib.inspection
    :members:
-.. automodule:: neuraljaxwork.experiments
+.. automodule:: neuraljaxlib.experiments
    :members:

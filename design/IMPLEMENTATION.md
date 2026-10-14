@@ -1,7 +1,7 @@
 # Implementation status: 0.1.0 alpha
 
 The numbered files in this folder remain the original proposal. The authoritative
-implemented behavior is in `docs/api.md`, tests, and `src/neuraljaxwork`.
+implemented behavior is in `docs/api.md`, tests, and `src/neuraljaxlib`.
 
 Implemented: PyTorch-style forward modules; Flax NNX state transforms; JAX autodiff;
 explicit RNGs; dense/convolution/transpose convolution, normalization/pooling,

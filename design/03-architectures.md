@@ -5,9 +5,9 @@ interfaces and differences in version 0.1.0.
 
 ```python
 import jax.numpy as jnp
-import neuraljaxwork as nj
-from neuraljaxwork import nn, optim
-from neuraljaxwork.nn import functional as F
+import neuraljaxlib as nj
+from neuraljaxlib import nn, optim
+from neuraljaxlib.nn import functional as F
 ```
 
 ## Dense networks: tabular classification and MNIST

@@ -168,7 +168,7 @@ basis of graph-aware transforms. The exact lowering interface needs a prototype
 before this convenience API is frozen. Raw `jax.jit(model)` is not supported.
 
 Recommended implementation direction: evaluate Flax NNX as the module/state and
-transform backend, and Optax for optimizer mathematics. Keep NeuralJAXwork's
+transform backend, and Optax for optimizer mathematics. Keep NeuralJAXlib's
 public contracts and adapters explicit. A custom graph engine is a much larger
 project and is not a prerequisite for learning to implement layers and models.
 

@@ -1,4 +1,4 @@
-# NeuralJAXwork: proposed API design
+# NeuralJAXlib: proposed API design
 
 This folder preserves the original API proposal from 2026-10-14. Code blocks
 describe proposed contracts and may include unsupported interfaces. For release
@@ -51,15 +51,15 @@ sample galleries. Plotting and notebooks remain optional consumers of this data.
 | `training.Task` / `Trainer` | Optional experiment orchestration around the same step |
 | `inspection` / `Run` | Describe models and persist structured experiment evidence |
 
-Examples use `neuraljaxwork` with the alias `nj`, as adopted in version 0.1.0.
+Examples use `neuraljaxlib` with the alias `nj`, as adopted in version 0.1.0.
 The uppercase prototype is archived under `legacy/`.
 
 ## Model and training API
 
 ```python
-import neuraljaxwork as nj
-from neuraljaxwork import nn, optim
-from neuraljaxwork.nn import functional as F
+import neuraljaxlib as nj
+from neuraljaxlib import nn, optim
+from neuraljaxlib.nn import functional as F
 
 class Classifier(nn.Module):
     def __init__(self, in_features, classes, *, rngs):

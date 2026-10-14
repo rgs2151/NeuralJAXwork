@@ -9,9 +9,9 @@ This example uses `DigitCNN` from the architecture cookbook. Constructor RNGs
 initialize weights; the separately owned runtime stream supplies dropout.
 
 ```python
-import neuraljaxwork as nj
-from neuraljaxwork import optim, metrics
-from neuraljaxwork.nn import functional as F
+import neuraljaxlib as nj
+from neuraljaxlib import optim, metrics
+from neuraljaxlib.nn import functional as F
 
 model = DigitCNN(rngs=nj.Rngs(params=42))
 optimizer = optim.AdamW(model.parameters(), lr=3e-4, weight_decay=1e-2)
@@ -86,7 +86,7 @@ apply sigmoid or softmax outside the training objective as needed.
 ## Data contracts
 
 ```python
-from neuraljaxwork import data
+from neuraljaxlib import data
 
 train_data = data.TensorDataset(train_x, train_y)
 train_loader = data.DataLoader(

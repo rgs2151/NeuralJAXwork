@@ -1,7 +1,7 @@
 # Archived logo concepts
 
 These initial proposals were superseded by the open-layer identity.
-The adopted logo is [`logo/neuraljaxwork.svg`](../../logo/neuraljaxwork.svg).
+The adopted logo is [`logo/neuraljaxlib.svg`](../../logo/neuraljaxlib.svg).
 No image-generation model was used. Geometry is editable vector artwork.
 
 - **A / Monogram:** a compact N/J ligature, in cobalt. The closest connection to the project name.

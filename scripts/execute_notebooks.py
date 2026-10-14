@@ -37,7 +37,7 @@ def main():
             kernel_name="python3",
             resources={"metadata": {"path": str(root)}},
         ).execute()
-        notebook.metadata.setdefault("neuraljaxwork", {}).update(
+        notebook.metadata.setdefault("neuraljaxlib", {}).update(
             source_sha256=source_digest(notebook),
             executed_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             gpu_selection=args.gpu,

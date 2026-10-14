@@ -1,16 +1,16 @@
-# NeuralJAXwork
+# NeuralJAXlib
 
-[Documentation](https://rgs2151.github.io/NeuralJAXwork/) ·
-[Architecture tutorials](https://rgs2151.github.io/NeuralJAXwork/docs/learning.html)
+[Documentation](https://rgs2151.github.io/NeuralJAXlib/) ·
+[Architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html)
 
-<p align="center"><img src="logo/neuraljaxwork.svg" width="150" alt="NeuralJAXwork logo"></p>
+<p align="center"><img src="logo/neuraljaxlib.svg" width="150" alt="NeuralJAXlib logo"></p>
 
-[![Tests](https://github.com/rgs2151/NeuralJAXwork/actions/workflows/check_demos.yml/badge.svg)](https://github.com/rgs2151/NeuralJAXwork/actions/workflows/check_demos.yml)
-[![Documentation](https://github.com/rgs2151/NeuralJAXwork/actions/workflows/doc_maker.yml/badge.svg)](https://rgs2151.github.io/NeuralJAXwork/)
+[![Tests](https://github.com/rgs2151/NeuralJAXlib/actions/workflows/check_demos.yml/badge.svg)](https://github.com/rgs2151/NeuralJAXlib/actions/workflows/check_demos.yml)
+[![Documentation](https://github.com/rgs2151/NeuralJAXlib/actions/workflows/doc_maker.yml/badge.svg)](https://rgs2151.github.io/NeuralJAXlib/)
 [![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-NeuralJAXwork is a neural-network library with PyTorch-style module composition,
+NeuralJAXlib is a neural-network library with PyTorch-style module composition,
 JAX automatic differentiation, and explicit training loops. Flax NNX manages
 module state and transformations; Optax provides optimizer implementations.
 
@@ -24,14 +24,14 @@ Requires Python 3.10–3.13. Runtime dependencies include JAX, Flax NNX, and Opt
 version bounds are specified in `pyproject.toml`.
 
 ```bash
-python -m pip install "git+https://github.com/rgs2151/NeuralJAXwork.git"
+python -m pip install "git+https://github.com/rgs2151/NeuralJAXlib.git"
 ```
 
 For an editable installation with development and example dependencies:
 
 ```bash
-git clone https://github.com/rgs2151/NeuralJAXwork.git
-cd NeuralJAXwork
+git clone https://github.com/rgs2151/NeuralJAXlib.git
+cd NeuralJAXlib
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[dev,examples]'
@@ -44,9 +44,9 @@ or `.[docs]` for Sphinx. Core imports do not load notebook or plotting libraries
 
 ```python
 import jax.numpy as jnp
-import neuraljaxwork as nj
-from neuraljaxwork import nn, optim
-from neuraljaxwork.nn import functional as F
+import neuraljaxlib as nj
+from neuraljaxlib import nn, optim
+from neuraljaxlib.nn import functional as F
 
 class Regressor(nn.Module):
     def __init__(self, *, rngs):
@@ -96,11 +96,11 @@ and structured outputs are ordinary Python composition.
 
 ## Examples
 
-The [architecture tutorials](https://rgs2151.github.io/NeuralJAXwork/docs/learning.html)
+The [architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html)
 cover tabular classification, image classification, sequence forecasting, language
 modeling, reconstruction, and image generation. Each includes training code,
 evaluation, and saved figures. The
-[API tutorials](https://rgs2151.github.io/NeuralJAXwork/docs/api_tutorials.html)
+[API tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/api_tutorials.html)
 cover modules, optimization, data, checkpoints, and custom layers.
 
 Run these from the repository root after installing `.[examples]`:
@@ -155,6 +155,6 @@ validation procedures.
 - [Original design proposal](design/README.md) and [implementation status](design/IMPLEMENTATION.md)
 
 The 2023 prototype is preserved in `legacy/` and excluded from the package.
-Its API and checkpoints are incompatible with `neuraljaxwork`.
+Its API and checkpoints are incompatible with `neuraljaxlib`.
 
 MIT licensed. Dataset licenses and attribution are separate; see the example guide.

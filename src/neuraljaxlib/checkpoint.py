@@ -68,12 +68,25 @@ def save(path, *, metadata=None, progress=None, data_state=None, **objects):
             os.unlink(temp)
 
 
+def _canonical_types(value):
+    """Read pre-rename checkpoint type names without changing user metadata."""
+    if isinstance(value, dict):
+        return {key: _canonical_types(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_canonical_types(item) for item in value]
+    if isinstance(value, str) and value.startswith("neuraljaxwork."):
+        return "neuraljaxlib." + value.removeprefix("neuraljaxwork.")
+    return value
+
+
 def restore(path, **objects):
     """Validate the entire snapshot before updating any live participant."""
     state = nnx.state(objects)
     flat = list(nnx.to_flat_state(state))
     with np.load(path, allow_pickle=False) as archive:
         manifest = json.loads(str(archive["manifest"]))
+        manifest["signature"] = _canonical_types(manifest["signature"])
+        manifest["types"] = _canonical_types(manifest["types"])
         if manifest["schema"] != 1 or manifest["paths"] != [list(p) for p, _ in flat]:
             raise ValueError("Checkpoint schema or state paths do not match")
         if manifest["signature"] != _signature(objects):

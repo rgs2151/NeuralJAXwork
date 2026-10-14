@@ -1,9 +1,11 @@
+import json
+
 import jax.numpy as jnp
 import numpy as np
 import pytest
 
-import neuraljaxwork as nj
-from neuraljaxwork import checkpoint, data, inspection, nn, optim
+import neuraljaxlib as nj
+from neuraljaxlib import checkpoint, data, inspection, nn, optim
 
 
 def test_checkpoint_next_update_and_loader_resume(tmp_path):
@@ -53,8 +55,8 @@ def test_inspection_does_not_change_mode_or_buffers():
 
 
 def test_trainer_owns_no_extra_update(tmp_path):
-    from neuraljaxwork import training
-    from neuraljaxwork.nn import functional as F
+    from neuraljaxlib import training
+    from neuraljaxlib.nn import functional as F
 
     class ClassifierTask(training.Task):
         def training_step(self, batch):
@@ -81,3 +83,21 @@ def test_trainer_owns_no_extra_update(tmp_path):
     )
     assert int(optimizer.step_count) == 2 and "val/loss" in history[0]
     assert (tmp_path / "best.npz").exists()
+
+
+def test_checkpoint_before_package_rename(tmp_path):
+    model = nn.Linear(2, 1, rngs=nj.Rngs(params=5))
+    path = tmp_path / "before-rename.npz"
+    expected = np.asarray(model(jnp.ones((1, 2))))
+    checkpoint.save(path, model=model)
+    with np.load(path, allow_pickle=False) as saved:
+        arrays = {key: saved[key] for key in saved.files}
+    manifest = json.loads(str(arrays["manifest"]))
+    manifest["signature"] = json.loads(
+        json.dumps(manifest["signature"]).replace("neuraljaxlib.", "neuraljaxwork.")
+    )
+    arrays["manifest"] = np.asarray(json.dumps(manifest))
+    np.savez_compressed(path, **arrays)
+    fresh = nn.Linear(2, 1, rngs=nj.Rngs(params=9))
+    checkpoint.restore(path, model=fresh)
+    np.testing.assert_array_equal(fresh(jnp.ones((1, 2))), expected)

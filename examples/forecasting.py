@@ -8,10 +8,10 @@ import jax
 import jax.numpy as jnp
 import numpy as np
 
-import neuraljaxwork as nj
-from neuraljaxwork import checkpoint, data, inspection, models, nn, optim
-from neuraljaxwork.experiments import Run
-from neuraljaxwork.nn import functional as F
+import neuraljaxlib as nj
+from neuraljaxlib import checkpoint, data, inspection, models, nn, optim
+from neuraljaxlib.experiments import Run
+from neuraljaxlib.nn import functional as F
 
 from . import forecast_data, plots
 

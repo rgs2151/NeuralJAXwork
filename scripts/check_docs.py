@@ -24,7 +24,7 @@ chapters = sorted((source / "notebooks").glob("*.ipynb"))
 for chapter in chapters:
     notebook = nbformat.read(chapter, as_version=4)
     nbformat.validate(notebook)
-    metadata = notebook.metadata.get("neuraljaxwork", {})
+    metadata = notebook.metadata.get("neuraljaxlib", {})
     code = [cell for cell in notebook.cells if cell.cell_type == "code"]
     assert all(cell.execution_count is not None for cell in code), (
         f"Unexecuted local cell: {chapter.name}"
@@ -43,7 +43,7 @@ for chapter in chapters:
         assert "<img" in html and "_images/" in html, f"Missing figure: {chapter.name}"
     assert list((root / "_downloads").rglob(chapter.name)), f"Missing download: {chapter.name}"
 assert (root / ".nojekyll").exists()
-assert "neuraljaxwork.svg" in (root / "index.html").read_text(), "Project logo is missing"
+assert "neuraljaxlib.svg" in (root / "index.html").read_text(), "Project logo is missing"
 for section in ("quickstart", "guide", "learning", "api_tutorials", "api_reference"):
     assert f"docs/{section}.html" in (root / "index.html").read_text()
 for internal in ("results", "validation", "publishing", "development"):
