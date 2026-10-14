@@ -1,7 +1,7 @@
 NeuralJAXlib
 =============
 
-.. image:: /gallery/composite/gallery.gif
+.. image:: /gallery/neuroscience/gallery.gif
    :alt: CNN, RNN, Autoencoder, GAN, and Transformer animations
    :width: 100%
 

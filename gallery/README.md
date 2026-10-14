@@ -2,7 +2,7 @@
 
 Five approved SVG animations, implemented in dependency-free JavaScript. The canonical individual sources are frozen; `frozen.json` records their SHA-256 hashes. Composite layout and exports live separately under `composite/`.
 
-Open `assets/composite.html` for the complete row, or reuse any of the self-contained `assets/{cnn,rnn,transformer,autoencoder,gan}.html` files. These are packaged copies of the same final versions, not alternative designs. The README and docs landing page display `composite/gallery.gif`, rendered at the approved 1248 × 270 proportions.
+Open `assets/composite.html` for the complete row, or reuse any of the self-contained `assets/{cnn,rnn,transformer,autoencoder,gan}.html` files. These are packaged copies of the same final versions, not alternative designs. The README and docs landing page display the brain-MRI variant, `neuroscience/gallery.gif`, at the approved 1248 × 270 proportions. The original composite remains available in `composite/gallery.gif`.
 
 See [composite export instructions](composite/README.md) for layout, playback, and reproduction.
 

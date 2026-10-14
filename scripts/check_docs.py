@@ -50,7 +50,7 @@ assert re.search(r'<img\b[^>]*src="_images/gallery\.gif"', homepage), (
     "Landing page must display the gallery GIF as an image"
 )
 assert (root / "_images/gallery.gif").read_bytes() == (
-    source / "gallery/composite/gallery.gif"
+    source / "gallery/neuroscience/gallery.gif"
 ).read_bytes(), "Published gallery differs from the approved GIF"
 for section in ("quickstart", "guide", "learning", "api_tutorials", "api_reference"):
     assert f"docs/{section}.html" in (root / "index.html").read_text()
