@@ -10,6 +10,10 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
   const page=await browser.newPage({viewport:{width:1248,height:300},deviceScaleFactor:1});
   page.on('pageerror',e=>{throw e;});
   await page.goto('file://'+path.join(__dirname,'index.html'));
+  const size=await page.evaluate(()=>({width:gallery.width,height:gallery.height}));
+  await page.setViewportSize(size);
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  console.log(`Capturing ${size.width} × ${size.height}`);
   for(let frame=0;frame<frames;frame++){
    await page.evaluate(ms=>gallery.seek(ms),frame*1000/fps);
    await page.screenshot({path:path.join(dir,String(frame).padStart(4,'0')+'.png')});

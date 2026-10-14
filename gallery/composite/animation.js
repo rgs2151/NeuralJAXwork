@@ -8,7 +8,7 @@
       ['gan', mountGAN, GAN_SAMPLES],
       ['transformer', mountTransformer, TRANSFORMER_SAMPLES],
     ];
-    const panelWidth = 240, gap = 12, width = panelWidth * specs.length + gap * (specs.length - 1), height = 300;
+    const panelWidth = 240, gap = 12, width = panelWidth * specs.length + gap * (specs.length - 1), height = 270;
     const viewport = document.createElement('div');
     viewport.setAttribute('role', 'group');
     viewport.setAttribute('aria-label', 'NeuralJAXlib gallery: CNN, RNN, Autoencoder, GAN, Transformer.');
@@ -20,7 +20,7 @@
     const controllers = specs.map(([name, mount, data]) => {
       const panel = document.createElement('div');
       panel.dataset.galleryPanel = name;
-      panel.style.cssText = 'display:grid;grid-template-rows:24px 240px 24px;row-gap:6px;min-width:0;align-items:center';
+      panel.style.cssText = 'display:grid;grid-template-rows:24px 240px;row-gap:6px;min-width:0;align-items:center';
       row.append(panel);
       const controller = mount(panel, data);
       controller.pause();
@@ -31,6 +31,8 @@
       // Match PCA labels to the 18px RNN legend and transformer words.
       if (name === 'autoencoder') plot.querySelectorAll('text').forEach(node => { node.style.fontSize = '18px'; });
       if (name === 'rnn') {
+        panel.style.gridTemplateRows = '24px auto 24px';
+        panel.style.alignContent = 'start';
         const legend = panel.lastElementChild;
         legend.style.gridRow = '3'; legend.style.margin = '0'; legend.style.lineHeight = '24px';
       }
