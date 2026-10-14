@@ -1,5 +1,9 @@
 # RNN weather clock
 
+The resize callback uses the SVG's untransformed `clientWidth`. Labels therefore
+scale with the artwork when a host applies CSS scaling or rotation; they do not
+grow to compensate for a small preview. This fixes the oversized "now" label.
+
 Open `index.html` for the SVG/JavaScript animation. The tightly cropped clock is 300×253 pixels at its default width and scales to 240×202 pixels; the heading is above the square and the two-item legend is below it. Labels use the heading’s 18-pixel font size at normal weight. All strokes use a shared 2-pixel width with rounded joins and butt caps on the fading traces to avoid dark overlaps and remain the same thickness when resized. The CNN animation is unchanged.
 
 The clock is rotated 90 degrees clockwise, placing the output line at the right. A horizontal now label sits above and to the right of that line. Increasing clockwise angle means increasing age: one full turn spans 24 days. Day and temperature-unit labels are omitted. Temperature increases radially outwards on a fixed Celsius scale, from radius 66 at the neuron circle’s circumference to radius 102.5 at the previous band’s midpoint. There is no outer grid. Both traces begin filled; the newest comparison stays at three o’clock as history moves clockwise. One 24-day revolution takes 18 seconds, then the excerpt resets. The historical seam is open rather than connecting old and new values. Both traces fade linearly with age, from fully opaque at now to transparent at the oldest end, using 96 short SVG sections.

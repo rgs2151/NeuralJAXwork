@@ -1,27 +1,44 @@
-# Composite gallery
+# Composite Gallery
 
-The row contains CNN, RNN, Autoencoder, GAN, and Transformer, in that order. All panels have a 240-pixel overall height, 18-pixel Arial bold titles, and 6-pixel horizontal gaps. Widths follow each plot's proportions; the complete row is approximately 1149×240 pixels. A single outer SVG contains the five mounted SVG renderers. Its width scales responsively while retaining the horizontal arrangement.
+The row contains CNN, RNN, Autoencoder, GAN and Transformer, in that order.
+It mounts the five standalone renderers intact in HTML grid panels, not nested
+SVG viewports. Geometry, cached data and playback timing stay in the individual
+renderers. RNN retains its original legend instead of a separately redrawn copy.
 
-`animation.js` mounts the canonical renderers and arranges their output without editing their source files. The RNN “now” label is fixed at the same 18-pixel display size as the legend, overriding its standalone resize attribute only in the composite. The RNN legend is reproduced in SVG so the entire row can be captured consistently. The live composite uses the original timings. `window.gallery.seek(milliseconds)` provides deterministic capture.
+The design frame is 1248 x 300: five 240px-wide panels with 12px gaps. Each panel
+has a 24px heading row, a 240px plot row, and a 24px legend row, with 6px vertical
+gaps. Plots retain their native aspect ratios and are centered in the plot row.
+Headings use 18px bold Arial with aligned baselines. RNN labels/legend,
+transformer words and PCA axis labels use the same 18px design scale. Only the
+composite enlarges the standalone PCA labels; its underlying figure is unchanged.
+
+The whole row scales once from its design width. Do not mount it in a 300px
+design canvas and enlarge it: that magnifies non-scaling SVG strokes and makes
+the CNN scan window and RNN lines excessively thick. The RNN source now uses
+`clientWidth` for label sizing, so ancestor transforms cannot inflate "now".
+
+`mountGallery(root)` exposes `width`, `height`, `seek(milliseconds)`, `pause()`,
+`play()` and `destroy()`. Playback respects visibility and reduced motion.
 
 ## Files
 
-- `index.html`: live composite, loading the canonical sources.
-- `gallery.gif`: 18-second, 15-fps looping excerpt for the GitHub README.
-- `../assets/composite.html`: self-contained live composite.
-- `../assets/{cnn,rnn,transformer,autoencoder,gan}.html`: self-contained approved individual animations.
-- `../frozen.json`: hashes of the frozen individual sources, checked before packaging.
+- `index.html`: live row loading the canonical renderers.
+- `animation.js`: shared layout and playback orchestration.
+- `../assets/composite.html`: self-contained corrected row.
+- `../assets/{cnn,rnn,autoencoder,gan,transformer}.html`: standalone assets.
+- `../frozen.json`: approved individual-source hashes.
 
-The GIF preserves the original playback speeds. Its last eight frames blend into its opening frame to soften the excerpt's loop boundary. That blend belongs only to the GIF export; individual assets and the live composite retain their approved behavior. The GIF uses a 96-color palette without dithering to reduce size and avoid speckling.
+The previous distorted `gallery.gif` was deleted, not retained as another
+approved version. The README and documentation now link to the interactive
+bundle. A new GIF can be exported later when browser capture is authorized.
 
 ## Reproduction
 
-Packaging uses Python's standard library. Browser capture additionally needs Node.js, Playwright with Chromium, ffmpeg, and Python with Pillow.
-
 ```bash
 python3 gallery/composite/package_assets.py
-node gallery/composite/render_gif.cjs
 python3 gallery/composite/build_preview.py /absolute/output/gallery.html
 ```
 
-Set `PLAYWRIGHT_MODULE`, `CHROMIUM_PATH`, or `GALLERY_PYTHON` when those dependencies are outside their default locations. Captured frames are temporary and removed after successful encoding. Regeneration never retrains a model or modifies the frozen renderers. Only the current approved standalone bundles and current GIF are retained as reusable assets.
+The optional `render_gif.cjs` exporter uses the corrected 1248 x 300 viewport.
+It takes browser screenshots; run it only when that capture is explicitly wanted.
+Packaging the HTML does not require screenshots, training or network access.

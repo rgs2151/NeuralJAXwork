@@ -7,7 +7,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
  const fps=15,seconds=18,frames=Math.round(fps*seconds);
  const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{}),args:['--no-sandbox']});
  try{
-  const page=await browser.newPage({viewport:{width:1149,height:240},deviceScaleFactor:1});
+  const page=await browser.newPage({viewport:{width:1248,height:300},deviceScaleFactor:1});
   page.on('pageerror',e=>{throw e;});
   await page.goto('file://'+path.join(__dirname,'index.html'));
   for(let frame=0;frame<frames;frame++){

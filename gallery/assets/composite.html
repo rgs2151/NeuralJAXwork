@@ -264,7 +264,7 @@ window.RNN_SAMPLES = {"schema":1,"units":"\u00b0C","historyHours":576,"playbackH
       });
     }
     const resize=new ResizeObserver(()=>{
-      const size=18*254/(svg.getBoundingClientRect().width||300);
+      const size=18*254/(svg.clientWidth||300);
       svg.querySelectorAll('text').forEach(node=>node.setAttribute('font-size',size));
     });
     resize.observe(svg);
@@ -473,51 +473,75 @@ window.GAN_SAMPLES = {"schema":1,"size":28,"frames":31,"samples":[{"index":2,"pi
     return {duration,sampleDuration,seek(ms){elapsed=ms;paused=true;draw(ms);},pause(){paused=true;},play(){paused=false;},destroy(){disposed=true;cancelAnimationFrame(raf);observer.disconnect();motion.removeEventListener('change',preference);heading.remove();svg.remove();}};
   };
 })();
-/* Compose frozen renderers into one SVG; individual asset sources stay untouched. */
-(function(){
-  const NS='http://www.w3.org/2000/svg';
-  window.mountGallery=function(root){
-    const specs=[
-      ['cnn',mountCNN,CNN_SAMPLES,216,216,'#000'],
-      ['rnn',mountRNN,RNN_SAMPLES,201*254/214,201,'#fff'],
-      ['autoencoder',mountAutoencoder,AE_SAMPLES,216*240/218,216,'#fff'],
-      ['gan',mountGAN,GAN_SAMPLES,216,216,'#000'],
-      ['transformer',mountTransformer,TRANSFORMER_SAMPLES,216,216,'#fff']
+/* Compose intact standalone panels at one design scale, without nested SVG rescaling. */
+(function () {
+  window.mountGallery = function (root) {
+    const specs = [
+      ['cnn', mountCNN, CNN_SAMPLES],
+      ['rnn', mountRNN, RNN_SAMPLES],
+      ['autoencoder', mountAutoencoder, AE_SAMPLES],
+      ['gan', mountGAN, GAN_SAMPLES],
+      ['transformer', mountTransformer, TRANSFORMER_SAMPLES],
     ];
-    const gap=6,height=240,width=specs.reduce((sum,s)=>sum+s[3],0)+gap*(specs.length-1);
-    const svg=document.createElementNS(NS,'svg');
-    svg.setAttribute('viewBox',`0 0 ${width} ${height}`);svg.setAttribute('role','img');
-    svg.setAttribute('aria-label','NeuralJAXlib gallery: CNN, RNN, Autoencoder, GAN, Transformer.');
-    svg.style.cssText='display:block;width:100%;height:auto;background:#fff;color:#171717;font-family:Arial,sans-serif';root.append(svg);
-    function el(tag,attrs){const n=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);svg.append(n);return n;}
-    const mounts=[],controllers=[];let x=0;
-    specs.forEach(([name,mount,data,w,h,bg])=>{
-      const host=document.createElement('div');host.style.display='none';root.append(host);mounts.push(host);
-      const controller=mount(host,data);controller.pause();controllers.push(controller);
-      const title=host.firstElementChild.textContent;
-      el('text',{x:x+w/2,y:18,'text-anchor':'middle','font-family':'Arial,sans-serif','font-size':18,'font-weight':700,fill:'#171717'}).textContent=title;
-      el('rect',{x,y:24,width:w,height:h,fill:bg});
-      const plot=host.querySelector('svg');plot.setAttribute('x',x);plot.setAttribute('y',24);
-      plot.setAttribute('width',w);plot.setAttribute('height',h);
-      plot.style.width=w+'px';plot.style.height=h+'px';svg.append(plot);
-      if(name==='rnn'){
-        // Nested SVG bounding boxes reflect artwork, not the allocated viewport.
-        // Override the standalone resize attribute with a fixed composite size.
-        plot.querySelectorAll('text').forEach(node=>node.style.fontSize=(18*254/w)+'px');
-        const legend=host.lastElementChild;
-        const labels=[...legend.children].map(item=>item.textContent);
-        const widths=labels.map(label=>label==='Forecast'?92:50),total=widths[0]+14+widths[1];let left=x+(w-total)/2;
-        labels.forEach((label,i)=>{el('circle',{cx:left+4,cy:233,r:4,fill:i===0?'#8b1e1e':'#000'});el('text',{x:left+14,y:239,'font-family':'Arial,sans-serif','font-size':18,fill:'#171717'}).textContent=label;left+=widths[i]+14;});
+    const panelWidth = 240, gap = 12, width = panelWidth * specs.length + gap * (specs.length - 1), height = 300;
+    const viewport = document.createElement('div');
+    viewport.setAttribute('role', 'group');
+    viewport.setAttribute('aria-label', 'NeuralJAXlib gallery: CNN, RNN, Autoencoder, GAN, Transformer.');
+    viewport.style.cssText = 'position:relative;width:100%;color:#171717;font-family:Arial,sans-serif';
+    const row = document.createElement('div');
+    row.dataset.galleryRow = '';
+    row.style.cssText = `position:absolute;left:0;top:0;display:grid;grid-template-columns:repeat(5,${panelWidth}px);gap:${gap}px;width:${width}px;height:${height}px;transform-origin:top left`;
+    viewport.append(row); root.append(viewport);
+    const controllers = specs.map(([name, mount, data]) => {
+      const panel = document.createElement('div');
+      panel.dataset.galleryPanel = name;
+      panel.style.cssText = 'display:grid;grid-template-rows:24px 240px 24px;row-gap:6px;min-width:0;align-items:center';
+      row.append(panel);
+      const controller = mount(panel, data);
+      controller.pause();
+      const heading = panel.firstElementChild;
+      heading.style.cssText = 'grid-row:1;margin:0;font:700 18px/24px Arial,sans-serif;text-align:center;color:inherit;white-space:nowrap';
+      const plot = panel.querySelector('svg');
+      plot.style.gridRow = '2';
+      // Match PCA labels to the 18px RNN legend and transformer words.
+      if (name === 'autoencoder') plot.querySelectorAll('text').forEach(node => { node.style.fontSize = '18px'; });
+      if (name === 'rnn') {
+        const legend = panel.lastElementChild;
+        legend.style.gridRow = '3'; legend.style.margin = '0'; legend.style.lineHeight = '24px';
       }
-      x+=w+gap;
+      return controller;
     });
-    let elapsed=0,last=null,paused=false,disposed=false,raf=0;
-    const motion=matchMedia('(prefers-reduced-motion: reduce)');
-    function draw(ms){controllers.forEach(c=>c.seek(ms));}
-    function tick(now){if(disposed)return;if(last!==null&&!paused&&!document.hidden&&!motion.matches){elapsed+=Math.min(now-last,100);draw(elapsed);}last=now;raf=requestAnimationFrame(tick);}
-    function preference(){draw(motion.matches?14000:elapsed);}
-    motion.addEventListener('change',preference);preference();raf=requestAnimationFrame(tick);
-    return {width,height,seek(ms){elapsed=ms;paused=true;draw(ms);},play(){paused=false;},pause(){paused=true;},destroy(){disposed=true;cancelAnimationFrame(raf);motion.removeEventListener('change',preference);controllers.forEach(c=>c.destroy());mounts.forEach(h=>h.remove());svg.remove();}};
+    const resize = new ResizeObserver(() => {
+      const scale = (root.clientWidth || width) / width;
+      row.style.transform = `scale(${scale})`;
+      viewport.style.height = `${height * scale}px`;
+    });
+    resize.observe(root);
+    let elapsed = 0, last = null, paused = false, disposed = false, visible = true, raf = 0;
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const observer = new IntersectionObserver(entries => { visible = entries[0].isIntersecting; });
+    observer.observe(root);
+    function draw(ms) { controllers.forEach(controller => controller.seek(ms)); }
+    function tick(now) {
+      if (disposed) return;
+      if (last !== null && !paused && visible && !document.hidden && !motion.matches) {
+        elapsed += Math.min(now - last, 100); draw(elapsed);
+      }
+      last = now; raf = requestAnimationFrame(tick);
+    }
+    function preference() { draw(motion.matches ? 14000 : elapsed); }
+    motion.addEventListener('change', preference); preference(); raf = requestAnimationFrame(tick);
+    return {
+      width, height,
+      seek(ms) { elapsed = ms; paused = true; draw(ms); },
+      play() { paused = false; },
+      pause() { paused = true; },
+      destroy() {
+        disposed = true; cancelAnimationFrame(raf); resize.disconnect(); observer.disconnect();
+        motion.removeEventListener('change', preference);
+        controllers.forEach(controller => controller.destroy()); viewport.remove();
+      },
+    };
   };
 })();
 window.gallery=mountGallery(document.getElementById('gallery-composite'));

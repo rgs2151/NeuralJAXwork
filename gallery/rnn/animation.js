@@ -100,7 +100,7 @@
       });
     }
     const resize=new ResizeObserver(()=>{
-      const size=18*254/(svg.getBoundingClientRect().width||300);
+      const size=18*254/(svg.clientWidth||300);
       svg.querySelectorAll('text').forEach(node=>node.setAttribute('font-size',size));
     });
     resize.observe(svg);
