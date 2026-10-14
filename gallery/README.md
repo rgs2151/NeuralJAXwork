@@ -1,10 +1,15 @@
 # Gallery
 
-Compact SVG animations for the architecture gallery, implemented in dependency-free JavaScript.
+Five approved SVG animations, implemented in dependency-free JavaScript. The canonical individual sources are frozen; `frozen.json` records their SHA-256 hashes. Composite layout and exports live separately under `composite/`.
+
+Open `assets/composite.html` for the complete row, or reuse any of the self-contained `assets/{cnn,rnn,transformer,autoencoder,gan}.html` files. These are packaged copies of the same final versions, not alternative designs. The GitHub README uses `composite/gallery.gif`.
+
+See [composite export instructions](composite/README.md) for layout, playback, and reproduction.
 
 - [CNN](cnn/index.html): convolution and pooling.
 - [RNN](rnn/README.md): a weather forecasting clock.
 - [GAN](gan/README.md): Fashion-MNIST training progression.
+- [Transformer](transformer/README.md): continuous text with mean causal attention.
 - [Autoencoder](autoencoder/README.md): class-centroid PCA transitions for digits, clothing, and traffic signs.
 
 ## CNN

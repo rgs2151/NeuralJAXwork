@@ -18,6 +18,10 @@ examples and visualizations for learning and experimentation.
 [Architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html) ·
 [API tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/api_tutorials.html)
 
+## Gallery
+
+![CNN, RNN, Transformer, Autoencoder, and GAN animations](gallery/composite/gallery.gif)
+
 ## Install
 
 Requires Python 3.10–3.13. Runtime dependencies include JAX, Flax NNX, and Optax;

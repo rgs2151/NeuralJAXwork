@@ -1,0 +1,41 @@
+{
+  "assets": [
+    "cnn",
+    "rnn",
+    "transformer",
+    "autoencoder",
+    "gan"
+  ],
+  "sha256": {
+    "cnn/animation.js": "407e8823cfcbb4fd39e0a0e68406049ee2a0dbfc100599555f0cd09d47cba2c5",
+    "cnn/build_preview.py": "cf80ab466e7eed5d689579a342000c1936240e5f47fab7b20d622ccfee88060b",
+    "cnn/export.py": "8fa3a5515f5ded83e9b6aaeb3165cba4f8c6544b43c84235856883c74f2d03d7",
+    "cnn/index.html": "57f553195afdfdbafd4129f13eabc0fdbc546fdd2874497fbbf44b52db501933",
+    "cnn/samples.js": "012e6a4b1d0a8519749ea70c32649a741301c313b4dcd87680085d76af8bb5b0",
+    "rnn/README.md": "4eceef7f01ccf26693dd98dafffda327317ed51baa02113d44f16d1fc64c67b0",
+    "rnn/animation.js": "db2fbeb7a3a9f115eb4b4a8c25bc8060ef9029ab78cd185daf66257feca420b5",
+    "rnn/build_preview.py": "dfc05c652d4a91e2fe9856866b566454d32e5ecf87256431422934fe34a8aba1",
+    "rnn/export.py": "3ee5f26efdb8c9d641a70d7ce4a8ff26d0ab481463595712c75e9f254d72cf78",
+    "rnn/index.html": "d3fc8b27020ece255f69042ebdde9607bb0eaaba4b975a87397626dda38b66a3",
+    "rnn/samples.js": "788df313d7a1af1fd05a27a03d1e5eb0d70799810d21457e123aab7aa2b7246d",
+    "transformer/README.md": "bcd39f94a70972e4dbc29acadce43a8c257223205c1148b52bec39b68fbcb674",
+    "transformer/animation.js": "17637ff38b8c62d584bb8abd47abf0134897bbd0c21fa2c44781f7d7c757baf8",
+    "transformer/build_preview.py": "d166c2d4eed92fc822873af9f4130fd73f7f134e3620fe4a51bd1967b990f17e",
+    "transformer/export.py": "9888d97cc5f84831ab170836b3240f9bdd977c68515cf8aeb45fea61ce5bf3d5",
+    "transformer/index.html": "06c666775843d99d3bf7e066001dc3812cadea35470ef5a7b9bbc40daf3b0bfb",
+    "transformer/samples.js": "8fe002f5528bd49f6feaa5255531c8a570b7fd9e09edc17693605200dcbd1f28",
+    "autoencoder/README.md": "9d9467ed4e99856ce5609ea1aeb85c2acce5c9306631853cc604b26ef49e4538",
+    "autoencoder/animation.js": "6aa73ea1762e3ac7a3527946d2656548acbe66c3a589d7ab9ad89e873425d6d8",
+    "autoencoder/build_preview.py": "4fbe75474336e97dbf008b78913d1c28980b2996ba132de14463c964d08f7ff2",
+    "autoencoder/export.py": "0eb90ca9c4f9e314d4321fd274bb31396222dd401fa3d2392e45495dcbd5a82c",
+    "autoencoder/index.html": "2166cbdfc5cccdfd0680580e54c44538dd8bffe2114659babd12194553bfa9c1",
+    "autoencoder/samples.js": "8ee92bd6d2904b7346dcc533afde294280d75ba5d92ed651642b8fef92bd3cb6",
+    "autoencoder/train.py": "2621a9bd38a86977f5872f0610edd5ccee4d7e851eac79bb9f42d40310d72243",
+    "gan/README.md": "d5659246deb7774e95272be7e19280b4f5ec310c0fd855531e15d110c1ad3fd6",
+    "gan/animation.js": "85b8d12d853c4ce8eabc013fc7a2695efd8ae7208360d45321eb62e91698d772",
+    "gan/build_preview.py": "2f4a8ca95febd0cc2226139da3098d6f2094381b9e14770c514d1f78a486ef4e",
+    "gan/export.py": "aa41155c4472f8203c39f8c5df363e44029843c011369e00094ad0ed22561f48",
+    "gan/index.html": "e8fedc513fab6af5672d31e01ee6839e4253a92be3240b35d389552fd6dad43d",
+    "gan/samples.js": "e2d6e39d01b5e206fa11a3712a95e4cc4241d45d89dff2dbaf7f39c44c6553fa"
+  }
+}
