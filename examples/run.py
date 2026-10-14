@@ -16,7 +16,7 @@ from neuraljaxwork.nn import functional as F
 
 from . import datasets, plots
 
-# Original tiny corpus for an offline mechanics demo, not a language benchmark.
+# Repeated ASCII text for offline pipeline checks.
 TEXT = (
     "the moon rises over the quiet river. the sun warms the green meadow. "
     "a small bird sings beside the water. the wind moves through the trees.\n"

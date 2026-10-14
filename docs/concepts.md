@@ -53,4 +53,4 @@ constructed Python architecture; it is not executable model source. A model's
 `state_dict()` is a lighter weights-and-buffers snapshot.
 
 The [API tutorials](api_tutorials.rst) demonstrate these concepts with small,
-inspectable programs. The [model examples](tutorials.rst) apply them to datasets.
+inspectable programs. The [architecture implementations](tutorials.rst) apply them to datasets.

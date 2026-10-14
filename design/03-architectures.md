@@ -1,8 +1,7 @@
 # Architecture cookbook
 
-Status: proposed API examples, not executable against the current repository.
-All examples share these imports and the core contracts; models do not acquire
-special training methods based on their architecture family.
+Historical proposal; see [implementation status](IMPLEMENTATION.md) for supported
+interfaces and differences in version 0.1.0.
 
 ```python
 import jax.numpy as jnp
@@ -85,7 +84,7 @@ class PetCNN(nn.Module):
 BatchNorm owns affine parameters initialized without randomness and running-statistic
 buffers. Training updates statistics; evaluation uses stored values. Input resize,
 normalization, and augmentation belong to data transforms, not hidden model logic.
-These are small teaching architectures, not promised competitive classifiers.
+These architectures are intended for teaching and experimentation.
 
 ## RNNs: explicit sequence state
 
@@ -190,7 +189,7 @@ equal-width API; `D % heads == 0`. Default return is output `[B, Tq, D]`.
 that flag is static under compilation. Large attention weights are opt-in.
 
 Boolean masks broadcast to `[B, heads, Tq, Tk]`; **True means allowed**. This is
-an explicit convention, not a promise to match all PyTorch mask APIs.
+the mask convention used throughout this proposal.
 `padding_mask(valid)` converts `[B, Tk]` to `[B, 1, 1, Tk]` for key masking.
 Padded query locations are excluded separately from losses. Fully masked query
 rows produce zero weights and zero attention output, including projection bias,
@@ -330,6 +329,6 @@ GAN losses alone do not establish quality or rule out mode collapse.
 Custom modules can combine existing modules with `jax.numpy` operations, register
 their own `Parameter` and `Buffer` objects, return structured outputs, and supply
 serialization config. Graph inspection treats an unknown custom operation as an
-opaque node with input/output metadata rather than inventing its internals.
+opaque node with input/output metadata.
 Supported custom operations need valid JAX autodiff rules; truly new primitives
 may require custom differentiation. Composition does not remove that requirement.

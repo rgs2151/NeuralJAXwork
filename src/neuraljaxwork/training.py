@@ -136,7 +136,7 @@ class ModelCheckpoint:
 
 
 class Trainer:
-    """Host-side epoch loop. No hidden differentiation, stepping, or data downloads."""
+    """Host-side epoch loop delegating optimization to the task step."""
 
     def __init__(self, max_epochs, callbacks=(), run=None):
         self.max_epochs, self.callbacks, self.run = max_epochs, tuple(callbacks), run

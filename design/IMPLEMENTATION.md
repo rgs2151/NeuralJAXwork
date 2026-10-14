@@ -5,13 +5,14 @@ implemented behavior is in `docs/api.md`, tests, and `src/neuraljaxwork`.
 
 Implemented: PyTorch-style forward modules; Flax NNX state transforms; JAX autodiff;
 explicit RNGs; dense/convolution/transpose convolution, normalization/pooling,
-RNN/LSTM, attention; all requested primary architecture families; explicit training
-steps and separate GAN optimizers; tiny smoke tests; data-loader cursor;
+RNN/LSTM, attention; reference models for each supported architecture family;
+explicit training steps and separate GAN optimizers; numerical and state tests;
+data-loader cursor;
 checkpoint resume; hierarchy JSON; run artifacts; optional small Task/Trainer;
 seven runnable examples with locally trained GPU results, and five API tutorial
 notebooks. Sphinx renders their saved outputs without executing notebooks in CI.
 
-Deliberate alpha differences:
+Differences from the proposal:
 
 - NNX discovers ordinary list/dict children. Raw-array attributes are not rejected
   by a custom registration layer. Use Parameter/Buffer for supported persistent state.
@@ -32,7 +33,5 @@ Deliberate alpha differences:
   containers beyond module containers, or loss-module wrappers yet. Functional
   losses cover the examples.
 - Cats/dogs has a tested RGB architecture but no bundled dataset notebook yet.
-  The implemented image showcases prioritize the requested MNIST CNN and
-  Fashion-MNIST GAN. Full training/visual-quality studies remain separate runs.
-
-These limits are documented rather than hidden behind placeholder implementations.
+  Image tutorials cover MNIST classification, MNIST reconstruction, and
+  Fashion-MNIST generation.

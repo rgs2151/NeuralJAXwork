@@ -1,4 +1,4 @@
-"""Optional plots; consumers of saved predictions and history, never training hooks."""
+"""Plot saved predictions and training history."""
 
 import numpy as np
 

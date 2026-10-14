@@ -10,8 +10,7 @@ A child can return arrays, tuples, or dictionaries of arrays.
 registers a non-parameter state variable. Access arrays through `.value`. Assigning
 the same module to two attributes shares weights. Parameter traversal deduplicates
 by identity. `ModuleList` and `ModuleDict` express named collections; the underlying
-NNX backend also discovers ordinary lists/dicts (a deliberate departure from the
-stricter original proposal).
+NNX backend also discovers ordinary lists and dictionaries.
 
 `named_parameters()`, `named_buffers()`, and `named_modules()` produce canonical
 paths. `parameters()` returns a live selection for an optimizer, not copies.
@@ -30,7 +29,7 @@ self. They do not turn autodiff on/off. Switch mode outside a compiled step.
 | `Linear(I, O, bias=True, rngs=...)` | `[..., I] -> [..., O]`, weight `[O,I]` |
 | `Conv1d(I, O, K, stride=1, padding=0, groups=1, rngs=...)` | `[B,C,L]`; integer padding |
 | `Conv2d(I, O, K, stride=1, padding=0, groups=1, rngs=...)` | NCHW; integer/pair or SAME/VALID padding |
-| `ConvTranspose2d(I, O, K, stride=1, padding=0, output_padding=0, rngs=...)` | NCHW; no grouped/dilated variant yet; weights `[O,I,KH,KW]` |
+| `ConvTranspose2d(I, O, K, stride=1, padding=0, output_padding=0, rngs=...)` | NCHW; grouping and dilation unsupported; weights `[O,I,KH,KW]` |
 | `MaxPool2d(K, stride=None)`, `AvgPool2d(...)` | NCHW, valid windows |
 | `AdaptiveAvgPool2d((1,1))` | Global spatial mean; other sizes rejected |
 | `BatchNorm1d(C)`, `BatchNorm2d(C)` | NC/NCL or NCHW; affine parameters and running buffers |
@@ -46,7 +45,7 @@ ReLU, GELU, Tanh, Sigmoid, Flatten, and Sequential provide simple composition.
 for stochastic layers or multiple inputs. Linear/conv use fan-in-scaled uniform
 weights and zero biases. LSTM forget bias is one. BatchNorm uses population batch
 variance for both normalization and running-statistic updates, not PyTorch's
-unbiased running-variance update. This is not numerical PyTorch compatibility.
+unbiased running-variance update. Results can therefore differ from PyTorch.
 
 Transposed convolution output length on each spatial axis is
 `(input - 1) * stride - 2 * padding + kernel_size + output_padding`.
@@ -84,9 +83,7 @@ recompile. Avoid arbitrary Python side effects inside a transformed function.
 `value_and_grad` differentiates parameter leaves of the selected module and
 returns an NNX gradient state; `has_aux=True` returns `((loss, aux), grads)`.
 
-NNX semantics govern exceptions and advanced transform nesting. The initial
-release does **not** guarantee rollback of all eager mutations on arbitrary
-exceptions. Keep shapes/configuration valid before calling transformed code.
+NNX semantics govern exceptions and advanced transform nesting. Eager mutations are not automatically rolled back after an exception. Keep shapes/configuration valid before calling transformed code.
 
 ## Losses and optimization
 

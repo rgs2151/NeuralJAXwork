@@ -1,6 +1,7 @@
 # Core module and state contract
 
-Status: proposed. `nj` means `neuraljaxwork`. The contracts here govern all examples.
+Historical proposal; see [implementation status](IMPLEMENTATION.md) for supported
+interfaces and differences in version 0.1.0.
 
 ## Modules and registration
 

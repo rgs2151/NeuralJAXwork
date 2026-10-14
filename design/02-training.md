@@ -1,6 +1,7 @@
 # Training, data, and experiments
 
-Status: proposed API. The explicit loop is primary; orchestration is optional.
+Historical proposal; see [implementation status](IMPLEMENTATION.md) for supported
+interfaces and differences in version 0.1.0.
 
 ## A complete supervised step
 

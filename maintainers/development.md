@@ -1,4 +1,4 @@
-# Development and support boundaries
+# Development
 
 ## Local checks
 
@@ -16,7 +16,7 @@ convolution arithmetic/transpose adjoint behavior, RNN/LSTM carries and padding,
 causal/masked attention gradients, each model family's update, isolated GAN
 updates, checkpoint next-update equality, loader resume, inspection noninterference,
 and trainer update counts. They are intentionally small, with no performance
-threshold tied to one machine. CI has a ten-minute job timeout as a runaway guard.
+threshold tied to one machine. CI jobs have a ten-minute timeout.
 
 Optional integration checks:
 
@@ -28,9 +28,8 @@ python -m examples.run gan --smoke --epochs 1
 Notebook execution and dataset training happen locally, outside CI.
 The documentation workflow renders saved notebook outputs and deploys successful
 main-branch builds to Pages; see [publishing](publishing.md).
-No full-dataset convergence or generative-quality assertion belongs in the default
-smoke suite. Add focused numerical/state tests when introducing a new primitive;
-avoid dozens of redundant model-size combinations.
+Keep full-dataset training outside the default test suite. Add focused numerical
+and state tests when introducing a new primitive.
 
 ## Versioning and packaging
 
@@ -44,15 +43,14 @@ Building artifacts locally does not publish to PyPI. Release publication require
 a chosen registry/account, release credentials, and an explicit release action.
 GPU/TPU users must configure a compatible JAX installation for their hardware;
 this repository's CI exercises CPU. The published example runs were also tested
-locally on one RTX 5090; this is not a distributed-training or performance study. Version bounds are intentionally conservative, not an assertion that
-this older JAX/NNX generation is the newest available.
+locally on one RTX 5090. Dependency bounds preserve compatibility with the
+supported NNX API.
 
 ## Current limits
 
-The implemented family coverage is broad, but this is not a replacement for all of
-PyTorch/Flax. No distributed training, mixed precision policy, parameter groups,
-freezing helper, scheduler suite, arbitrary model factories from JSON, operation
-trace renderer, KV cache, bidirectional recurrence, pretrained zoo, or ONNX export.
+Unsupported features include distributed training, mixed precision policy, parameter groups,
+parameter-freezing helpers, schedulers, model reconstruction from JSON, operation
+graph rendering, KV caches, bidirectional recurrence, pretrained models, and ONNX export.
 Adaptive average pooling currently supports `(1,1)` only. Embedding/class-index
 ranges and recurrent length values are caller data preconditions. Convolution
 arguments cover the documented subset, not all PyTorch keyword combinations.
@@ -61,11 +59,11 @@ Direct NNX transformation semantics apply. The original design's universal
 transactional rollback and strict raw-array/container-registration guarantees are
 not implemented. Optimizers validate compatible tree structure through NNX/Optax,
 not provenance of an unrelated same-shaped gradient tree. See the explicit
-[design status](../design/IMPLEMENTATION.md) before treating a proposal as a promise.
+[design status](../design/IMPLEMENTATION.md) for the differences between the proposal and the release.
 
 ## Contribution checklist
 
 Keep new modules composable, explicit about shapes/state/randomness, and usable
 without plotting dependencies. Add a tiny smoke/numerical test and update API
-reference/docs. Never claim a dataset score without a saved configuration and
-actual run. Keep changes to legacy code separate from the installed package.
+reference. Report dataset metrics with their run configuration and saved outputs.
+Keep changes to legacy code separate from the installed package.

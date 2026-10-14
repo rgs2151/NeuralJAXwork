@@ -30,8 +30,7 @@ restored using the matching initialized key implementation.
 No pickle or embedded Python executes on load. Schema, paths, architecture
 configuration, optimizer settings, shapes, and dtypes are checked before state
 updates. Files are written to a temporary sibling and atomically replaced.
-Compatible CPU/backend runs reproduce the next update in tests; cross-device
-bitwise reproduction is not promised. Custom modules must expose configuration
+Compatible CPU/backend runs reproduce the next update in tests; bitwise reproduction across devices is not guaranteed. Custom modules must expose configuration
 as ordinary public scalar/container fields for meaningful compatibility checks.
 Opaque custom static objects are not fully validated by the architecture schema.
 
@@ -68,4 +67,3 @@ The summary deduplicates parameters. JSON records module ownership, static field
 variable shape/dtype, and alias references. `output_spec` runs an evaluation clone
 and returns shapes/dtypes without changing the live module's mode or buffers.
 It does not provide a full computation graph or capture intermediate activations.
-Residual/functional edges, graph rendering, and bounded capture are future work.

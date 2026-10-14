@@ -1,4 +1,4 @@
-name: Documentation and GitHub Pages
+name: Documentation
 on:
   push:
     branches: [main]
@@ -34,7 +34,7 @@ jobs:
       - name: Upload reviewable documentation
         uses: actions/upload-artifact@v4
         with:
-          name: tutorial-book
+          name: documentation
           path: _build/html
       - name: Configure GitHub Pages
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
@@ -57,6 +57,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Publish tutorial book
+      - name: Publish documentation
         id: deployment
         uses: actions/deploy-pages@v4

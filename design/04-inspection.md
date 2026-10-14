@@ -1,8 +1,7 @@
 # Inspection, visualization, and showcase notebooks
 
-Status: proposed contracts. Build the metadata foundations early; plotting and
-notebooks follow working training. Models must work without notebook or plotting
-dependencies installed.
+Historical proposal; see [implementation status](IMPLEMENTATION.md) for supported
+interfaces and differences in version 0.1.0.
 
 ## Three views of an architecture
 
@@ -50,9 +49,9 @@ same parameter identity. Parameter totals deduplicate shared weights.
 A later tracing backend combines module boundaries with JAX computation metadata
 to represent operations such as residual addition and concatenation. Until that
 backend exists, module-call traces must label unobserved functional operations;
-they must not pretend to be complete computation graphs. Recurrent scans and
+they describe only the observed module calls. Recurrent scans and
 conditional regions should remain structured nodes with nested bodies instead
-of thousands of unrolled boxes. No promise of universal Python source recovery.
+of thousands of unrolled boxes. Python source recovery is outside the scope of tracing.
 
 ## Intermediates and model diagnostics
 
@@ -133,7 +132,7 @@ configuration, with hardware and runtime reported after measurement.
 
 Dataset choices, downloads, licenses, and access instructions are finalized when
 each notebook is implemented. Titanic's competition test set may lack public
-labels: score a labeled holdout and do not invent test accuracy. For cats/dogs,
+labels: evaluate a labeled holdout. For cats/dogs,
 avoid duplicate or related-image leakage across splits. Token vocabularies and
 normalizers are fitted only on training data. GAN image quality must not be
 inferred from declining loss; any later quantitative metric needs a documented
@@ -143,4 +142,4 @@ Notebook code imports reusable experiment functions from `examples/`; it does no
 contain the only implementation of a training loop. Saved plots include units,
 split, checkpoint, and configuration context. Gallery selection is reproducible,
 with both successes and failures represented. Executed notebook outputs are
-generated only after real runs; the design provides no fabricated scores.
+saved from the corresponding experiment runs.

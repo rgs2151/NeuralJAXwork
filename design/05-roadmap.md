@@ -1,9 +1,10 @@
 # Implementation roadmap and decision register
 
-Status: proposed. Implementation begins only after discussion of this design.
-Milestones are dependency-ordered outcomes, not estimates or claims of completion.
+Historical implementation plan. Milestones record the original sequence of work;
+[implementation status](IMPLEMENTATION.md) tracks delivered features and omissions.
+Notebook execution is now local-only; CI renders saved outputs.
 
-## Architectural decisions proposed for acceptance
+## Original architectural decisions
 
 | Decision | Proposal | Reason / cost |
 | --- | --- | --- |
@@ -20,12 +21,12 @@ Milestones are dependency-ordered outcomes, not estimates or claims of completio
 | Visualization | Versioned metadata and traces before renderers | Preserve inspectability without blocking core training |
 | Compatibility | New API; no automatic legacy compatibility | Existing classes have different state and training semantics |
 
-## Questions to settle before freezing the API
+## Original design questions
 
 1. **Backend commitment:** can a thin NNX adapter satisfy `forward`, explicit
    runtime RNGs, `ParameterSet` identity, joint graph transforms, and transactional
    updates? Prototype this before committing to the public names. If not, revise
-   the facade or scope rather than quietly implementing a fragile custom engine.
+   the public interface or implementation scope.
 2. **Package identity:** use lowercase `neuraljaxwork` for new code? Decide whether
    the old uppercase package is archived, removed in a major version, or retained
    briefly with migration guidance. No migration is performed by these documents.
@@ -40,9 +41,8 @@ Milestones are dependency-ordered outcomes, not estimates or claims of completio
    control flow for computation schematics. Module summaries can ship before a
    complete operation-level trace.
 
-The cookbook deliberately fixes enough semantics to discuss the user experience.
-These questions concern implementation feasibility and release policy, not an
-invitation to change those semantics silently.
+The cookbook defines the proposed API; these questions record the implementation
+choices considered before version 0.1.0.
 
 ## Milestone 0: prove the state model
 
@@ -69,7 +69,7 @@ Acceptance: loss/gradient checks against independent calculations, finite-differ
 checks at differentiable points, correct loss reductions, parameter registration
 and alias tests, deterministic initialization, and actual learning assertions.
 An example exiting successfully is insufficient. Establish numerical tolerances
-and learning thresholds from measured baselines, not invented results.
+and learning thresholds from measured baselines.
 
 ## Milestone 2: CNNs and inspection foundations
 
@@ -119,10 +119,10 @@ quality empirically without promising GAN convergence.
 
 Build the notebook sequence in 04-inspection.md, architecture renderers, bounded
 intermediate capture, and artifact-based plots. Deliver a consistent set of real,
-reproducible demonstrations rather than notebook links with no implementation.
+reproducible demonstrations.
 
-Acceptance: notebooks execute in a fresh supported environment; short variants
-run in CI; full variants record hardware, duration, data versions, and checkpoints;
+Acceptance: notebooks execute locally in a supported environment; CI validates
+saved outputs without execution; full runs record hardware, duration, data versions, and checkpoints;
 plots regenerate from artifacts; shared modules and residual edges render
 accurately; tracing/capture cannot perturb subsequent training.
 
@@ -156,7 +156,7 @@ docs/                           # future user guide and generated API reference
 pyproject.toml                  # tested runtime dependencies and optional extras
 ```
 
-No directories in this proposed source layout are created by the design work.
+This layout is a proposal; the implemented package uses a more compact structure.
 Avoid one framework class per architecture name: MLPs, autoencoders, GANs, and
 transformer applications primarily belong in examples or a later models library.
 Reusable layers and state/control contracts belong in the core package.
@@ -182,7 +182,5 @@ that the proposed facade already exists or is source-compatible with them.
   task-level training logic and manual optimization inspire optional orchestration.
   Our proposed trainer always delegates updates to the task step.
 
-Maintain this folder as a decision record. When an API is implemented, replace
-speculative choices with the tested contract, link examples and checks, and mark
-unsupported features explicitly. The legacy README should only be rewritten once
-the actual implementation and migration scope are known.
+Release-specific decisions and deviations are recorded in
+[implementation status](IMPLEMENTATION.md).

@@ -22,15 +22,14 @@ The gallery runner's recipes are in `examples/train_gallery.py`. It preserves
 completed runs. Download Tiny Shakespeare to `data/tinyshakespeare.txt` as
 described in the transformer tutorial before running that recipe. Training
 checkpoints and full artifacts live under gitignored `runs/`; datasets live under
-`data/`. The second GPU is not selected.
+`data/`.
 
 Run `python scripts/execute_notebooks.py --gpu 0` to execute and save notebook
 outputs locally before publishing. The command records a source digest so CI can
 reject stale outputs after code-cell edits without executing those cells. They display
 measured results from the run directory and include the commands needed to
 reproduce them. Retain the run configuration, seed, evaluation split, hardware,
-and limitations alongside the figures. Do not replace results by editing output
-numbers or by copying figures from a different run.
+and limitations alongside the figures. Figures and metrics must come from the recorded run.
 
 ## Render without execution
 
@@ -44,7 +43,7 @@ python -m http.server --directory _build/html 8000
 The renderer does not need a GPU, notebook kernel, dataset, or checkpoint. It reads
 saved notebook outputs and public API docstrings. Validation checks that the
 notebooks contain successful saved outputs, and the HTML includes navigation,
-figures where expected, source downloads, and the original project logo.
+figures where expected, source downloads, and the project logo.
 
 ## CI/CD
 

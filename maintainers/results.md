@@ -1,7 +1,7 @@
 # Training results
 
 These results were produced locally on **GPU 0, NVIDIA GeForce RTX 5090**, using
-Python 3.10, JAX 0.5.3, Flax NNX 0.10.4, and the CUDA 12 plugin. GPU 1 was not used.
+Python 3.10, JAX 0.5.3, Flax NNX 0.10.4, and the CUDA 12 plugin.
 All runs use seed 0. Checkpoints and downloaded data are gitignored; saved notebook
 outputs and the [run records](results.json) preserve the
 configurations, metrics, histories, hardware, and checkpoint hashes.
@@ -17,8 +17,8 @@ configurations, metrics, histories, hardware, and checkpoint hashes.
 | gan | 30 | 55,000 | 1,000 | Fixed-noise galleries; no quantitative quality claim |
 
 For the GAN, the listed test subset is loaded by the shared image loader but is
-not used for optimization or quantitative evaluation. Review the fixed-noise sample
-galleries, including defects. No FID, precision/recall, or coverage score is claimed.
+not used for optimization or quantitative evaluation. Evaluation uses fixed-noise sample galleries; FID, precision/recall, and coverage
+metrics were not computed.
 
 ## Evaluation protocol
 
