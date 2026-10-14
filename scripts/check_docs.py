@@ -44,7 +44,7 @@ for chapter in chapters:
     assert list((root / "_downloads").rglob(chapter.name)), f"Missing download: {chapter.name}"
 assert (root / ".nojekyll").exists()
 assert "neuraljaxwork.svg" in (root / "index.html").read_text(), "Project logo is missing"
-for section in ("guide", "learning", "api_reference"):
+for section in ("quickstart", "guide", "learning", "api_tutorials", "api_reference"):
     assert f"docs/{section}.html" in (root / "index.html").read_text()
 for internal in ("results", "validation", "publishing", "development"):
     assert not (root / "docs" / f"{internal}.html").exists(), (

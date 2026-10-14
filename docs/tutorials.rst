@@ -1,5 +1,5 @@
-Model examples
-==============
+Architecture implementations
+============================
 
 Each example documents its data, architecture, objective, training configuration,
 and evaluation. The displayed results were produced locally on one GPU and saved

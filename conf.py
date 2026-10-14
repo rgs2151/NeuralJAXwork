@@ -6,6 +6,7 @@ release = '0.1.0'
 extensions = ['myst_nb', 'sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx.ext.githubpages']
 html_theme = 'pydata_sphinx_theme'
 html_title = 'NeuralJAXwork'
+html_context = {'default_mode': 'light'}
 html_logo = 'logo/neuraljaxwork.svg'
 html_favicon = 'logo/neuraljaxwork.svg'
 html_static_path = ['docs/_static']

@@ -1,4 +1,4 @@
-# Getting started
+# Installation
 
 NeuralJAXwork combines familiar module composition with JAX's explicit gradients
 and state-aware compilation. This alpha installs from the repository; it is not
