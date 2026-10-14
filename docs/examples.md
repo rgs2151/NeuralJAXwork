@@ -1,7 +1,7 @@
 # Examples and datasets
 
 The published notebooks use the complete local GPU recipes in
-`examples/train_gallery.py`. Each [architecture tutorial](tutorials.rst) includes its
+`examples/train_gallery.py`. Each [architecture tutorial](learning.rst) includes its
 training configuration, evaluation, and saved figures.
 The commands below describe how to start or customize a run.
 
@@ -45,30 +45,76 @@ ten digit logits. A seeded validation subset comes from the official training
 set; the official test set is evaluated only after selection. `--limit` also caps
 evaluation samples for fast exploratory runs. Split IDs are saved.
 
-Artifacts include learning curves, confusion matrix, and misclassified images
-with true/predicted labels. The loader uses the
+Artifacts include learning curves, a confusion matrix, a correct-prediction gallery,
+and a separate error gallery with true/predicted labels. `gallery.npz` and
+`gallery.json` preserve the selected images, probabilities, indices, and selection
+rules for visualization. The loader uses the
 [upstream Keras MNIST mirror and published SHA-256](https://github.com/keras-team/keras/blob/master/keras/src/datasets/mnist.py),
 without depending on TensorFlow or Keras. Dataset attribution/license is described
 by that upstream source (MNIST derives from NIST and is credited to its authors).
 The code license does not replace dataset terms.
 
-## RNN and LSTM: next-value forecasting
+## RNN: seasonal temperature forecasting
 
 ```bash
-python -m examples.run rnn --epochs 20 --limit 1024
-python -m examples.run lstm --epochs 20 --limit 1024
+python -m examples.run rnn --download --epochs 80 --limit 100000 --batch-size 64
 ```
 
-Both models receive twelve sine-wave observations and predict the next value.
-Each trajectory has an independently sampled phase/frequency. Different seeds
-produce train, validation, and test trajectories, avoiding overlap from slicing
-one time series. The models share a linear prediction head and MSE objective.
+The RNN predicts 24 hourly New York temperatures from 168 known hours. Data come
+from [Open-Meteo's historical ERA5 API](https://open-meteo.com/en/docs/historical-weather-api),
+covering 2017–2025. Temperature normalization is fitted before 2023; calendar
+features encode hour and day of year. The model learns a correction to yesterday's
+hourly profile, with a zero-initialized output projection. Baselines repeat that
+profile or hold the last temperature constant.
 
-`forecast.png` plots predicted versus true values; the diagonal is perfect
-prediction. The report includes persistence baseline MSE (predict the last seen
-value). Compare architectures at equal seeds, data, and training budgets. This
-controlled task illustrates recurrent mechanics; it does not establish that LSTM
-is superior on long-range dependencies. Layer tests cover padding, carry state, and chunk equivalence.
+Training targets precede 2023, validation targets fall in 2023, and test targets
+fall in 2024–2025. Targets never cross split boundaries; known history may cross
+into the preceding split. The four seasonal forecast panels use fixed calendar
+dates, and the lead-time error plot evaluates all held-out daily origins.
+ERA5 is reanalysis, so this is a historical forecasting experiment rather than an
+operational weather-forecast replay. Data attribution: ERA5 / Copernicus Climate
+Change Service, distributed by Open-Meteo under CC BY 4.0.
+
+## LSTM: market volatility forecasting
+
+```bash
+python -m examples.run lstm --download --epochs 80 --limit 100000 --batch-size 64 --model-width 16
+```
+
+The LSTM uses 60 known trading sessions to predict the next five sessions'
+annualized root-mean-square log return: `sqrt(252 * mean(next_5_returns**2))`.
+[S&P 500 closing levels](https://fred.stlouisfed.org/series/SP500) come from
+S&P Dow Jones Indices LLC via FRED. The cached period is October 2016–December
+2025; FRED's available history rolls forward. Source URLs, file hashes, and actual
+split dates are recorded in `data.json`. Source data terms remain separate from
+the package license.
+
+Inputs contain past returns, absolute returns, and trailing 5- and 20-session
+volatility. The model learns a correction to the trailing-20-session estimate
+in standardized log-volatility space. Normalization uses training targets only.
+Chronological target splits match the weather experiment. Targets crossing split
+boundaries are excluded; adjacent five-session outcomes overlap within a split.
+Reported errors are descriptive, not independent statistical trials.
+
+The market plot pairs known index history with predicted and subsequent realized
+volatility. Baselines use trailing 5- and 20-session estimates. This is a volatility
+forecast, not a stock-price or trading-return model. Large unanticipated market
+shocks remain visible in the evaluation.
+
+Both recurrent examples use validation-based checkpoint selection, gradient
+clipping, and early stopping. Full float32 matrix products stabilize GPU replay.
+`--smoke` retains a small synthetic sequence check without network access.
+
+## Forecast records for visualization
+
+`predictions.npz` stores all held-out histories, forecasts, targets, baselines,
+and timestamps in physical units. `visualization.json` describes the fields.
+An animation can move through consecutive origins without inference or retraining:
+show history through `issued_at`, draw the forecast over `target_times`, and reveal
+the complete outcome at `outcome_available_at`. Weather targets are in °C;
+market volatility is stored as a fraction and multiplied by 100 for percent labels.
+Market `future_prices` are outcomes, not known inputs. These artifacts and all
+checkpoints stay in the gitignored run directory.
 
 ## Transformer: character next-token prediction
 

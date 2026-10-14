@@ -42,6 +42,20 @@ def run_experiment(
 ):
     if epochs < 1 or limit < 4 or batch_size < 1:
         raise ValueError("epochs>=1, limit>=4, batch_size>=1 are required")
+    if task in ("rnn", "lstm") and not smoke:
+        from .forecasting import run_forecast
+
+        return run_forecast(
+            task,
+            epochs=epochs,
+            batch_size=batch_size,
+            limit=limit,
+            seed=seed,
+            output=output,
+            download=download,
+            cache=cache,
+            hidden=model_width,
+        )
     output = Path(output or f"runs/{task}-{time.time_ns()}")
     config = dict(
         task=task,
@@ -308,12 +322,7 @@ def run_experiment(
             plots.classification(test[1], probabilities, output / "classification.png")
             np.savez(output / "predictions.npz", probabilities=probabilities, targets=test[1])
             if task == "cnn":
-                wrong = np.flatnonzero(probabilities.argmax(-1) != test[1])[:16]
-                if len(wrong):
-                    labels = [f"{test[1][i]}→{probabilities[i].argmax()}" for i in wrong]
-                    plots.image_grid(
-                        test[0][wrong], output / "mistakes.png", "True → predicted", labels
-                    )
+                plots.digit_gallery(test[0], test[1], probabilities, output)
             elif "test_sex" in metadata:
                 report["subgroups"] = {}
                 for group in sorted(set(metadata["test_sex"])):

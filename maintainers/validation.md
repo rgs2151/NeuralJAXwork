@@ -9,7 +9,8 @@ validates and displays the saved output record.
 The CPU suite exercises API/state behavior on tiny arrays, including eager/JIT
 agreement, parameter sharing, dropout, BatchNorm, stable losses, recurrent carries,
 causal attention, convolution arithmetic, dense/convolutional GAN update boundaries,
-checkpoint continuation, loader restoration, and trainer update counts. It needs
+checkpoint continuation, loader restoration, trainer update counts, chronological forecast boundaries, past-only rolling
+features, and training-only normalization. It needs
 no dataset downloads. The package and wheel are built in CI on Python 3.10/3.12.
 
 ## Local GPU runs

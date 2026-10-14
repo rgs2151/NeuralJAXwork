@@ -1,6 +1,7 @@
 """Train the documentation gallery locally on one GPU; never invoked by CI."""
 
 import argparse
+import json
 import os
 import subprocess
 import sys
@@ -20,8 +21,8 @@ RECIPES = {
         "256",
     ],
     "titanic": ["--epochs", "100", "--batch-size", "64"],
-    "rnn": ["--epochs", "40", "--limit", "4096", "--batch-size", "128"],
-    "lstm": ["--epochs", "40", "--limit", "4096", "--batch-size", "128"],
+    "rnn": ["--epochs", "80", "--limit", "100000", "--batch-size", "64"],
+    "lstm": ["--epochs", "80", "--limit", "100000", "--batch-size", "64", "--model-width", "16"],
     "transformer": [
         "--epochs",
         "20",
@@ -61,6 +62,11 @@ def main():
     root.mkdir(parents=True, exist_ok=True)
     for task in args.tasks:
         if (root / task / "report.json").exists():
+            report = json.loads((root / task / "report.json").read_text())
+            if task in ("rnn", "lstm") and "evaluation" not in report:
+                raise ValueError(
+                    f"{root / task} contains an older sequence task; choose a fresh --root"
+                )
             print(f"{task}: completed run already exists; preserving it", flush=True)
             continue
         with (root / f"{task}.log").open("w") as log:

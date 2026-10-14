@@ -1,7 +1,7 @@
 # NeuralJAXwork
 
 [Documentation](https://rgs2151.github.io/NeuralJAXwork/) ·
-[Architecture tutorials](https://rgs2151.github.io/NeuralJAXwork/docs/tutorials.html)
+[Architecture tutorials](https://rgs2151.github.io/NeuralJAXwork/docs/learning.html)
 
 <p align="center"><img src="logo/neuraljaxwork.svg" width="150" alt="NeuralJAXwork logo"></p>
 
@@ -108,16 +108,16 @@ Run these from the repository root after installing `.[examples]`:
 | Model | Command | Outputs |
 | --- | --- | --- |
 | Dense | `python -m examples.run titanic --download` | Held-out confusion matrix, ROC, calibration, subgroup report |
-| CNN | `python -m examples.run cnn --download` | MNIST accuracy, confusion matrix, misclassified digits |
-| RNN | `python -m examples.run rnn` | Sine next-value predictions and persistence baseline |
-| LSTM | `python -m examples.run lstm` | Same forecasting task for comparison |
+| CNN | `python -m examples.run cnn --download` | MNIST accuracy, correct predictions, confusion matrix, and error analysis |
+| RNN | `python -m examples.run rnn --download` | Next-day New York temperature curves and seasonal baselines |
+| LSTM | `python -m examples.run lstm --download` | S&P 500 volatility forecasts and historical baselines |
 | Transformer | `python -m examples.run transformer` | Character loss/perplexity and sampled text |
 | Autoencoder | `python -m examples.run autoencoder --download` | MNIST original/reconstruction pairs and latent codes |
 | GAN | `python -m examples.run gan --download` | Fashion-MNIST fixed-noise sample grids and both losses |
 
 Defaults use small subsets and two epochs. Configure a run with
 `--epochs`, `--limit`, `--batch-size`, `--seed`, and `--output`.
-`--limit` caps image/text training subsets and sets synthetic sequence count;
+`--limit` caps image/text training subsets and forecasting windows;
 Titanic uses its full training split. `--smoke --epochs 1` uses tiny synthetic
 inputs without downloads.
 

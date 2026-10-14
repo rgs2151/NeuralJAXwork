@@ -18,6 +18,15 @@ python -m pip install 'jax[cuda12]==0.5.3'
 CUDA_VISIBLE_DEVICES=0 JAX_PLATFORMS=cuda python -m examples.train_gallery
 ```
 
+The recurrent tutorials use a separate run root:
+
+```bash
+python -m examples.train_gallery --tasks rnn lstm --root runs/forecast-gallery-v2 --gpu 0
+```
+
+Choose a fresh root to retrain. Older sine-sequence artifacts are not reused for
+these datasets. Forecast notebooks reference `runs/forecast-gallery-v2`.
+
 The gallery runner's recipes are in `examples/train_gallery.py`. It preserves
 completed runs. Download Tiny Shakespeare to `data/tinyshakespeare.txt` as
 described in the transformer tutorial before running that recipe. Training

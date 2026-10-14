@@ -18,7 +18,7 @@ modes = [
 ]
 assert modes == ["off"], "Documentation builds must never execute notebooks"
 indices = "".join(
-    (root / "docs" / name).read_text() for name in ("tutorials.html", "api_tutorials.html")
+    (root / "docs" / name).read_text() for name in ("learning.html", "api_tutorials.html")
 )
 chapters = sorted((source / "notebooks").glob("*.ipynb"))
 for chapter in chapters:

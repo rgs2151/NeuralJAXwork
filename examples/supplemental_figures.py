@@ -6,44 +6,25 @@ from pathlib import Path
 import numpy as np
 
 
-def create(root="runs/gallery", autoencoder="runs/gallery-refined/autoencoder"):
+def create(
+    root="runs/gallery",
+    autoencoder="runs/gallery-refined/autoencoder",
+    forecasts="runs/forecast-gallery-v2",
+):
     import matplotlib.pyplot as plt
     from sklearn.decomposition import PCA
     from sklearn.metrics import brier_score_loss, roc_auc_score
 
     from . import datasets
+    from .forecasting import draw_forecasts
 
     root = Path(root)
+
     for task in ("rnn", "lstm"):
-        path = root / task
-        saved = np.load(path / "predictions.npz")
-        x, y = datasets.sine_sequences(128, length=12, seed=2)
-        fig, axes = plt.subplots(2, 2, figsize=(9, 5), sharex=True, sharey=True)
-        for i, ax in enumerate(axes.flat):
-            ax.plot(np.arange(12), x[i, :, 0], color="#265d87", label="Observed")
-            ax.scatter(
-                [12],
-                [y[i, 0]],
-                marker="o",
-                s=65,
-                facecolors="none",
-                edgecolors="black",
-                label="Target",
-            )
-            ax.scatter(
-                [12],
-                [saved["predictions"][i, 0]],
-                marker="x",
-                s=50,
-                color="#b65032",
-                label="Prediction",
-            )
-            ax.set(xlabel="Time step", ylabel="Value", title=f"Test trajectory {i}")
-            ax.spines[["top", "right"]].set_visible(False)
-        axes[0, 0].legend(fontsize=8)
-        fig.tight_layout()
-        fig.savefig(path / "trajectories.png", dpi=150)
-        plt.close(fig)
+        path = Path(forecasts) / task
+        with np.load(path / "predictions.npz", allow_pickle=False) as archive:
+            records = {name: archive[name] for name in archive.files}
+        draw_forecasts(task, records, path)
     path = Path(autoencoder)
     saved = np.load(path / "predictions.npz")
     _, (_, labels) = datasets.images("mnist")

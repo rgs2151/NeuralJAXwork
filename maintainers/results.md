@@ -10,8 +10,8 @@ configurations, metrics, histories, hardware, and checkpoint hashes.
 | --- | ---: | ---: | ---: | --- |
 | titanic | 100 | 916 | 197 | Accuracy **81.22%** |
 | cnn | 10 | 55,000 | 10,000 | Accuracy **98.94%** |
-| rnn | 40 | 4,096 | 128 | MSE **0.000037** |
-| lstm | 40 | 4,096 | 128 | MSE **0.000043** |
+| rnn | 80 (selected 75) | 2,184 | 731 daily forecasts | Temperature MAE **1.81°C** |
+| lstm | 23 (selected 8) | 1,479 | 498 forecast origins | Volatility MAE **4.56 percentage points** |
 | transformer | 20 | 27,881 | 2,048 | Cross-entropy **1.7873**; perplexity **5.973** |
 | autoencoder | 25 | 55,000 | 10,000 | MSE **0.010804** |
 | gan | 30 | 55,000 | 1,000 | Fixed-noise galleries; no quantitative quality claim |
@@ -25,8 +25,17 @@ metrics were not computed.
 The CNN and autoencoder use 55,000 training images, a seeded 5,000-image validation
 split, and all 10,000 official MNIST test images. Titanic uses a stratified
 916/196/197 split and preprocessing fitted only on training rows. RNN and LSTM
-use 4,096 independent training trajectories and 128 independent trajectories for
-each evaluation split. Their test persistence baseline MSE is 0.022309.
+use historical weather and market data, with training targets before 2023,
+validation targets in 2023, and test targets in 2024–2025. Targets crossing a
+split boundary are excluded. Prior observations can be used as input history.
+The RNN predicts 24 hourly temperatures from seven days of history; repeating
+yesterday gives 2.57°C MAE. The LSTM predicts five-session annualized RMS log
+return from 60 prior sessions; trailing-20-session volatility gives 5.70 percentage
+points MAE. Overlapping market targets are not independent statistical trials.
+Both forecast models use full float32 matrix products, and the selected checkpoints
+reproduce saved predictions in a fresh process on the same GPU. The initial
+reduced-precision runs were replaced to resolve GPU replay differences; final
+records use `runs/forecast-gallery-v2`.
 
 The transformer uses contiguous 80/10/10 character ranges of Tiny Shakespeare,
 a 128-character context, width 128, three blocks, and a fixed ASCII vocabulary.

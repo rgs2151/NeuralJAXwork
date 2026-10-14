@@ -64,7 +64,7 @@ python -m examples.run cnn --download --epochs 10 --limit 10000
 
 The first command verifies the pipeline on tiny synthetic data. The second runs
 the MNIST experiment. Both write fresh run directories containing metrics,
-checkpoints, and plots. Start with the [tutorial chapters](tutorials.rst), then
+checkpoints, and plots. Start with the [tutorial chapters](learning.rst), then
 use the [API guide](api.md) to build your own model.
 
 For interactive editing, install `.[notebooks]` and run `jupyter lab`. The same
