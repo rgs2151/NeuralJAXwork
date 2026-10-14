@@ -1,7 +1,9 @@
 NeuralJAXlib
 =============
 
-:download:`Download the interactive CNN, RNN, Autoencoder, GAN, and Transformer gallery <gallery/assets/composite.html>`
+.. image:: /gallery/composite/gallery.gif
+   :alt: CNN, RNN, Autoencoder, GAN, and Transformer animations
+   :width: 100%
 
 NeuralJAXlib is a lightweight, GPU-accelerated framework for building and exploring
 neural networks in JAX. Its modular building blocks support architectures ranging

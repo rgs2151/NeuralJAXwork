@@ -16,7 +16,7 @@ examples and visualizations for learning and experimentation.
 
 ## Gallery
 
-[CNN, RNN, Autoencoder, GAN, and Transformer animated gallery](gallery/assets/composite.html)
+![CNN, RNN, Autoencoder, GAN, and Transformer animations](gallery/composite/gallery.gif)
 
 [Documentation](https://rgs2151.github.io/NeuralJAXlib/) ·
 [Architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html) ·

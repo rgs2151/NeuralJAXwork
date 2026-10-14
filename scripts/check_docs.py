@@ -2,6 +2,7 @@
 
 import ast
 import hashlib
+import re
 import sys
 from pathlib import Path
 
@@ -44,6 +45,13 @@ for chapter in chapters:
     assert list((root / "_downloads").rglob(chapter.name)), f"Missing download: {chapter.name}"
 assert (root / ".nojekyll").exists()
 assert "neuraljaxlib.svg" in (root / "index.html").read_text(), "Project logo is missing"
+homepage = (root / "index.html").read_text()
+assert re.search(r'<img\b[^>]*src="_images/gallery\.gif"', homepage), (
+    "Landing page must display the gallery GIF as an image"
+)
+assert (root / "_images/gallery.gif").read_bytes() == (
+    source / "gallery/composite/gallery.gif"
+).read_bytes(), "Published gallery differs from the approved GIF"
 for section in ("quickstart", "guide", "learning", "api_tutorials", "api_reference"):
     assert f"docs/{section}.html" in (root / "index.html").read_text()
 for internal in ("results", "validation", "publishing", "development"):

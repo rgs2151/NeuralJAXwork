@@ -24,13 +24,15 @@ the CNN scan window and RNN lines excessively thick. The RNN source now uses
 
 - `index.html`: live row loading the canonical renderers.
 - `animation.js`: shared layout and playback orchestration.
+- `gallery.gif`: the current 18-second looping GIF for the README and docs landing page.
 - `../assets/composite.html`: self-contained corrected row.
 - `../assets/{cnn,rnn,autoencoder,gan,transformer}.html`: standalone assets.
 - `../frozen.json`: approved individual-source hashes.
 
-The previous distorted `gallery.gif` was deleted, not retained as another
-approved version. The README and documentation now link to the interactive
-bundle. A new GIF can be exported later when browser capture is authorized.
+The current GIF is captured from this corrected layout at 1248 × 300 pixels,
+15 frames per second, with the original playback speeds. Its last eight frames
+blend into the opening frame. The README and documentation display the GIF
+directly; the interactive bundle remains available separately.
 
 ## Reproduction
 
