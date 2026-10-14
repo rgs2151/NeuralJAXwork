@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CNN</title>
+  <style>
+    body { margin: 0; background: #000; color: #eee; }
+    #cnn-preview { width: 100%; max-width: 240px; margin: auto; }
+  </style>
+</head>
+<body>
+  <div id="cnn-preview"></div>
+  <script src="samples.js"></script>
+  <script src="animation.js"></script>
+  <script>window.cnn = mountCNN(document.getElementById('cnn-preview'), CNN_SAMPLES);</script>
+</body>
+</html>

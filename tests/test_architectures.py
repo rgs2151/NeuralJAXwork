@@ -47,11 +47,22 @@ def test_attention_causal_and_fully_masked_gradients():
 def test_cnn_and_autoencoder_updates():
     images = jnp.ones((2, 1, 28, 28)) * 0.5
     model = models.DigitCNN(width=2, rngs=nj.Rngs(params=0))
+    before = [
+        np.asarray(c.weight.value).copy()
+        for c in (model.conv1, model.conv2, model.conv3, model.conv4)
+    ]
     opt = optim.Adam(model.parameters())
     assert np.isfinite(
         training.cnn_step(model, opt, (images, jnp.array([0, 1])), nj.Rngs(dropout=2))["loss"]
     )
     assert model.eval()(images).shape == (2, 10)
+    x = jnp.pad(images, ((0, 0), (0, 0), (2, 2), (2, 2)))
+    for conv, size, old in zip(
+        (model.conv1, model.conv2, model.conv3, model.conv4), (16, 8, 4, 2), before, strict=True
+    ):
+        x = model.pool(jax.nn.relu(conv(x)))
+        assert x.shape[-2:] == (size, size)
+        assert not np.array_equal(old, conv.weight.value)
     ae = models.Autoencoder(latent_size=2, width=4, rngs=nj.Rngs(params=2))
     ae_opt = optim.Adam(ae.parameters())
     assert np.isfinite(training.autoencoder_step(ae, ae_opt, images)["loss"])

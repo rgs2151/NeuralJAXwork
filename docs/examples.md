@@ -40,8 +40,9 @@ a stricter generalization study would need family/group-aware splitting.
 python -m examples.run cnn --download --limit 10000 --epochs 10
 ```
 
-Two convolutions, pooling, dropout, and a linear head map `[B,1,28,28]` images to
-ten digit logits. A seeded validation subset comes from the official training
+Four convolution–ReLU–max-pooling stages, dropout, and a linear head map
+`[B,1,28,28]` images to ten digit logits. Zero padding expands the input to 32×32;
+the four stages reduce it to 16×16, 8×8, 4×4, and 2×2. A seeded validation subset comes from the official training
 set; the official test set is evaluated only after selection. `--limit` also caps
 evaluation samples for fast exploratory runs. Split IDs are saved.
 

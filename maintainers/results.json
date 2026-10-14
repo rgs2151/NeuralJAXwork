@@ -474,48 +474,48 @@
   "cnn": {
     "history": [
       {
-        "train_loss": 0.3488135380073027,
-        "val_loss": 0.12361503173708915
+        "train_loss": 0.3139914751713926,
+        "val_loss": 0.09582492862939834
       },
       {
-        "train_loss": 0.10522687173269012,
-        "val_loss": 0.08255835479795932
+        "train_loss": 0.07972842653177001,
+        "val_loss": 0.07233840208426118
       },
       {
-        "train_loss": 0.07886707117340781,
-        "val_loss": 0.07211268778443336
+        "train_loss": 0.0540894119376486,
+        "val_loss": 0.05173049095571041
       },
       {
-        "train_loss": 0.06707520404241302,
-        "val_loss": 0.05971080347895622
+        "train_loss": 0.041527890926193106,
+        "val_loss": 0.05129893442764878
       },
       {
-        "train_loss": 0.057743479311466214,
-        "val_loss": 0.06106309963911772
+        "train_loss": 0.034856132611564616,
+        "val_loss": 0.03618718651905656
       },
       {
-        "train_loss": 0.05083068197207018,
-        "val_loss": 0.06254937659054995
+        "train_loss": 0.02892283509725874,
+        "val_loss": 0.038704655375890434
       },
       {
-        "train_loss": 0.04707101851024411,
-        "val_loss": 0.05573194117844105
+        "train_loss": 0.025333129914917728,
+        "val_loss": 0.038299869254231456
       },
       {
-        "train_loss": 0.04303013298078017,
-        "val_loss": 0.05714492034316063
+        "train_loss": 0.022164476522261445,
+        "val_loss": 0.044930181515589356
       },
       {
-        "train_loss": 0.039381860358064825,
-        "val_loss": 0.0496143322467804
+        "train_loss": 0.01989656485149806,
+        "val_loss": 0.038651817446923815
       },
       {
-        "train_loss": 0.03724836224073713,
-        "val_loss": 0.04601457298547029
+        "train_loss": 0.016621081023189155,
+        "val_loss": 0.046706913012155564
       }
     ],
     "smoke": false,
-    "training_seconds": 8.991205401718616,
+    "training_seconds": 10.915008052717894,
     "devices": [
       "cuda:0 NVIDIA GeForce RTX 5090"
     ],
@@ -535,8 +535,8 @@
     "train_samples": 55000,
     "validation_samples": 5000,
     "test_samples": 10000,
-    "test_loss": 0.0302992644155398,
-    "test_accuracy": 0.9894,
+    "test_loss": 0.026345845453068614,
+    "test_accuracy": 0.9906,
     "majority_baseline_accuracy": 0.1135,
     "manifest": {
       "schema": 1,
@@ -558,8 +558,8 @@
         "cuda:0"
       ]
     },
-    "checkpoint_sha256": "ac246ff4c2d3a37ab56a2474e6c23eb74bdf06aa6e261c444633a68f833005e9",
-    "selected_epoch": 10,
+    "checkpoint_sha256": "67ccf3261aa54398309d80c8eb39369dace52d332c8ed6541de72a8765237a8f",
+    "selected_epoch": 5,
     "environment": {
       "jax": "0.5.3",
       "jaxlib": "0.5.3",

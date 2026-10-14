@@ -9,7 +9,7 @@ configurations, metrics, histories, hardware, and checkpoint hashes.
 | Example | Epochs | Training examples | Test examples | Held-out result |
 | --- | ---: | ---: | ---: | --- |
 | titanic | 100 | 916 | 197 | Accuracy **81.22%** |
-| cnn | 10 | 55,000 | 10,000 | Accuracy **98.94%** |
+| cnn | 10 | 55,000 | 10,000 | Accuracy **99.06%** |
 | rnn | 80 (selected 75) | 2,184 | 731 daily forecasts | Temperature MAE **1.81°C** |
 | lstm | 23 (selected 8) | 1,479 | 498 forecast origins | Volatility MAE **4.56 percentage points** |
 | transformer | 20 | 27,881 | 2,048 | Cross-entropy **1.7873**; perplexity **5.973** |
@@ -19,6 +19,8 @@ configurations, metrics, histories, hardware, and checkpoint hashes.
 For the GAN, the listed test subset is loaded by the shared image loader but is
 not used for optimization or quantitative evaluation. Evaluation uses fixed-noise sample galleries; FID, precision/recall, and coverage
 metrics were not computed.
+
+The four-stage CNN was retrained in `runs/gallery-four-layer/cnn`. Its lowest-validation-loss checkpoint (epoch 5) replaces the two-stage CNN result.
 
 ## Evaluation protocol
 

@@ -22,20 +22,27 @@ class MLP(nn.Module):
 
 
 class DigitCNN(nn.Module):
-    """MNIST NCHW images to ten logits; width controls the smoke-test size."""
+    """Four convolution/pooling stages for MNIST NCHW images.
+
+    Zero padding expands 28x28 to 32x32 before four reductions to 16, 8,
+    4, and 2 pixels per side. Earlier two-stage checkpoints are incompatible.
+    """
 
     def __init__(self, width=16, classes=10, *, rngs):
         super().__init__()
         self.conv1 = nn.Conv2d(1, width, 3, padding=1, rngs=rngs)
         self.conv2 = nn.Conv2d(width, width * 2, 3, padding=1, rngs=rngs)
-        self.pool = nn.MaxPool2d(2)
+        self.conv3 = nn.Conv2d(width * 2, width * 4, 3, padding=1, rngs=rngs)
+        self.conv4 = nn.Conv2d(width * 4, width * 8, 3, padding=1, rngs=rngs)
+        self.pool = nn.MaxPool2d(2, stride=2)
         self.dropout = nn.Dropout(0.2)
-        self.head = nn.Linear(width * 2 * 7 * 7, classes, rngs=rngs)
+        self.head = nn.Linear(width * 8 * 2 * 2, classes, rngs=rngs)
 
     def forward(self, x, *, rngs=None):
-        x = self.pool(F.relu(self.conv1(x)))
-        x = self.pool(F.relu(self.conv2(x))).reshape(x.shape[0], -1)
-        return self.head(self.dropout(x, rngs=rngs))
+        x = jnp.pad(x, ((0, 0), (0, 0), (2, 2), (2, 2)))
+        for conv in (self.conv1, self.conv2, self.conv3, self.conv4):
+            x = self.pool(F.relu(conv(x)))
+        return self.head(self.dropout(x.reshape(x.shape[0], -1), rngs=rngs))
 
 
 class PetCNN(nn.Module):
