@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="16 0 208 268" role="img" aria-labelledby="title desc">
+<title id="title">NeuralJAXwork</title>
+<desc id="desc">Three open blue, magenta, and teal layers with suspended blocks above a dark-red base.</desc>
+<!-- Dark-red foundation; geometry continues the original open-layer design. -->
+<path d="M28 178L113 129L212 186V206L127 255L28 198Z" fill="#57101C"/>
+<path d="M28 178L113 129L212 186L184 202L113 161L56 194Z M84 210L113 193L156 218L127 235Z" fill="#8B1426"/>
+<!-- Teal layer and third suspended block. -->
+<path d="M28 137L113 88L212 145V165L184 181V161L113 120L56 153V173L28 157Z M84 169L113 152L156 177V197L127 214L84 189Z" fill="#165C70"/>
+<path d="M28 137L113 88L212 145L184 161L113 120L56 153Z M84 169L113 152L156 177L127 194Z" fill="#28B4BC"/>
+<!-- Magenta layer and second suspended block. -->
+<path d="M28 96L113 47L212 104V124L184 140V120L113 79L56 112V132L28 116Z M84 128L113 111L156 136V156L127 173L84 148Z" fill="#60316D"/>
+<path d="M28 96L113 47L212 104L184 120L113 79L56 112Z M84 128L113 111L156 136L127 153Z" fill="#9A4CA8"/>
+<!-- Blue layer and first suspended block. -->
+<path d="M28 55L113 6L212 63V83L184 99V79L113 38L56 71V91L28 75Z M84 87L113 70L156 95V115L127 132L84 107Z" fill="#23447E"/>
+<path d="M28 55L113 6L212 63L184 79L113 38L56 71Z M84 87L113 70L156 95L127 112Z" fill="#5C8DDA"/>
+</svg>

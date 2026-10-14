@@ -43,7 +43,7 @@ for chapter in chapters:
         assert "<img" in html and "_images/" in html, f"Missing figure: {chapter.name}"
     assert list((root / "_downloads").rglob(chapter.name)), f"Missing download: {chapter.name}"
 assert (root / ".nojekyll").exists()
-assert "jax_logo_min.png" in (root / "index.html").read_text(), "Original logo is missing"
+assert "neuraljaxwork.svg" in (root / "index.html").read_text(), "Project logo is missing"
 for section in ("guide", "learning", "api_reference"):
     assert f"docs/{section}.html" in (root / "index.html").read_text()
 for internal in ("results", "validation", "publishing", "development"):
@@ -52,5 +52,5 @@ for internal in ("results", "validation", "publishing", "development"):
     )
 assert not (root / "_static" / "results.json").exists(), "Internal run record published"
 print(
-    f"Validated {len(chapters)} saved notebooks, rendered pages, downloads, and original logo. No code executed."
+    f"Validated {len(chapters)} saved notebooks, rendered pages, downloads, and project logo. No code executed."
 )

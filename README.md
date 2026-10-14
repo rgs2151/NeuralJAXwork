@@ -3,7 +3,7 @@
 [Read the tutorial book](https://rgs2151.github.io/NeuralJAXwork/) ·
 [Architecture tutorials](https://rgs2151.github.io/NeuralJAXwork/docs/tutorials.html)
 
-<p align="center"><img src="logo/jax_logo_min.png" width="150" alt="NeuralJAXwork logo"></p>
+<p align="center"><img src="logo/neuraljaxwork.svg" width="150" alt="NeuralJAXwork logo"></p>
 
 [![Tests](https://github.com/rgs2151/NeuralJAXwork/actions/workflows/check_demos.yml/badge.svg)](https://github.com/rgs2151/NeuralJAXwork/actions/workflows/check_demos.yml)
 [![Documentation](https://github.com/rgs2151/NeuralJAXwork/actions/workflows/doc_maker.yml/badge.svg)](https://rgs2151.github.io/NeuralJAXwork/)
