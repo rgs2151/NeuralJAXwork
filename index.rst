@@ -1,19 +1,12 @@
 NeuralJAXlib
 =============
 
-NeuralJAXlib is a GPU-accelerated, lightweight machine-learning framework in JAX.
-PyTorch-style modules, automatic differentiation, JIT compilation, and explicit
-training loops provide a common API for dense networks, CNNs, recurrent networks,
-transformers, autoencoders, and GANs.
+NeuralJAXlib is a lightweight, GPU-accelerated framework for building and exploring
+neural networks in JAX. Its modular building blocks support architectures ranging
+from dense networks and CNNs to transformers, autoencoders, and GANs.
 
-Model structure, gradients, optimizer updates, and random state remain visible
-in your code, making it straightforward to inspect and adapt each part of a
-training pipeline. The tutorials use this approach to connect neural-network
-concepts with working implementations, real datasets, and visual evaluation.
-
-Start with installation and the user guide, follow an architecture tutorial to
-train a model, or explore the API tutorials to build your own components.
-The API reference documents individual interfaces and their behavior.
+The library supports model development, training, and evaluation, with documented
+examples and visualizations for learning and experimentation.
 
 .. toctree::
    :maxdepth: 2

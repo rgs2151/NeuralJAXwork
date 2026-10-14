@@ -7,20 +7,12 @@
 [![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-NeuralJAXlib is a GPU-accelerated, lightweight machine-learning framework in JAX.
-It combines PyTorch-style modules with automatic differentiation, JIT compilation,
-and explicit training loops. Build dense networks, CNNs, recurrent networks,
-transformers, autoencoders, and GANs through a shared, composable API.
+NeuralJAXlib is a lightweight, GPU-accelerated framework for building and exploring
+neural networks in JAX. Its modular building blocks support architectures ranging
+from dense networks and CNNs to transformers, autoencoders, and GANs.
 
-The framework keeps model structure, gradients, optimizer updates, and random
-state visible in your code. You can start with a reference architecture, replace
-individual components, and inspect how each change affects training and predictions.
-Flax NNX manages module state and transformations; Optax supplies the optimizers.
-
-This makes NeuralJAXlib a practical setting for learning how neural networks work
-and experimenting with their design. Worked examples connect the implementation
-to real datasets, evaluation metrics, and visualizations, from MNIST classification
-to language modeling and image generation.
+The library supports model development, training, and evaluation, with documented
+examples and visualizations for learning and experimentation.
 
 [Documentation](https://rgs2151.github.io/NeuralJAXlib/) ·
 [Architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html) ·
