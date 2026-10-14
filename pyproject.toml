@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "neuraljaxlib"
 version = "0.1.0"
-description = "Composable PyTorch-style neural networks and explicit training on JAX"
+description = "GPU-accelerated, lightweight ML framework in JAX with PyTorch-style modules and explicit training loops"
 readme = "README.md"
 requires-python = ">=3.10,<3.14"
 license = {file = "LICENSE"}

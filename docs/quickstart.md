@@ -1,8 +1,8 @@
 # Installation
 
-NeuralJAXlib combines familiar module composition with JAX's explicit gradients
-and state-aware compilation. This alpha installs from the repository; it is not
-yet published to PyPI.
+Install NeuralJAXlib from the repository to use its layers, optimizers, and
+training utilities. The commands below include dependencies for development
+and the worked examples.
 
 ## Install a checkout
 

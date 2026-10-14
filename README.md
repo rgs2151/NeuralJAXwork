@@ -1,22 +1,30 @@
-# NeuralJAXlib
-
-[Documentation](https://rgs2151.github.io/NeuralJAXlib/) ·
-[Architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html)
-
 <p align="center"><img src="logo/neuraljaxlib.svg" width="150" alt="NeuralJAXlib logo"></p>
+
+# NeuralJAXlib
 
 [![Tests](https://github.com/rgs2151/NeuralJAXlib/actions/workflows/check_demos.yml/badge.svg)](https://github.com/rgs2151/NeuralJAXlib/actions/workflows/check_demos.yml)
 [![Documentation](https://github.com/rgs2151/NeuralJAXlib/actions/workflows/doc_maker.yml/badge.svg)](https://rgs2151.github.io/NeuralJAXlib/)
 [![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-NeuralJAXlib is a neural-network library with PyTorch-style module composition,
-JAX automatic differentiation, and explicit training loops. Flax NNX manages
-module state and transformations; Optax provides optimizer implementations.
+NeuralJAXlib is a GPU-accelerated, lightweight machine-learning framework in JAX.
+It combines PyTorch-style modules with automatic differentiation, JIT compilation,
+and explicit training loops. Build dense networks, CNNs, recurrent networks,
+transformers, autoencoders, and GANs through a shared, composable API.
 
-Version **0.1.0 (alpha)**. Install from this repository; no PyPI release has been
-published. The documentation includes API tutorials, reference material, and
-architecture implementations with saved training results.
+The framework keeps model structure, gradients, optimizer updates, and random
+state visible in your code. You can start with a reference architecture, replace
+individual components, and inspect how each change affects training and predictions.
+Flax NNX manages module state and transformations; Optax supplies the optimizers.
+
+This makes NeuralJAXlib a practical setting for learning how neural networks work
+and experimenting with their design. Worked examples connect the implementation
+to real datasets, evaluation metrics, and visualizations, from MNIST classification
+to language modeling and image generation.
+
+[Documentation](https://rgs2151.github.io/NeuralJAXlib/) ·
+[Architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html) ·
+[API tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/api_tutorials.html)
 
 ## Install
 
