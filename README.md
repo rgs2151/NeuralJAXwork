@@ -14,13 +14,13 @@ from dense networks and CNNs to transformers, autoencoders, and GANs.
 The library supports model development, training, and evaluation, with documented
 examples and visualizations for learning and experimentation.
 
-[Documentation](https://rgs2151.github.io/NeuralJAXlib/) ·
-[Architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html) ·
-[API tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/api_tutorials.html)
-
 ## Gallery
 
 ![CNN, RNN, Autoencoder, GAN, and Transformer animations](gallery/composite/gallery.gif)
+
+[Documentation](https://rgs2151.github.io/NeuralJAXlib/) ·
+[Architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html) ·
+[API tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/api_tutorials.html)
 
 ## Install
 
