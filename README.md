@@ -3,14 +3,22 @@
 [Read the tutorial book](https://rgs2151.github.io/NeuralJAXwork/) ·
 [Architecture tutorials](https://rgs2151.github.io/NeuralJAXwork/docs/tutorials.html)
 
-**Composable neural networks on JAX, with PyTorch-style model definitions and
-explicit training loops.** Build a model with `nn.Module` and `forward`, compute
-gradients with `value_and_grad`, then apply them with an optimizer. Flax NNX handles
-state-aware transformations; JAX computes gradients; Optax supplies optimizer math.
+<p align="center"><img src="logo/jax_logo_min.png" width="150" alt="NeuralJAXwork logo"></p>
 
-Version **0.1.0 — alpha**. This repository is installable from source; it has not
-been published to PyPI. CPU behavior is tested. Accelerator execution uses JAX,
-but this release does not claim GPU benchmark or multi-device coverage.
+[![Tests](https://github.com/rgs2151/NeuralJAXwork/actions/workflows/check_demos.yml/badge.svg)](https://github.com/rgs2151/NeuralJAXwork/actions/workflows/check_demos.yml)
+[![Documentation](https://github.com/rgs2151/NeuralJAXwork/actions/workflows/doc_maker.yml/badge.svg)](https://rgs2151.github.io/NeuralJAXwork/)
+[![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)](pyproject.toml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![JAX](https://img.shields.io/badge/backend-JAX-009688)](https://github.com/jax-ml/jax)
+
+NeuralJAXwork is a neural-network library with PyTorch-style module composition,
+JAX automatic differentiation, and explicit training loops. Flax NNX manages
+module state and transformations; Optax provides optimizer implementations.
+
+Version **0.1.0 (alpha)**. Install from this repository; no PyPI release has been
+published. The documentation includes API tutorials, reference material, and
+locally trained examples with saved results. CI renders those results without
+executing notebooks or training models.
 
 ## Install
 
@@ -90,6 +98,13 @@ and structured outputs are ordinary Python composition.
 
 ## Examples
 
+The [published results](https://rgs2151.github.io/NeuralJAXwork/docs/results.html)
+come from local RTX 5090 training: 98.94% MNIST test accuracy, 81.22% Titanic
+holdout accuracy, recurrent forecasting comparisons, MNIST reconstructions,
+Tiny Shakespeare generation, and convolutional Fashion-MNIST samples. The
+[API tutorials](https://rgs2151.github.io/NeuralJAXwork/docs/api_tutorials.html)
+cover modules, optimization, data, checkpoints, and custom layers.
+
 Run these from the repository root after installing `.[examples]`:
 
 | Model | Example | Visual evidence |
@@ -123,7 +138,6 @@ are not silently overwritten. See [the example guide](docs/examples.md) and
 ```bash
 JAX_PLATFORMS=cpu python -m pytest
 python -m build
-python -m ipykernel install --sys-prefix --name python3
 python -m sphinx -W --keep-going -b html . _build/html
 python scripts/check_docs.py _build/html
 ```
@@ -131,8 +145,8 @@ python scripts/check_docs.py _build/html
 Tests use tiny batches, no downloads, and one or a few updates. They check actual
 state/gradient behavior, not model convergence on full datasets. The notebook
 and dataset runs are intentionally outside the default test suite. Documentation
-CI separately executes all seven notebooks in offline smoke mode, renders them
-into the Sphinx book, and deploys successful main-branch builds to GitHub Pages.
+CI renders saved notebook outputs and deploys successful main-branch builds to
+GitHub Pages. Training is a separate, local GPU workflow.
 
 ## Documentation and status
 

@@ -1,43 +1,57 @@
-# Building and publishing the tutorial book
+# Documentation workflow
 
-The documentation is a Sphinx book using MyST-NB and the Sphinx Book Theme.
-Notebook sources in `notebooks/` are included directly in the table of contents.
-They are executed during the build and rendered with their reports and figures;
-there is no separate hand-copied tutorial version.
+Sphinx, MyST-NB, and the Sphinx Book Theme render the documentation. Notebook
+execution is disabled with `nb_execution_mode = 'off'`. This setting applies to
+local documentation builds and GitHub Actions alike. Saved cell outputs are the
+published record; rendering never starts training.
 
-## Build locally
+## Local training and notebook execution
+
+Install the notebook dependencies and a compatible JAX GPU runtime. Select one
+GPU explicitly. The documented local environment uses JAX 0.5.3 with its CUDA 12
+plugin and CUDA libraries, on an NVIDIA RTX 5090:
 
 ```bash
-python -m pip install -e '.[dev,docs]'
-python -m ipykernel install --sys-prefix --name python3
-JAX_PLATFORMS=cpu MPLBACKEND=Agg python -m sphinx -W --keep-going -b html . _build/html
+python -m pip install --upgrade pip
+python -m pip install -e '.[notebooks,docs,dev]'
+python -m pip install 'jax[cuda12]==0.5.3'
+CUDA_VISIBLE_DEVICES=0 JAX_PLATFORMS=cuda python -m examples.train_gallery
+```
+
+The gallery runner's recipes are in `examples/train_gallery.py`. It preserves
+completed runs. Download Tiny Shakespeare to `data/tinyshakespeare.txt` as
+described in the transformer tutorial before running that recipe. Training
+checkpoints and full artifacts live under gitignored `runs/`; datasets live under
+`data/`. The second GPU is not selected.
+
+Run `python scripts/execute_notebooks.py --gpu 0` to execute and save notebook
+outputs locally before publishing. The command records a source digest so CI can
+reject stale outputs after code-cell edits without executing those cells. They display
+measured results from the run directory and include the commands needed to
+reproduce them. Retain the run configuration, seed, evaluation split, hardware,
+and limitations alongside the figures. Do not replace results by editing output
+numbers or by copying figures from a different run.
+
+## Render without execution
+
+```bash
+python -m pip install -e '.[docs]'
+python -m sphinx -W --keep-going -b html . _build/html
 python scripts/check_docs.py _build/html
 python -m http.server --directory _build/html 8000
 ```
 
-Open `http://localhost:8000` to inspect the whole book. The kernel must belong to
-the environment containing the installed package and example dependencies.
-
-Every tutorial defaults to synthetic smoke mode. Builds require no dataset
-downloads or full training runs. MyST-NB executes notebooks with a 90-second
-per-cell timeout, and notebook errors fail the build. Warnings are treated as
-errors. The default pytest suite remains separate and small.
+The renderer does not need a GPU, notebook kernel, dataset, or checkpoint. It reads
+saved notebook outputs and public API docstrings. Validation checks that the
+notebooks contain successful saved outputs, and the HTML includes navigation,
+figures where expected, source downloads, and the original project logo.
 
 ## CI/CD
 
-`.github/workflows/doc_maker.yml` runs on pull requests, pushes to `main`, and
-manual dispatch. Its build job installs the package, runs the smoke tests,
-executes all seven notebooks, builds Sphinx, and checks that chapters, outputs,
-figures, and notebook downloads are present. The rendered book is uploaded as
-the `tutorial-book` Actions artifact for review.
+`check_demos.yml` runs small API/package tests on CPU. `doc_maker.yml` builds and
+validates the saved documentation on pull requests and pushes. It does not register
+a kernel or invoke notebook execution or training. Pull requests upload a preview
+artifact; successful `main` builds publish to GitHub Pages using GitHub Actions.
 
-Only a successful build on `main` deploys. GitHub's `configure-pages`,
-`upload-pages-artifact`, and `deploy-pages` actions publish the book to
-[GitHub Pages](https://rgs2151.github.io/NeuralJAXwork/). Pull requests build the
-same book but never deploy it. The deployment job uses the `github-pages`
-environment and the required `pages: write` / `id-token: write` permissions.
-Repository Pages settings must use **GitHub Actions** as the publishing source.
-
-A green local build is not proof of publication: check the workflow's deploy job
-and the live site. Full-dataset tutorial results are intentionally not part of
-this deployment; published smoke plots are labeled as mechanics checks.
+The public site is [NeuralJAXwork](https://rgs2151.github.io/NeuralJAXwork/).
+Model training and documentation rendering are intentionally separate workflows.

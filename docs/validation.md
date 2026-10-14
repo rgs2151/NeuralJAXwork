@@ -1,28 +1,37 @@
-# Validation record
+# Validation
 
-Local validation on 2026-10-14 used Python 3.10.20, JAX/JAXlib 0.5.3, Flax 0.10.4,
-Optax 0.2.4, NumPy 2.2.6, and CPU execution.
+Validation has two separate responsibilities: fast package correctness checks and
+local training/evaluation of examples. Documentation rendering does neither; it
+validates and displays the saved output record.
 
-| Check | Result |
-| --- | --- |
-| Default pytest suite | 14 passed in 9.76 seconds; no downloads |
-| Ruff check and formatting | Passed for package, examples, and tests |
-| Sphinx with `-W --keep-going` | Tutorial book built with all seven notebooks executed; figures/downloads checked |
-| Source distribution and wheel | Built successfully with isolated build environments |
-| Wheel import outside checkout | Imported from isolated install target and ran a compiled classifier update |
-| Notebook execution | All seven notebooks executed in offline smoke mode |
-| Example integration | All seven runners completed tiny offline runs |
-| Real dataset plumbing | Titanic, MNIST CNN/autoencoder, and Fashion-MNIST GAN completed one-epoch checks |
+## Package checks
 
-Real-data checks used the complete 916-row Titanic training split and a cap of
-32 training examples for image tasks, with batch size 16. These runs validate
-I/O, preprocessing, training, checkpointing, and plot production. They are not
-convergence studies, competitive scores, or evidence of useful GAN sample quality.
-No GPU validation was performed locally. The documentation workflow separately
-executes the notebooks and publishes successful main-branch builds; its status is
-available in GitHub Actions.
+The CPU suite exercises API/state behavior on tiny arrays, including eager/JIT
+agreement, parameter sharing, dropout, BatchNorm, stable losses, recurrent carries,
+causal attention, convolution arithmetic, dense/convolutional GAN update boundaries,
+checkpoint continuation, loader restoration, and trainer update counts. It needs
+no dataset downloads. The package and wheel are built in CI on Python 3.10/3.12.
 
-Timings are observations on this machine, not enforced performance assertions.
-The notebooks' synthetic outputs were executed for validation but are not committed
-as if they were real-dataset model results. New full runs should retain their own
-configurations, reports, and artifacts.
+## Local GPU runs
+
+The seven model examples were trained on GPU 0 (NVIDIA RTX 5090), with GPU 1
+unselected. JAX 0.5.3, Flax NNX 0.10.4, Optax 0.2.4, and the JAX CUDA 12 plugin
+were used. The [results page](results.md) reports held-out metrics, training sizes,
+selection rules, and caveats. Figures were inspected locally, including fixed-noise
+Fashion-MNIST outputs and MNIST reconstruction pairs.
+
+Twelve notebooks—five API tutorials and seven model examples—were executed locally
+and saved with outputs. The notebook metadata records a digest of code cells.
+Editing code without refreshing outputs causes documentation validation to fail,
+preventing stale figures/results from silently accompanying changed code.
+
+## Documentation checks
+
+Sphinx uses `nb_execution_mode = 'off'`. A warning-free build and
+`scripts/check_docs.py` verify saved outputs, absence of notebook errors, matching
+source digests, rendered figures where applicable, navigation, source downloads,
+and the original logo. No notebook execution occurs in CI. The Pages deployment
+runs only after this static build passes.
+
+GPU results are single-workstation, single-seed demonstrations, not distributed
+training coverage, comprehensive hardware compatibility, or competitive benchmarks.

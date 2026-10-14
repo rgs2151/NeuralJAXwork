@@ -68,4 +68,4 @@ checkpoints, and plots. Start with the [tutorial chapters](tutorials.rst), then
 use the [API guide](api.md) to build your own model.
 
 For interactive editing, install `.[notebooks]` and run `jupyter lab`. The same
-notebooks are executed and rendered into this book by the documentation build.
+notebooks are executed locally; their saved outputs are rendered into the documentation without execution.

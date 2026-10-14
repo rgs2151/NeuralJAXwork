@@ -1,35 +1,46 @@
-NeuralJAXwork: the tutorial book
-================================
+NeuralJAXwork
+=============
 
-Build neural networks with a PyTorch-style module API, JAX automatic
-differentiation, and explicit training loops. This book combines a getting-started
-guide, **seven executable architecture tutorials**, and the Python API reference.
+NeuralJAXwork provides composable neural-network modules, automatic
+differentiation, explicit optimization, and reproducible training state on JAX.
+This documentation covers the public API, practical workflows, and trained
+examples. Version 0.1.0 is an alpha release.
 
-Version 0.1.0 is an installable alpha. The tutorial outputs shown here are generated
-by small **offline synthetic smoke runs** during the documentation build. They
-verify that the examples work; they are not benchmark scores or trained-model
-quality claims. Each tutorial explains how to switch to its real experiment.
+Notebook pages display saved outputs from local runs. Building or deploying this
+site does not execute notebooks, download datasets, or train models.
+
+.. toctree::
+   :maxdepth: 1
+   :titlesonly:
+   :caption: Getting started
+
+   docs/quickstart
+   docs/concepts
 
 .. toctree::
    :maxdepth: 2
-   :caption: Start here
+   :titlesonly:
+   :caption: Tutorials
 
-   docs/quickstart
+   docs/api_tutorials
    docs/tutorials
 
 .. toctree::
-   :maxdepth: 2
-   :caption: User guide
+   :maxdepth: 1
+   :titlesonly:
+   :caption: Guides and reference
 
    docs/api
    docs/examples
    docs/state
+   docs/results
+   docs/reference
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Reference and development
+   :maxdepth: 1
+   :titlesonly:
+   :caption: Development
 
-   docs/reference
    docs/development
    docs/validation
    docs/publishing

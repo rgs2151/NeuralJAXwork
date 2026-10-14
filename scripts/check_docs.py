@@ -1,20 +1,49 @@
-"""Check the built book contains all tutorial chapters, generated images and sources."""
+"""Validate saved notebooks and their rendered pages without executing code."""
 
+import ast
+import hashlib
 import sys
 from pathlib import Path
 
+import nbformat
+
 root = Path(sys.argv[1])
 source = Path(__file__).resolve().parents[1]
+configuration = ast.parse((source / "conf.py").read_text())
+modes = [
+    node.value.value
+    for node in configuration.body
+    if isinstance(node, ast.Assign)
+    and any(isinstance(t, ast.Name) and t.id == "nb_execution_mode" for t in node.targets)
+]
+assert modes == ["off"], "Documentation builds must never execute notebooks"
+indices = "".join(
+    (root / "docs" / name).read_text() for name in ("tutorials.html", "api_tutorials.html")
+)
 chapters = sorted((source / "notebooks").glob("*.ipynb"))
-index = (root / "docs/tutorials.html").read_text()
 for chapter in chapters:
-    page = root / "notebooks" / f"{chapter.stem}.html"
-    html = page.read_text()
-    assert f"{chapter.stem}.html" in index, f"Missing navigation: {chapter.name}"
-    assert "cell_output" in html, f"Missing executed output: {chapter.name}"
-    assert "<img" in html and "_images/" in html, f"Missing generated figure: {chapter.name}"
-    assert list((root / "_downloads").rglob(chapter.name)), (
-        f"Missing source download: {chapter.name}"
+    notebook = nbformat.read(chapter, as_version=4)
+    nbformat.validate(notebook)
+    metadata = notebook.metadata.get("neuraljaxwork", {})
+    code = [cell for cell in notebook.cells if cell.cell_type == "code"]
+    assert all(cell.execution_count is not None for cell in code), (
+        f"Unexecuted local cell: {chapter.name}"
     )
-assert (root / ".nojekyll").exists(), "Pages must preserve Sphinx underscore directories"
-print(f"Book verified: {len(chapters)} linked, executed tutorials with figures and downloads.")
+    assert not any(o.output_type == "error" for c in code for o in c.outputs), (
+        f"Saved error: {chapter.name}"
+    )
+    digest = hashlib.sha256("\n".join(c.source for c in code).encode()).hexdigest()
+    assert digest == metadata.get("source_sha256"), (
+        f"Stale saved outputs: {chapter.name}; execute locally again"
+    )
+    html = (root / "notebooks" / f"{chapter.stem}.html").read_text()
+    assert f"{chapter.stem}.html" in indices, f"Missing navigation: {chapter.name}"
+    assert "cell_output" in html, f"Missing saved outputs: {chapter.name}"
+    if metadata.get("requires_figure"):
+        assert "<img" in html and "_images/" in html, f"Missing figure: {chapter.name}"
+    assert list((root / "_downloads").rglob(chapter.name)), f"Missing download: {chapter.name}"
+assert (root / ".nojekyll").exists()
+assert "jax_logo_min.png" in (root / "index.html").read_text(), "Original logo is missing"
+print(
+    f"Validated {len(chapters)} saved notebooks, rendered pages, downloads, and original logo. No code executed."
+)

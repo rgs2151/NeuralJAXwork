@@ -1,28 +1,15 @@
-# Architecture notebooks
+# Notebooks
 
-These notebooks are also executable chapters in the
-[Sphinx tutorial book](https://rgs2151.github.io/NeuralJAXwork/docs/tutorials.html).
-Documentation CI executes them in smoke mode and publishes their rendered code,
-outputs, and figures to GitHub Pages after a successful main-branch build.
+Notebook outputs are generated locally and committed for display in the Sphinx
+documentation. CI **never executes notebooks or trains models**. Downloaded data,
+checkpoints, and full run directories are gitignored.
 
-Install `python -m pip install -e '.[notebooks]'`, launch Jupyter from the repository
-root, and select that environment's kernel. Open notebooks in numbered order or
-choose a model family. Every notebook defaults to a tiny **offline synthetic smoke
-run**, with fresh output under `runs/`. To train on the named dataset, set
-`SMOKE=False`; use `DOWNLOAD=True` to permit missing dataset downloads.
+API tutorials cover modules/parameters, explicit training and evaluation, data
+batching, checkpoint/RNG restoration, and inspection/custom layers. Model examples
+cover Titanic, MNIST CNNs, RNN/LSTM forecasting, character transformers, MNIST
+reconstruction, and convolutional Fashion-MNIST generation.
 
-The notebooks introduce the architecture, tensor shapes, objective, data/split
-rules, controls, and visual interpretation. They call the same reusable experiment
-runner as the CLI, avoiding divergent notebook-only implementations. Outputs are
-not committed as if a demonstration run were a trained-model result.
-
-1. Titanic dense classifier: confusion matrix, ROC, calibration, subgroup report.
-2. MNIST CNN: digit classification and mistakes.
-3. RNN forecasting: next value of independent sine trajectories.
-4. LSTM forecasting: the same task with hidden/cell state.
-5. Causal character transformer: perplexity and sampled text.
-6. MNIST autoencoder: paired reconstructions and latent arrays.
-7. Fashion-MNIST GAN: fixed-noise clothing generation over epochs.
-
-See `docs/examples.md` for longer runs, dataset sources, licensing, and limitations.
-A cats/dogs data notebook and full architecture-rendering UI are future additions.
+Install `.[notebooks]`, select the intended environment as the notebook kernel,
+and launch Jupyter from the repository root or this directory. For GPU execution,
+set `CUDA_VISIBLE_DEVICES=0` before starting Jupyter. Follow each notebook's run
+configuration; full training is not a smoke test. Save outputs after execution.

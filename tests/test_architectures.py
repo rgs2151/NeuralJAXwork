@@ -101,3 +101,20 @@ def test_pet_and_sequence_classifier():
     model = models.LSTMClassifier(6, 2, embedding_dim=2, hidden=3, rngs=nj.Rngs(params=0))
     output = model(jnp.array([[1, 2], [3, 4]]), lengths=jnp.array([1, 2]))
     assert output["logits"].shape == (2, 2)
+
+
+def test_fashion_gan_phase_state():
+    g = models.FashionGenerator(latent_size=2, width=2, rngs=nj.Rngs(params=1))
+    d = models.FashionDiscriminator(width=2, rngs=nj.Rngs(params=2))
+    go, do = optim.Adam(g.parameters()), optim.Adam(d.parameters())
+    g.eval()
+    saved = g.state_dict()
+    z = jnp.ones((2, 2))
+    real = jnp.ones((2, 1, 28, 28))
+    training.discriminator_step(g, d, do, real, z)
+    for key, value in g.state_dict().items():
+        np.testing.assert_array_equal(value, saved[key])
+    g.train()
+    training.generator_step(g, d.eval(), go, z)
+    assert g.eval()(z).shape == real.shape
+    assert any(not np.array_equal(v, saved[k]) for k, v in g.state_dict().items())

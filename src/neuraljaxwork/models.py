@@ -194,3 +194,39 @@ class ConvAutoencoder(nn.Module):
     def forward(self, x):
         z = self.encode(x)
         return {"latent": z, "reconstruction": self.decode(z)}
+
+
+class FashionGenerator(nn.Module):
+    """Convolutional Fashion-MNIST generator, with explicit BatchNorm state."""
+
+    def __init__(self, latent_size=64, width=64, *, rngs):
+        super().__init__()
+        self.width = width
+        self.project = nn.Linear(latent_size, 2 * width * 7 * 7, rngs=rngs)
+        self.norm1 = nn.BatchNorm2d(2 * width)
+        self.up1 = nn.ConvTranspose2d(2 * width, width, 4, stride=2, padding=1, rngs=rngs)
+        self.norm2 = nn.BatchNorm2d(width)
+        self.up2 = nn.ConvTranspose2d(width, 1, 4, stride=2, padding=1, rngs=rngs)
+
+    def forward(self, z):
+        x = self.project(z).reshape(-1, 2 * self.width, 7, 7)
+        x = F.relu(self.norm1(x))
+        x = F.relu(self.norm2(self.up1(x)))
+        return jnp.tanh(self.up2(x))
+
+
+class FashionDiscriminator(nn.Module):
+    """Convolutional discriminator; outputs logits without a sigmoid."""
+
+    def __init__(self, width=32, *, rngs):
+        super().__init__()
+        self.conv1 = nn.Conv2d(1, width, 4, stride=2, padding=1, rngs=rngs)
+        self.conv2 = nn.Conv2d(width, 2 * width, 4, stride=2, padding=1, rngs=rngs)
+        self.head = nn.Linear(2 * width * 7 * 7, 1, rngs=rngs)
+
+    def forward(self, images):
+        x = self.conv1(images)
+        x = jnp.where(x >= 0, x, 0.2 * x)
+        x = self.conv2(x)
+        x = jnp.where(x >= 0, x, 0.2 * x)
+        return self.head(x.reshape(x.shape[0], -1))

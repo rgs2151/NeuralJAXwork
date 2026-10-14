@@ -1,5 +1,9 @@
 # Examples and datasets
 
+The published notebooks use the complete local GPU recipes in
+`examples/train_gallery.py`; measured results are in [Training results](results.md).
+The commands below describe how to start or customize a run.
+
 All commands run from the repository root with `pip install -e '.[examples]'`.
 Use `--smoke --epochs 1` for a tiny offline integration check. Normal runs use
 real datasets where specified, but default to small subsets. They demonstrate
@@ -79,7 +83,7 @@ vocabulary projection. Targets are shifted one character. The fixed ASCII
 vocabulary prevents fitting a vocabulary on held-out text. Contiguous text ranges
 form train/validation/test; windows never cross a split boundary.
 
-The included original repeated corpus is an offline demonstration, with repeated
+The CLI fallback original repeated corpus is an offline demonstration, with repeated
 phrases across splits. Its validation score is not evidence of generalization.
 For a real corpus, inspect source/license and split contamination. Perplexity and
 sampled text are saved; generation uses an independent seed and a sliding context.
@@ -93,10 +97,10 @@ samples can contain unprintable characters.
 python -m examples.run autoencoder --download --limit 10000 --epochs 10
 ```
 
-The dense autoencoder compresses flattened digits to eight latent values and
+The dense autoencoder compresses flattened digits to sixteen latent values and
 reconstructs `[0,1]` images using a sigmoid decoder and MSE. Compare adjacent
 original/reconstructed image pairs, inspect held-out reconstruction loss, and
-reuse saved latent codes for projections. A low reconstruction error is not a
+reuse saved latent codes for projections. The published run uses width 256 and 16 latent values. A low reconstruction error is not a
 classification score. `models.ConvAutoencoder` provides a spatial alternative
 using strided convolutions and transposed convolutions; the default runner uses
 the dense model for easier latent inspection.
@@ -114,8 +118,8 @@ and validates IDX headers and sizes. It does not currently pin Fashion-MNIST fil
 hashes; downloaded file integrity is structurally checked, not cryptographically
 version-locked.
 
-Training images are scaled to `[-1,1]`. A dense generator maps 16-dimensional noise
-to an image; a dense discriminator emits a raw logit. Each batch takes one
+Training images are scaled to `[-1,1]`. A convolutional generator maps 64-dimensional noise
+to an image; a convolutional discriminator emits a raw logit. Each batch takes one
 non-saturating discriminator update and one generator update. The inactive model
 is in evaluation mode, and fake images are detached only in the discriminator
 phase. Both model/optimizer states and runtime RNGs are saved together.

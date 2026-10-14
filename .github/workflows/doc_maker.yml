@@ -1,4 +1,4 @@
-name: Tutorial book and GitHub Pages
+name: Documentation and GitHub Pages
 on:
   push:
     branches: [main]
@@ -25,15 +25,11 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
-      - name: Install package and executable book dependencies
-        run: python -m pip install '.[dev,docs]'
-      - name: Register the documentation kernel
-        run: python -m ipykernel install --sys-prefix --name python3
-      - name: Run small API and architecture tests
-        run: python -m pytest
-      - name: Execute all tutorial notebooks and build the book
+      - name: Install documentation dependencies
+        run: python -m pip install '.[docs]'
+      - name: Render documentation and saved notebook outputs
         run: python -m sphinx -W --keep-going -b html . _build/html
-      - name: Verify notebook pages, outputs, and navigation
+      - name: Validate saved outputs, figures, downloads, and navigation
         run: python scripts/check_docs.py _build/html
       - name: Upload reviewable documentation
         uses: actions/upload-artifact@v4

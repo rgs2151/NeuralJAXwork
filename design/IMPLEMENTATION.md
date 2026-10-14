@@ -8,7 +8,8 @@ explicit RNGs; dense/convolution/transpose convolution, normalization/pooling,
 RNN/LSTM, attention; all requested primary architecture families; explicit training
 steps and separate GAN optimizers; tiny smoke tests; data-loader cursor;
 checkpoint resume; hierarchy JSON; run artifacts; optional small Task/Trainer;
-seven runnable examples and notebook frontends.
+seven runnable examples with locally trained GPU results, and five API tutorial
+notebooks. Sphinx renders their saved outputs without executing notebooks in CI.
 
 Deliberate alpha differences:
 

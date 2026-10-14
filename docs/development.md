@@ -6,7 +6,6 @@
 python -m pip install -e '.[dev,examples,docs]'
 JAX_PLATFORMS=cpu python -m pytest
 python -m build
-python -m ipykernel install --sys-prefix --name python3
 python -m sphinx -W --keep-going -b html . _build/html
 python scripts/check_docs.py _build/html
 ```
@@ -26,9 +25,9 @@ python -m examples.run cnn --smoke --epochs 1
 python -m examples.run gan --smoke --epochs 1
 ```
 
-Notebook smoke execution and real dataset examples are separate from unit tests.
-The documentation workflow executes all notebooks, renders the tutorial book,
-and deploys successful main-branch builds to Pages; see [publishing](publishing.md).
+Notebook execution and dataset training happen locally, outside CI.
+The documentation workflow renders saved notebook outputs and deploys successful
+main-branch builds to Pages; see [publishing](publishing.md).
 No full-dataset convergence or generative-quality assertion belongs in the default
 smoke suite. Add focused numerical/state tests when introducing a new primitive;
 avoid dozens of redundant model-size combinations.
@@ -44,8 +43,8 @@ uppercase package is archived under `legacy/` and excluded from installation.
 Building artifacts locally does not publish to PyPI. Release publication requires
 a chosen registry/account, release credentials, and an explicit release action.
 GPU/TPU users must configure a compatible JAX installation for their hardware;
-this repository's CI exercises CPU, not accelerator performance or distributed
-training. Version bounds are intentionally conservative, not an assertion that
+this repository's CI exercises CPU. The published example runs were also tested
+locally on one RTX 5090; this is not a distributed-training or performance study. Version bounds are intentionally conservative, not an assertion that
 this older JAX/NNX generation is the newest available.
 
 ## Current limits

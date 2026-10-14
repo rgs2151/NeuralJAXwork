@@ -35,6 +35,10 @@ def run_experiment(
     cache="data",
     smoke=False,
     text_file=None,
+    eval_limit=1000,
+    context_length=32,
+    model_width=32,
+    model_depth=2,
 ):
     if epochs < 1 or limit < 4 or batch_size < 1:
         raise ValueError("epochs>=1, limit>=4, batch_size>=1 are required")
@@ -47,6 +51,10 @@ def run_experiment(
         seed=seed,
         smoke=smoke,
         text_file=text_file,
+        eval_limit=eval_limit,
+        context_length=context_length,
+        model_width=model_width,
+        model_depth=model_depth,
     )
     run = Run(output, config)
     rngs = nj.Rngs(params=seed)
@@ -76,22 +84,33 @@ def run_experiment(
             ids = np.random.default_rng(seed).permutation(len(official_train[0]))
             val_ids, train_ids = ids[:5000], ids[5000:]
             train = tuple(a[train_ids[:limit]] for a in official_train)
-            val = tuple(a[val_ids[: min(limit, 1000)]] for a in official_train)
-            test = tuple(a[: min(limit, 1000)] for a in test)
+            val = tuple(a[val_ids[: min(limit, eval_limit)]] for a in official_train)
+            test = tuple(a[: min(limit, eval_limit)] for a in test)
             metadata = {
                 "dataset": source,
                 "train_ids": train_ids[:limit].tolist(),
-                "val_ids": val_ids[: min(limit, 1000)].tolist(),
+                "val_ids": val_ids[: min(limit, eval_limit)].tolist(),
                 "test_ids": list(range(len(test[0]))),
                 "normalization": "[0,1] NCHW",
             }
         if task == "cnn":
             model = models.DigitCNN(width=2 if smoke else 16, rngs=rngs)
         elif task == "autoencoder":
-            model = models.Autoencoder(latent_size=8, width=8 if smoke else 128, rngs=rngs)
+            model = models.Autoencoder(
+                latent_size=8 if smoke else 16, width=8 if smoke else 256, rngs=rngs
+            )
         else:
-            model = models.Generator(latent_size=16, width=8 if smoke else 128, rngs=rngs)
-            discriminator = models.Discriminator(width=8 if smoke else 128, rngs=rngs)
+            latent_size = 16 if smoke else 64
+            model = (
+                models.Generator(latent_size=16, width=8, rngs=rngs)
+                if smoke
+                else models.FashionGenerator(latent_size=latent_size, rngs=rngs)
+            )
+            discriminator = (
+                models.Discriminator(width=8, rngs=rngs)
+                if smoke
+                else models.FashionDiscriminator(rngs=rngs)
+            )
     elif task in ("rnn", "lstm"):
         train = datasets.sine_sequences(16 if smoke else limit, length=12, seed=seed)
         val = datasets.sine_sequences(8 if smoke else 128, length=12, seed=seed + 1)
@@ -105,20 +124,20 @@ def run_experiment(
         if any(ord(c) >= 128 for c in text):
             raise ValueError("This small character example requires ASCII text")
         cut1, cut2 = int(0.8 * len(text)), int(0.9 * len(text))
-        length = 8 if smoke else 32
+        length = 8 if smoke else context_length
         train = datasets.character_sequences(text[:cut1], vocabulary, length)
         val = datasets.character_sequences(text[cut1:cut2], vocabulary, length)
         test = datasets.character_sequences(text[cut2:], vocabulary, length)
         train = tuple(a[: 8 if smoke else limit] for a in train)
         val, test = (
-            tuple(a[: 8 if smoke else 128] for a in val),
-            tuple(a[: 8 if smoke else 128] for a in test),
+            tuple(a[: 8 if smoke else eval_limit] for a in val),
+            tuple(a[: 8 if smoke else eval_limit] for a in test),
         )
         model = models.TinyLanguageModel(
             len(vocabulary),
             length,
-            width=8 if smoke else 32,
-            depth=1 if smoke else 2,
+            width=8 if smoke else model_width,
+            depth=1 if smoke else model_depth,
             heads=2,
             rngs=rngs,
         )
@@ -133,10 +152,14 @@ def run_experiment(
     (output / "data.json").write_text(json.dumps(metadata, indent=2))
     inspection.write_json(model, output / "architecture.json")
     (output / "summary.txt").write_text(inspection.summary(model))
-    optimizer = optim.Adam(model.parameters(), lr=1e-3 if task != "gan" else 2e-4)
+    optimizer = optim.Adam(
+        model.parameters(),
+        lr=3e-4 if task == "transformer" else (1e-3 if task != "gan" else 2e-4),
+        betas=(0.5, 0.999) if task == "gan" else (0.9, 0.999),
+    )
     if task == "gan":
         d_optimizer = optim.Adam(discriminator.parameters(), lr=2e-4, betas=(0.5, 0.999))
-        fixed_z = nj.random.normal(jax.random.key(seed + 100), (16, 16))
+        fixed_z = nj.random.normal(jax.random.key(seed + 100), (32, latent_size))
     loader = data.DataLoader(
         data.TensorDataset(*train), batch_size=batch_size, shuffle=True, seed=seed
     )
@@ -158,13 +181,20 @@ def run_experiment(
             counts.append(len(x))
         return float(np.average(losses, weights=counts))
 
+    started = time.perf_counter()
     for epoch in range(epochs):
         model.train()
         totals, count = {}, 0
         for x, y in loader.iter_epoch(epoch):
             if task == "gan":
                 result = training.gan_step(
-                    model, discriminator, optimizer, d_optimizer, x * 2 - 1, runtime, latent_size=16
+                    model,
+                    discriminator,
+                    optimizer,
+                    d_optimizer,
+                    x * 2 - 1,
+                    runtime,
+                    latent_size=latent_size,
                 )
             elif task == "cnn":
                 result = training.cnn_step(model, optimizer, (x, y), runtime)
@@ -205,7 +235,20 @@ def run_experiment(
         metadata=config,
     )
     plots.learning_curve(history, output / "learning.png")
-    report = {"history": history, "smoke": smoke}
+    report = {
+        "history": history,
+        "smoke": smoke,
+        "training_seconds": time.perf_counter() - started,
+        "devices": [str(d) + " " + d.device_kind for d in jax.devices()],
+        "config": config,
+        "train_samples": len(train[0]),
+        "validation_samples": len(val[0]),
+        "test_samples": len(test[0]),
+    }
+    if task == "gan":
+        np.savez(
+            output / "samples.npz", samples=np.asarray(model(fixed_z)), noise=np.asarray(fixed_z)
+        )
     if task != "gan":
         checkpoint.restore(output / "best.npz", model=model)
         model.eval()
@@ -240,15 +283,22 @@ def run_experiment(
             np.savez(output / "predictions.npz", predictions=pred, targets=test[1])
         elif task == "transformer":
             report["perplexity"] = float(np.exp(min(report["test_loss"], 80)))
-            tokens = jnp.array([[ord(c) for c in "the "]], dtype=jnp.int32)
+            tokens = [ord(c) for c in "First Citizen:\n"]
             sample_rng = nj.Rngs(sample=seed + 101)
-            for _ in range(80):
-                logits = model(tokens[:, -model.max_length :])[:, -1]
-                next_token = nj.random.categorical(sample_rng.next("sample"), logits)
-                tokens = jnp.concatenate([tokens, next_token[:, None]], axis=1)
-            (output / "generation.txt").write_text(
-                "".join(vocabulary[i] for i in np.asarray(tokens[0]))
-            )
+
+            @nj.jit
+            def sample_next(candidate, context, valid, index, key):
+                logits = candidate(context, valid=valid)[0, index] / 0.8
+                return nj.random.categorical(key, logits)
+
+            for _ in range(400):
+                context = tokens[-model.max_length :]
+                size = len(context)
+                padded = jnp.asarray([context + [0] * (model.max_length - size)], dtype=jnp.int32)
+                valid = jnp.arange(model.max_length)[None] < size
+                next_token = sample_next(model, padded, valid, size - 1, sample_rng.next("sample"))
+                tokens.append(int(next_token))
+            (output / "generation.txt").write_text("".join(vocabulary[i] for i in tokens))
         else:
             probabilities = np.asarray(jax.nn.softmax(prediction, axis=-1))
             report["test_accuracy"] = float(np.mean(probabilities.argmax(-1) == test[1]))
@@ -290,6 +340,10 @@ def main():
     parser.add_argument("--output")
     parser.add_argument("--cache", default="data")
     parser.add_argument("--text-file")
+    parser.add_argument("--eval-limit", type=int, default=1000)
+    parser.add_argument("--context-length", type=int, default=32)
+    parser.add_argument("--model-width", type=int, default=32)
+    parser.add_argument("--model-depth", type=int, default=2)
     parser.add_argument("--download", action="store_true")
     parser.add_argument(
         "--smoke", action="store_true", help="Tiny synthetic mechanics check; no dataset download"

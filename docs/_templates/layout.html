@@ -1,0 +1,4 @@
+{% extends "!layout.html" %}
+{% block htmltitle %}
+{% if pagename == master_doc %}<title>{{ project|e }}</title>{% else %}{{ super() }}{% endif %}
+{% endblock %}
