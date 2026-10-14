@@ -2,6 +2,11 @@
 
 Compact SVG animations for the architecture gallery, implemented in dependency-free JavaScript.
 
+- [CNN](cnn/index.html): convolution and pooling.
+- [RNN](rnn/README.md): a weather forecasting clock.
+- [GAN](gan/README.md): Fashion-MNIST training progression.
+- [Autoencoder](autoencoder/README.md): class-centroid PCA transitions for digits, clothing, and traffic signs.
+
 ## CNN
 
 Open `cnn/index.html` in a browser. The default square is 240×240 pixels, with the centered Arial heading `nj.Module.CNN` above it. This is a presentation label, not a currently available import path; the trained implementation is `neuraljaxlib.models.DigitCNN`. It can scale from 200 to 300 pixels by changing the container width.
