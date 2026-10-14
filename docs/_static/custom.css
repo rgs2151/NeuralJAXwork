@@ -1,9 +1,3 @@
-/* Keep the original identity legible without displacing the navigation. */
-.bd-sidebar-primary .navbar-brand img {
-  max-height: 150px;
-  width: auto;
-  margin: 0 auto;
-}
-.bd-sidebar-primary .navbar-brand { text-align: center; }
+/* Notebook output sizing; navigation and branding use the PyData defaults. */
 .cell_output .dataframe { font-size: 0.9rem; }
 .cell_output img { max-width: 100%; height: auto; }

@@ -4,7 +4,7 @@ author = 'Rudramani Singha'
 copyright = '2026, Rudramani Singha'
 release = '0.1.0'
 extensions = ['myst_nb', 'sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx.ext.githubpages']
-html_theme = 'sphinx_book_theme'
+html_theme = 'pydata_sphinx_theme'
 html_title = 'NeuralJAXwork'
 html_logo = 'logo/jax_logo_min.png'
 html_favicon = 'logo/jax_logo_min.png'
@@ -12,11 +12,12 @@ html_static_path = ['docs/_static']
 html_css_files = ['custom.css']
 templates_path = ['docs/_templates']
 html_theme_options = {
-    'repository_url': 'https://github.com/rgs2151/NeuralJAXwork',
-    'repository_branch': 'main',
-    'use_repository_button': True,
-    'use_download_button': True,
-    'show_navbar_depth': 2,
+    'github_url': 'https://github.com/rgs2151/NeuralJAXwork',
+    'logo': {'text': 'NeuralJAXwork'},
+    'navbar_end': ['theme-switcher', 'navbar-icon-links'],
+    'search_bar_text': 'Search documentation',
+    'search_as_you_type': True,
+    'show_nav_level': 2,
 }
 # Training and notebook execution happen locally, never during a docs build.
 nb_execution_mode = 'off'
