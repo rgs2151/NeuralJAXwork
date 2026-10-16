@@ -57,7 +57,7 @@ pair `(h,c)`. `lengths[B]` freezes the carry after valid timesteps and zeros pad
 outputs. Zero-length examples keep their initial carry. Lengths must be integers
 between zero and T; validate data before entering compiled code. Bidirectionality
 is not implemented. For streaming, pass the returned carry to the next chunk;
-for truncated backpropagation, call `nj.stop_gradient(carry)` between chunks.
+for truncated backpropagation, call `js.stop_gradient(carry)` between chunks.
 
 ## Attention
 
@@ -72,11 +72,11 @@ preconditions, not runtime checks inserted into compiled kernels.
 
 ## Randomness and compilation
 
-Constructors consume `nj.Rngs(params=seed)`. Runtime dropout consumes a separate
-`nj.Rngs(dropout=seed)`. `rngs.next(name)` advances a named checkpointable stream;
-missing names are errors. Sampling can use `nj.random` (JAX's random namespace).
+Constructors consume `js.Rngs(params=seed)`. Runtime dropout consumes a separate
+`js.Rngs(dropout=seed)`. `rngs.next(name)` advances a named checkpointable stream;
+missing names are errors. Sampling can use `js.random` (JAX's random namespace).
 
-`nj.jit`, `nj.value_and_grad`, and `nj.grad` are graph-aware NNX transforms.
+`js.jit`, `js.value_and_grad`, and `js.grad` are graph-aware NNX transforms.
 Pass stateful objects explicitly. Use ordinary JAX transforms only on pure array
 functions or the `split/merge/apply/update` boundary. Static shapes/modes can
 recompile. Avoid arbitrary Python side effects inside a transformed function.

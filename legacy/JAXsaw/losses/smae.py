@@ -2,7 +2,7 @@
 import jax.numpy as jnp
 
 # Import the parent Loss class
-from NeuralJAXlib.loss import Loss
+from JAXsaw.loss import Loss
 
 class SMAE(Loss):
     """

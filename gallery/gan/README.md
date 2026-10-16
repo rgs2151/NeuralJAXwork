@@ -23,4 +23,4 @@ JAX_PLATFORMS=cpu .venv/bin/python gallery/gan/export.py
 python3 gallery/gan/build_preview.py /absolute/output/gan-fashion.html
 ```
 
-`nj.Module.GAN` is a presentation label. The trained implementation is `neuraljaxlib.models.FashionGenerator`.
+`nj.Module.GAN` is a presentation label. The trained implementation is `jaxsaw.models.FashionGenerator`.

@@ -15,5 +15,5 @@ for name in [*manifest['assets'],'composite']:
     target=output/f'{name}.html'
     subprocess.run([sys.executable,str(ROOT/name/'build_preview.py'),str(target)],check=True)
     fragment=target.read_text()
-    target.write_text('<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>NeuralJAXlib '+name+'</title><style>body{margin:0;background:white;color:#171717;font-family:Arial,sans-serif}</style></head><body>\n'+fragment+'\n</body></html>\n')
+    target.write_text('<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>JAXsaw '+name+'</title><style>body{margin:0;background:white;color:#171717;font-family:Arial,sans-serif}</style></head><body>\n'+fragment+'\n</body></html>\n')
 print('Frozen sources verified; standalone assets packaged.')

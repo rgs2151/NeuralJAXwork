@@ -18,7 +18,7 @@ flow. Inspection must state its scope and disclose opaque or untraced regions.
 ## Proposed public API
 
 ```python
-from neuraljaxlib import inspection
+from jaxsaw import inspection
 
 summary = inspection.summary(model)
 print(summary)
@@ -77,7 +77,7 @@ attention weights and latent projections are not automatically causal explanatio
 ## Experiment record
 
 ```python
-from neuraljaxlib.experiments import Run
+from jaxsaw.experiments import Run
 
 run = Run("runs/mnist/cnn-seed42", config=config)
 run.log_metrics(step=100, split="train", loss=0.18, accuracy=0.95)

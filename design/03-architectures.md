@@ -5,9 +5,9 @@ interfaces and differences in version 0.1.0.
 
 ```python
 import jax.numpy as jnp
-import neuraljaxlib as nj
-from neuraljaxlib import nn, optim
-from neuraljaxlib.nn import functional as F
+import jaxsaw as js
+from jaxsaw import nn, optim
+from jaxsaw.nn import functional as F
 ```
 
 ## Dense networks: tabular classification and MNIST
@@ -28,14 +28,14 @@ class MLP(nn.Module):
             x = F.relu(layer(x))
         return self.head(x)
 
-titanic = MLP(12, [64, 32], 1, rngs=nj.Rngs(params=1))
+titanic = MLP(12, [64, 32], 1, rngs=js.Rngs(params=1))
 # 12 is illustrative: derive the actual count from fitted preprocessing.
 # Input [B, features], output logits [B, 1], target float [B, 1].
 # F.binary_cross_entropy_with_logits(logits, targets)
 
 mnist = nn.Sequential(
     nn.Flatten(start_dim=1),
-    MLP(784, [256, 128], 10, rngs=nj.Rngs(params=2)),
+    MLP(784, [256, 128], 10, rngs=js.Rngs(params=2)),
 )
 # Input [B, 1, 28, 28], output logits [B, 10], target integer [B].
 ```
@@ -112,7 +112,7 @@ Without lengths, every timestep is valid.
 `nn.RNNCell(input_size, hidden_size, ...)` supports custom loops with
 `next_h = cell(x_t, h)`. The sequence module scans the cell with shared weights.
 Streaming callers pass returned state to the next chunk. Truncated backpropagation
-uses `nj.stop_gradient(state)`, which maps over a state pytree, at chunk boundaries.
+uses `js.stop_gradient(state)`, which maps over a state pytree, at chunk boundaries.
 Do not carry state between unrelated shuffled examples.
 
 ## LSTMs: memory is an explicit tuple
@@ -252,7 +252,7 @@ the same model and explicit loss contracts, not a new trainer hierarchy.
 ## GANs: two modules, two optimizers, deliberate gradient boundaries
 
 ```python
-rngs = nj.Rngs(params=7)
+rngs = js.Rngs(params=7)
 generator = nn.Sequential(
     nn.Linear(64, 256, rngs=rngs), nn.ReLU(),
     nn.Linear(256, 784, rngs=rngs), nn.Tanh(),
@@ -263,12 +263,12 @@ discriminator = nn.Sequential(
 )
 g_optimizer = optim.Adam(generator.parameters(), lr=2e-4, betas=(0.5, 0.999))
 d_optimizer = optim.Adam(discriminator.parameters(), lr=2e-4, betas=(0.5, 0.999))
-sample_rngs = nj.Rngs(sample=8)
+sample_rngs = js.Rngs(sample=8)
 
-@nj.jit
+@js.jit
 def discriminator_step(generator, discriminator, optimizer, real, rngs):
-    z = nj.random.normal(rngs.next("sample"), (real.shape[0], 64))
-    fake = nj.stop_gradient(generator(z))
+    z = js.random.normal(rngs.next("sample"), (real.shape[0], 64))
+    fake = js.stop_gradient(generator(z))
 
     def objective(candidate):
         real_logits = candidate(real)
@@ -280,19 +280,19 @@ def discriminator_step(generator, discriminator, optimizer, real, rngs):
                                                  jnp.zeros_like(fake_logits))
         )
 
-    loss, grads = nj.value_and_grad(objective)(discriminator)
+    loss, grads = js.value_and_grad(objective)(discriminator)
     optimizer.step(grads)
     return {"d_loss": loss}
 
-@nj.jit
+@js.jit
 def generator_step(generator, discriminator, optimizer, real, rngs):
-    z = nj.random.normal(rngs.next("sample"), (real.shape[0], 64))
+    z = js.random.normal(rngs.next("sample"), (real.shape[0], 64))
 
     def objective(candidate):
         logits = discriminator(candidate(z))
         return F.binary_cross_entropy_with_logits(logits, jnp.ones_like(logits))
 
-    loss, grads = nj.value_and_grad(objective)(generator)
+    loss, grads = js.value_and_grad(objective)(generator)
     optimizer.step(grads)
     return {"g_loss": loss}
 

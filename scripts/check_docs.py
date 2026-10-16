@@ -25,7 +25,7 @@ chapters = sorted((source / "notebooks").glob("*.ipynb"))
 for chapter in chapters:
     notebook = nbformat.read(chapter, as_version=4)
     nbformat.validate(notebook)
-    metadata = notebook.metadata.get("neuraljaxlib", {})
+    metadata = notebook.metadata.get("jaxsaw", {})
     code = [cell for cell in notebook.cells if cell.cell_type == "code"]
     assert all(cell.execution_count is not None for cell in code), (
         f"Unexecuted local cell: {chapter.name}"
@@ -33,7 +33,19 @@ for chapter in chapters:
     assert not any(o.output_type == "error" for c in code for o in c.outputs), (
         f"Saved error: {chapter.name}"
     )
-    digest = hashlib.sha256("\n".join(c.source for c in code).encode()).hexdigest()
+    code_source = "\n".join(c.source for c in code)
+    if migration := metadata.get("source_rename"):
+        # Saved outputs predate the naming-only migration; validate against the
+        # original execution digest rather than claiming notebooks were rerun.
+        assert migration == {
+            "package_from": "neuraljaxlib", "package_to": "jaxsaw",
+            "alias_from": "nj", "alias_to": "js",
+        }, f"Unknown source migration: {chapter.name}"
+        code_source = code_source.replace("jaxsaw", "neuraljaxlib")
+        code_source = code_source.replace("JAXsaw", "NeuralJAXlib")
+        code_source = code_source.replace("JAXSAW", "NEURALJAXLIB")
+        code_source = re.sub(r"\bjs\b", "nj", code_source)
+    digest = hashlib.sha256(code_source.encode()).hexdigest()
     assert digest == metadata.get("source_sha256"), (
         f"Stale saved outputs: {chapter.name}; execute locally again"
     )
@@ -44,7 +56,7 @@ for chapter in chapters:
         assert "<img" in html and "_images/" in html, f"Missing figure: {chapter.name}"
     assert list((root / "_downloads").rglob(chapter.name)), f"Missing download: {chapter.name}"
 assert (root / ".nojekyll").exists()
-assert "neuraljaxlib.svg" in (root / "index.html").read_text(), "Project logo is missing"
+assert "jaxsaw.svg" in (root / "index.html").read_text(), "Project logo is missing"
 homepage = (root / "index.html").read_text()
 assert re.search(r'<img\b[^>]*src="_images/gallery\.gif"', homepage), (
     "Landing page must display the gallery GIF as an image"

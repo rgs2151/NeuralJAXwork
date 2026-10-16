@@ -57,10 +57,10 @@ immediately. Default weights use a documented fan-in initializer; biases default
 to zero. Initializer choices and logical weight shapes appear in module config.
 
 ```python
-rngs = nj.Rngs(params=42)
+rngs = js.Rngs(params=42)
 a = nn.Linear(32, 32, rngs=rngs)
 b = nn.Linear(32, 32, rngs=rngs)  # different draws from the same stream
-runtime_rngs = nj.Rngs(dropout=43, sample=44)
+runtime_rngs = js.Rngs(dropout=43, sample=44)
 ```
 
 Each call `rngs.next("dropout")` returns a new key and advances that stream's
@@ -103,7 +103,7 @@ This is a roadmap, not the minimum first release.
 
 ## Autodiff and optimizer ownership
 
-`nj.value_and_grad(fn, argnums=0, has_aux=False)` differentiates only trainable
+`js.value_and_grad(fn, argnums=0, has_aux=False)` differentiates only trainable
 `Parameter` leaves of the selected module argument. With `has_aux=True`, `fn`
 returns `(scalar_loss, auxiliary_pytree)` and the transform returns
 `((loss, auxiliary_pytree), Gradients)`. Gradient structure records parameter paths
@@ -127,7 +127,7 @@ Input gradients remain possible through frozen weights.
 
 ## Mutation and compilation: the central engineering requirement
 
-`nj.jit` is graph-aware, not an alias for `jax.jit`. It converts module, optimizer,
+`js.jit` is graph-aware, not an alias for `jax.jit`. It converts module, optimizer,
 and RNG state into explicit arrays for the compiled function, then commits returned
 state to the original objects. A joint graph preserves parameter sharing between
 model and optimizer. Supported state includes parameters, buffers, optimizer slots,
@@ -156,9 +156,9 @@ Python per timestep. Variable-length batches use padding, masks, or bucketing.
 For raw JAX interoperability, expose a pure boundary:
 
 ```python
-graph, state = nj.split(model)       # state: params, buffers, mode metadata
-output, next_state = nj.apply(graph, state, x)
-nj.update(model, next_state)         # explicit host-side commit
+graph, state = js.split(model)       # state: params, buffers, mode metadata
+output, next_state = js.apply(graph, state, x)
+js.update(model, next_state)         # explicit host-side commit
 ```
 
 `graph` is static structure, including aliases; array state is a pytree. Stochastic
@@ -168,7 +168,7 @@ basis of graph-aware transforms. The exact lowering interface needs a prototype
 before this convenience API is frozen. Raw `jax.jit(model)` is not supported.
 
 Recommended implementation direction: evaluate Flax NNX as the module/state and
-transform backend, and Optax for optimizer mathematics. Keep NeuralJAXlib's
+transform backend, and Optax for optimizer mathematics. Keep JAXsaw's
 public contracts and adapters explicit. A custom graph engine is a much larger
 project and is not a prerequisite for learning to implement layers and models.
 

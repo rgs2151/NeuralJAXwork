@@ -13,8 +13,8 @@ paths give parameters and buffers stable names for inspection and checkpoints.
 
 ## Arrays and transformations
 
-Inputs, outputs, and parameter values are JAX arrays. `nj.value_and_grad` returns
-both a scalar objective and parameter gradients. `nj.jit` understands module
+Inputs, outputs, and parameter values are JAX arrays. `js.value_and_grad` returns
+both a scalar objective and parameter gradients. `js.jit` understands module
 state and reference sharing, whereas raw `jax.jit` expects pure array functions.
 
 A compiled step takes every stateful participant explicitly: model, optimizer,
@@ -31,7 +31,7 @@ Optimizer ownership determines which parameters are updated.
 
 ## Randomness is state
 
-Create parameter streams with `nj.Rngs(params=seed)` and runtime streams with
+Create parameter streams with `js.Rngs(params=seed)` and runtime streams with
 named keys such as `dropout` and `sample`. Drawing a key advances that stream.
 Saving weights alone cannot reproduce the next random training step: save runtime
 RNGs and optimizer state too. Evaluation figures should use a separate seed so

@@ -4,19 +4,19 @@ import jax.numpy as jnp
 import numpy as np
 import pytest
 
-import neuraljaxlib as nj
-from neuraljaxlib import checkpoint, data, inspection, nn, optim
+import jaxsaw as js
+from jaxsaw import checkpoint, data, inspection, nn, optim
 
 
 def test_checkpoint_next_update_and_loader_resume(tmp_path):
-    model = nn.Linear(2, 1, rngs=nj.Rngs(params=0))
+    model = nn.Linear(2, 1, rngs=js.Rngs(params=0))
     opt = optim.Adam(model.parameters())
-    rngs = nj.Rngs(sample=3)
+    rngs = js.Rngs(sample=3)
 
-    @nj.jit
+    @js.jit
     def step(model, opt, rngs):
-        x = nj.random.normal(rngs.next("sample"), (2, 2))
-        loss, grads = nj.value_and_grad(lambda m: (m(x) ** 2).mean())(model)
+        x = js.random.normal(rngs.next("sample"), (2, 2))
+        loss, grads = js.value_and_grad(lambda m: (m(x) ** 2).mean())(model)
         opt.step(grads)
         return loss
 
@@ -49,14 +49,14 @@ def test_inspection_does_not_change_mode_or_buffers():
     assert shape["shape"] == [2, 2, 4, 4] and model.training
     for k, v in model.state_dict().items():
         np.testing.assert_array_equal(v, state[k])
-    layer = nn.Linear(2, 2, rngs=nj.Rngs(params=0))
+    layer = nn.Linear(2, 2, rngs=js.Rngs(params=0))
     description = inspection.describe(nn.Sequential(layer, layer))
     assert description["root"]["fields"]["items"][1] == {"alias": "model.items.0"}
 
 
 def test_trainer_owns_no_extra_update(tmp_path):
-    from neuraljaxlib import training
-    from neuraljaxlib.nn import functional as F
+    from jaxsaw import training
+    from jaxsaw.nn import functional as F
 
     class ClassifierTask(training.Task):
         def training_step(self, batch):
@@ -71,7 +71,7 @@ def test_trainer_owns_no_extra_update(tmp_path):
                 "correct": (logits.argmax(-1) == y).sum(),
             }
 
-    model = nn.Linear(2, 2, rngs=nj.Rngs(params=0))
+    model = nn.Linear(2, 2, rngs=js.Rngs(params=0))
     optimizer = optim.SGD(model.parameters())
     task = ClassifierTask(model, optimizer)
     ds = data.TensorDataset(np.ones((4, 2), dtype=np.float32), np.array([0, 1, 0, 1]))
@@ -85,19 +85,22 @@ def test_trainer_owns_no_extra_update(tmp_path):
     assert (tmp_path / "best.npz").exists()
 
 
-def test_checkpoint_before_package_rename(tmp_path):
-    model = nn.Linear(2, 1, rngs=nj.Rngs(params=5))
+@pytest.mark.parametrize("old_package", ["neuraljaxlib", "neuraljaxwork"])
+def test_checkpoint_before_package_rename(tmp_path, old_package):
+    model = nn.Linear(2, 1, rngs=js.Rngs(params=5))
     path = tmp_path / "before-rename.npz"
     expected = np.asarray(model(jnp.ones((1, 2))))
-    checkpoint.save(path, model=model)
+    checkpoint.save(path, model=model, metadata={"package": old_package})
     with np.load(path, allow_pickle=False) as saved:
         arrays = {key: saved[key] for key in saved.files}
     manifest = json.loads(str(arrays["manifest"]))
-    manifest["signature"] = json.loads(
-        json.dumps(manifest["signature"]).replace("neuraljaxlib.", "neuraljaxwork.")
-    )
+    for key in ("signature", "types"):
+        manifest[key] = json.loads(
+            json.dumps(manifest[key]).replace("jaxsaw.", old_package + ".")
+        )
     arrays["manifest"] = np.asarray(json.dumps(manifest))
     np.savez_compressed(path, **arrays)
-    fresh = nn.Linear(2, 1, rngs=nj.Rngs(params=9))
-    checkpoint.restore(path, model=fresh)
+    fresh = nn.Linear(2, 1, rngs=js.Rngs(params=9))
+    restored = checkpoint.restore(path, model=fresh)
+    assert restored.metadata == {"package": old_package}
     np.testing.assert_array_equal(fresh(jnp.ones((1, 2))), expected)

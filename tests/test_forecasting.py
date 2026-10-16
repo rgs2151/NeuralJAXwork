@@ -4,10 +4,10 @@ import jax.numpy as jnp
 import numpy as np
 import pytest
 
-import neuraljaxlib as nj
+import jaxsaw as js
 from examples.forecast_data import market_windows, weather_windows
 from examples.forecasting import ForecastModel, train_step
-from neuraljaxlib import optim
+from jaxsaw import optim
 
 
 def test_weather_horizon_and_training_only_scaling():
@@ -72,7 +72,7 @@ def test_market_targets_and_past_only_features():
 
 @pytest.mark.parametrize("task,features", [("rnn", 5), ("lstm", 4)])
 def test_forecast_baseline_initialization_and_update(task, features):
-    model = ForecastModel(task, hidden=2, rngs=nj.Rngs(params=0))
+    model = ForecastModel(task, hidden=2, rngs=js.Rngs(params=0))
     x = jnp.ones((2, 24, features))
     base = x[:, -24:, 0] if task == "rnn" else x[:, -1, -1:]
     np.testing.assert_array_equal(model(x), base)

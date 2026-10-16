@@ -1,20 +1,20 @@
 """Sphinx documentation; render locally executed notebook outputs without execution."""
-project = 'NeuralJAXlib'
+project = 'JAXsaw'
 author = 'Rudramani Singha'
 copyright = '2026, Rudramani Singha'
 release = '0.1.0'
 extensions = ['myst_nb', 'sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx.ext.githubpages']
 html_theme = 'pydata_sphinx_theme'
-html_title = 'NeuralJAXlib'
+html_title = 'JAXsaw: Visualizing Composable Neural Architectures in JAX'
 html_context = {'default_mode': 'light'}
-html_logo = 'logo/neuraljaxlib.svg'
-html_favicon = 'logo/neuraljaxlib.svg'
+html_logo = 'logo/jaxsaw.svg'
+html_favicon = 'logo/jaxsaw.svg'
 html_static_path = ['docs/_static']
 html_css_files = ['custom.css']
 templates_path = ['docs/_templates']
 html_theme_options = {
-    'github_url': 'https://github.com/rgs2151/NeuralJAXlib',
-    'logo': {'text': 'NeuralJAXlib'},
+    'github_url': 'https://github.com/rgs2151/JAXsaw',
+    'logo': {'text': 'JAXsaw'},
     'navbar_end': ['theme-switcher', 'navbar-icon-links'],
     'search_bar_text': 'Search documentation',
     'search_as_you_type': True,

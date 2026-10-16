@@ -37,11 +37,12 @@ def main():
             kernel_name="python3",
             resources={"metadata": {"path": str(root)}},
         ).execute()
-        notebook.metadata.setdefault("neuraljaxlib", {}).update(
+        notebook.metadata.setdefault("jaxsaw", {}).update(
             source_sha256=source_digest(notebook),
             executed_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             gpu_selection=args.gpu,
         )
+        notebook.metadata["jaxsaw"].pop("source_rename", None)
         nbformat.write(notebook, path)
         print(f"Saved {path.name}", flush=True)
 

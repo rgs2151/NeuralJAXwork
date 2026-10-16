@@ -9,11 +9,11 @@ with tqdm(total=100, desc="Processing...", leave=True) as pbar:
         pbar.update(1)
 
 
-#    NeuralJAXlib.Activation
-#    NeuralJAXlib.Layer
-#    NeuralJAXlib.Loss
+#    JAXsaw.Activation
+#    JAXsaw.Layer
+#    JAXsaw.Loss
 
-#    NeuralJAXlib.activations.Tanh
-#    NeuralJAXlib.layers.Dense
-#    NeuralJAXlib.losses.MSE
-#    NeuralJAXlib.losses.BinaryCrossEntropy
+#    JAXsaw.activations.Tanh
+#    JAXsaw.layers.Dense
+#    JAXsaw.losses.MSE
+#    JAXsaw.losses.BinaryCrossEntropy

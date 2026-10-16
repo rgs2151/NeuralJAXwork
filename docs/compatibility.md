@@ -1,8 +1,8 @@
 # Compatibility and limitations
 
-NeuralJAXlib 0.1.0 is an alpha release. Install it from a repository checkout;
+JAXsaw 0.1.0 is an alpha release. Install it from a repository checkout;
 it is not yet published to PyPI. The installed package uses the lowercase
-`neuraljaxlib` import. The archived 2023 API and its checkpoints are incompatible.
+`jaxsaw` import. The archived 2023 API and its checkpoints are incompatible.
 
 ## Runtime
 

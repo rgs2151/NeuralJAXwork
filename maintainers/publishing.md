@@ -61,5 +61,5 @@ validates the saved documentation on pull requests and pushes. It does not regis
 a kernel or invoke notebook execution or training. Pull requests upload a preview
 artifact; successful `main` builds publish to GitHub Pages using GitHub Actions.
 
-The public site is [NeuralJAXlib](https://rgs2151.github.io/NeuralJAXlib/).
+The public site is [JAXsaw](https://rgs2151.github.io/JAXsaw/).
 Model training and documentation rendering are intentionally separate workflows.

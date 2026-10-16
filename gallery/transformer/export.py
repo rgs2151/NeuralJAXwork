@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 import jax.numpy as jnp
 import numpy as np
-from neuraljaxlib import Rngs, checkpoint, models, nn, jit
+from jaxsaw import Rngs, checkpoint, models, nn, jit
 
 ROOT = Path(__file__).resolve().parents[2]
 RUN = ROOT/'runs/gallery/transformer'

@@ -74,8 +74,10 @@ def _canonical_types(value):
         return {key: _canonical_types(item) for key, item in value.items()}
     if isinstance(value, list):
         return [_canonical_types(item) for item in value]
-    if isinstance(value, str) and value.startswith("neuraljaxwork."):
-        return "neuraljaxlib." + value.removeprefix("neuraljaxwork.")
+    if isinstance(value, str):
+        for prefix in ("neuraljaxlib.", "neuraljaxwork."):
+            if value.startswith(prefix):
+                return "jaxsaw." + value.removeprefix(prefix)
     return value
 
 

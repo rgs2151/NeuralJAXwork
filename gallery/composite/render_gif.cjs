@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),os=require('node:os');
 const {spawnSync}=require('node:child_process');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 (async()=>{
- const dir=fs.mkdtempSync(path.join(os.tmpdir(),'neuraljaxlib-gallery-'));
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'jaxsaw-gallery-'));
  const fps=15,seconds=18,frames=Math.round(fps*seconds);
  const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{}),args:['--no-sandbox']});
  try{

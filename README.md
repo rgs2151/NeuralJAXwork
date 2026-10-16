@@ -1,13 +1,13 @@
-<p align="center"><img src="logo/neuraljaxlib.svg" width="150" alt="NeuralJAXlib logo"></p>
+<p align="center"><img src="logo/jaxsaw.svg" width="150" alt="JAXsaw logo"></p>
 
-# NeuralJAXlib
+# JAXsaw: Visualizing Composable Neural Architectures in JAX
 
-[![Tests](https://github.com/rgs2151/NeuralJAXlib/actions/workflows/check_demos.yml/badge.svg)](https://github.com/rgs2151/NeuralJAXlib/actions/workflows/check_demos.yml)
-[![Documentation](https://github.com/rgs2151/NeuralJAXlib/actions/workflows/doc_maker.yml/badge.svg)](https://rgs2151.github.io/NeuralJAXlib/)
+[![Tests](https://github.com/rgs2151/JAXsaw/actions/workflows/check_demos.yml/badge.svg)](https://github.com/rgs2151/JAXsaw/actions/workflows/check_demos.yml)
+[![Documentation](https://github.com/rgs2151/JAXsaw/actions/workflows/doc_maker.yml/badge.svg)](https://rgs2151.github.io/JAXsaw/)
 [![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-NeuralJAXlib is a lightweight, GPU-accelerated framework for building and exploring
+JAXsaw is a lightweight, GPU-accelerated framework for building and exploring
 neural networks in JAX. Its modular building blocks support architectures ranging
 from dense networks and CNNs to transformers, autoencoders, and GANs.
 
@@ -18,9 +18,9 @@ examples and visualizations for learning and experimentation.
 
 ![CNN, RNN, Autoencoder, GAN, and Transformer animations](gallery/neuroscience/gallery.gif)
 
-[Documentation](https://rgs2151.github.io/NeuralJAXlib/) ·
-[Architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html) ·
-[API tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/api_tutorials.html)
+[Documentation](https://rgs2151.github.io/JAXsaw/) ·
+[Architecture tutorials](https://rgs2151.github.io/JAXsaw/docs/learning.html) ·
+[API tutorials](https://rgs2151.github.io/JAXsaw/docs/api_tutorials.html)
 
 ## Install
 
@@ -28,14 +28,14 @@ Requires Python 3.10–3.13. Runtime dependencies include JAX, Flax NNX, and Opt
 version bounds are specified in `pyproject.toml`.
 
 ```bash
-python -m pip install "git+https://github.com/rgs2151/NeuralJAXlib.git"
+python -m pip install "git+https://github.com/rgs2151/JAXsaw.git"
 ```
 
 For an editable installation with development and example dependencies:
 
 ```bash
-git clone https://github.com/rgs2151/NeuralJAXlib.git
-cd NeuralJAXlib
+git clone https://github.com/rgs2151/JAXsaw.git
+cd JAXsaw
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[dev,examples]'
@@ -48,9 +48,9 @@ or `.[docs]` for Sphinx. Core imports do not load notebook or plotting libraries
 
 ```python
 import jax.numpy as jnp
-import neuraljaxlib as nj
-from neuraljaxlib import nn, optim
-from neuraljaxlib.nn import functional as F
+import jaxsaw as js
+from jaxsaw import nn, optim
+from jaxsaw.nn import functional as F
 
 class Regressor(nn.Module):
     def __init__(self, *, rngs):
@@ -61,12 +61,12 @@ class Regressor(nn.Module):
     def forward(self, x):
         return self.head(F.relu(self.hidden(x)))
 
-model = Regressor(rngs=nj.Rngs(params=42))
+model = Regressor(rngs=js.Rngs(params=42))
 optimizer = optim.Adam(model.parameters(), lr=0.01)
 
-@nj.jit
+@js.jit
 def train_step(model, optimizer, x, y):
-    loss, grads = nj.value_and_grad(lambda m: F.mse_loss(m(x), y))(model)
+    loss, grads = js.value_and_grad(lambda m: F.mse_loss(m(x), y))(model)
     optimizer.step(grads)
     return loss
 
@@ -79,7 +79,7 @@ model.eval()
 print(model(x))
 ```
 
-There is no `loss.backward()` or accumulated `.grad` state. Use `nj.jit` around
+There is no `loss.backward()` or accumulated `.grad` state. Use `js.jit` around
 functions that take modules, optimizers, and RNGs as explicit arguments; raw
 `jax.jit` is for pure array functions. Model mode and gradient selection are
 independent: evaluation mode still permits input gradients, as required by GANs.
@@ -100,11 +100,11 @@ and structured outputs are ordinary Python composition.
 
 ## Examples
 
-The [architecture tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/learning.html)
+The [architecture tutorials](https://rgs2151.github.io/JAXsaw/docs/learning.html)
 cover tabular classification, image classification, sequence forecasting, language
 modeling, reconstruction, and image generation. Each includes training code,
 evaluation, and saved figures. The
-[API tutorials](https://rgs2151.github.io/NeuralJAXlib/docs/api_tutorials.html)
+[API tutorials](https://rgs2151.github.io/JAXsaw/docs/api_tutorials.html)
 cover modules, optimization, data, checkpoints, and custom layers.
 
 Run these from the repository root after installing `.[examples]`:
@@ -159,6 +159,6 @@ validation procedures.
 - [Original design proposal](design/README.md) and [implementation status](design/IMPLEMENTATION.md)
 
 The 2023 prototype is preserved in `legacy/` and excluded from the package.
-Its API and checkpoints are incompatible with `neuraljaxlib`.
+Its API and checkpoints are incompatible with `jaxsaw`.
 
 MIT licensed. Dataset licenses and attribution are separate; see the example guide.

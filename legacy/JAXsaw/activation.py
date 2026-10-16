@@ -1,5 +1,5 @@
 import numpy as np
-from NeuralJAXlib.layer import Layer
+from JAXsaw.layer import Layer
 
 class Activation(Layer):
     def __init__(self, activation, activation_prime):

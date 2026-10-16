@@ -9,15 +9,15 @@ This example uses `DigitCNN` from the architecture cookbook. Constructor RNGs
 initialize weights; the separately owned runtime stream supplies dropout.
 
 ```python
-import neuraljaxlib as nj
-from neuraljaxlib import optim, metrics
-from neuraljaxlib.nn import functional as F
+import jaxsaw as js
+from jaxsaw import optim, metrics
+from jaxsaw.nn import functional as F
 
-model = DigitCNN(rngs=nj.Rngs(params=42))
+model = DigitCNN(rngs=js.Rngs(params=42))
 optimizer = optim.AdamW(model.parameters(), lr=3e-4, weight_decay=1e-2)
-runtime_rngs = nj.Rngs(dropout=43)
+runtime_rngs = js.Rngs(dropout=43)
 
-@nj.jit
+@js.jit
 def train_step(model, optimizer, batch, rngs):
     images, targets = batch
 
@@ -26,13 +26,13 @@ def train_step(model, optimizer, batch, rngs):
         loss = F.cross_entropy(logits, targets)
         return loss, {"correct": (logits.argmax(-1) == targets).sum()}
 
-    (loss, aux), grads = nj.value_and_grad(objective, has_aux=True)(model)
+    (loss, aux), grads = js.value_and_grad(objective, has_aux=True)(model)
     grads, grad_norm = optim.clip_grad_norm(grads, max_norm=1.0)
     optimizer.step(grads)
     return {"loss": loss, "correct": aux["correct"],
             "count": targets.size, "grad_norm": grad_norm}
 
-@nj.jit
+@js.jit
 def eval_step(model, batch):
     images, targets = batch
     logits = model(images)  # eval dropout requires no RNG
@@ -60,7 +60,7 @@ for epoch in range(epochs):
 predictions and counts, and reports dataset loss and accuracy. For padded/masked
 tasks, report the number of valid items, not array capacity. Gradient norm is a
 diagnostic aggregated separately, not weighted as a prediction loss. Host-side
-logging and aggregation occur outside `nj.jit`; conversion/synchronization is
+logging and aggregation occur outside `js.jit`; conversion/synchronization is
 explicit and can be amortized. Evaluation never updates model buffers or RNGs
 unless a caller explicitly opts into stochastic inference.
 
@@ -86,7 +86,7 @@ apply sigmoid or softmax outside the training objective as needed.
 ## Data contracts
 
 ```python
-from neuraljaxlib import data
+from jaxsaw import data
 
 train_data = data.TensorDataset(train_x, train_y)
 train_loader = data.DataLoader(
@@ -146,7 +146,7 @@ abort/skip policy; silent updates with invalid gradients are unacceptable.
 ## Checkpoint and resume
 
 ```python
-nj.checkpoint.save(
+js.checkpoint.save(
     "runs/mnist/checkpoints/last",
     model=model, optimizer=optimizer, rngs=runtime_rngs,
     progress={"epoch": epoch, "update": update},
@@ -154,7 +154,7 @@ nj.checkpoint.save(
     metadata={"config": config, "source_revision": revision},
 )
 
-restored = nj.checkpoint.restore(
+restored = js.checkpoint.restore(
     "runs/mnist/checkpoints/last",
     model=model, optimizer=optimizer, rngs=runtime_rngs,
 )
@@ -181,7 +181,7 @@ class ClassificationTask(training.Task):
     def __init__(self, model, *, lr=3e-4, seed=43):
         self.model = model
         self.optimizer = optim.AdamW(model.parameters(), lr=lr)
-        self.rngs = nj.Rngs(dropout=seed)
+        self.rngs = js.Rngs(dropout=seed)
 
     def training_step(self, batch):
         return train_step(self.model, self.optimizer, batch, self.rngs)

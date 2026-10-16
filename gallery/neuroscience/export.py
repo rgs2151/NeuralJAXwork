@@ -106,7 +106,7 @@ def export():
         mount = "CNN" if original == "cnn" else "GAN"
         data = "CNN_SAMPLES" if original == "cnn" else "GAN_SAMPLES"
         (GALLERY / "assets" / f"{name}.html").write_text(
-            '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NeuralJAXlib brain MRI '
+            '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JAXsaw brain MRI '
             + mount
             + '</title></head><body style="margin:0;background:white;color:#171717"><div id="animation" style="width:240px"></div><script>'
             + scripts
@@ -126,7 +126,7 @@ def export():
         scripts.extend((GALLERY / name / f).read_text() for f in ["samples.js", "animation.js"])
     scripts.append((GALLERY / "composite/animation.js").read_text())
     (GALLERY / "assets/neuroscience.html").write_text(
-        '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NeuralJAXlib MRI gallery</title></head><body style="margin:0;background:white"><div id="gallery-composite" style="width:100%;max-width:1248px;margin:auto"></div><script>'
+        '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>JAXsaw MRI gallery</title></head><body style="margin:0;background:white"><div id="gallery-composite" style="width:100%;max-width:1248px;margin:auto"></div><script>'
         + "\n".join(scripts)
         + '\nwindow.gallery=mountGallery(document.getElementById("gallery-composite"));</script></body></html>'
     )

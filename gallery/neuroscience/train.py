@@ -12,8 +12,8 @@ from models import BrainCNN, BrainDiscriminator, BrainGenerator
 from PIL import Image
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, confusion_matrix
 
-import neuraljaxlib as nj
-from neuraljaxlib import checkpoint, optim, training
+import jaxsaw as js
+from jaxsaw import checkpoint, optim, training
 
 
 def grid(x, path):
@@ -26,7 +26,7 @@ def grid(x, path):
     Image.fromarray(canvas).save(path)
 
 
-@nj.jit
+@js.jit
 def infer(model, x):
     return model(x)
 
@@ -44,7 +44,7 @@ def cnn(args):
     test = np.flatnonzero(fold == 0)
     for a, b in ((train, val), (train, test), (val, test)):
         assert not set(groups[a]) & set(groups[b])
-    model = BrainCNN(rngs=nj.Rngs(params=42))
+    model = BrainCNN(rngs=js.Rngs(params=42))
     optimizer = optim.AdamW(model.parameters(), lr=0.0003, weight_decay=0.01)
     rng = np.random.default_rng(42)
     best = -1
@@ -132,11 +132,11 @@ def gan(args):
     train = data["images"][~data["test"]]
     test = data["images"][data["test"]]
     assert not set(data["patients"][data["test"]]) & set(data["patients"][~data["test"]])
-    g = BrainGenerator(rngs=nj.Rngs(params=42))
-    d = BrainDiscriminator(rngs=nj.Rngs(params=43))
+    g = BrainGenerator(rngs=js.Rngs(params=42))
+    d = BrainDiscriminator(rngs=js.Rngs(params=43))
     go = optim.Adam(g.parameters(), lr=0.0002, betas=(0.5, 0.999))
     do = optim.Adam(d.parameters(), lr=0.0001, betas=(0.5, 0.999))
-    rngs = nj.Rngs(sample=44)
+    rngs = js.Rngs(sample=44)
     fixed = jax.random.normal(jax.random.key(45), (32, 128))
     rng = np.random.default_rng(46)
     frames = []

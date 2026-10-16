@@ -3,7 +3,7 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
-name = "neuraljaxlib"
+name = "jaxsaw"
 version = "0.1.0"
 description = "A lightweight, GPU-accelerated framework for building and exploring neural networks in JAX"
 readme = "README.md"
@@ -17,14 +17,14 @@ classifiers = ["Development Status :: 3 - Alpha", "Programming Language :: Pytho
 cuda = ["jax[cuda12]==0.5.3"]
 dev = ["pytest>=8", "build", "ruff"]
 examples = ["matplotlib>=3.7", "pandas>=2", "scikit-learn>=1.3", "pillow>=10"]
-notebooks = ["neuraljaxlib[examples]", "jupyterlab>=4", "nbclient", "nbformat", "ipykernel"]
+notebooks = ["jaxsaw[examples]", "jupyterlab>=4", "nbclient", "nbformat", "ipykernel"]
 docs = ["sphinx>=7,<9", "myst-nb>=1.2,<2", "pydata-sphinx-theme>=0.19,<0.20"]
 
 [project.urls]
-Repository = "https://github.com/rgs2151/NeuralJAXlib"
+Repository = "https://github.com/rgs2151/JAXsaw"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/neuraljaxlib"]
+packages = ["src/jaxsaw"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

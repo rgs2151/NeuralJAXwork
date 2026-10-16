@@ -1,9 +1,9 @@
-"""Brain MRI experiment models built from NeuralJAXlib layers."""
+"""Brain MRI experiment models built from JAXsaw layers."""
 
 import jax
 import jax.numpy as jnp
 
-from neuraljaxlib import nn
+from jaxsaw import nn
 
 
 class BrainCNN(nn.Module):

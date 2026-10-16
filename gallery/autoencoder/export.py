@@ -8,8 +8,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 from sklearn.decomposition import PCA
-import neuraljaxlib as nj
-from neuraljaxlib import checkpoint, models
+import jaxsaw as js
+from jaxsaw import checkpoint, models
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -59,7 +59,7 @@ def main():
     with np.load(ROOT/'data/mnist.npz') as source:
         images = source['x_test'][:,None].astype(np.float32)/255
         labels = source['y_test']
-    model = models.Autoencoder(latent_size=8, width=128, rngs=nj.Rngs(params=0))
+    model = models.Autoencoder(latent_size=8, width=128, rngs=js.Rngs(params=0))
     checkpoint.restore(run/'best.npz',model=model)
     model.eval()
     # Recompute from the checkpoint to avoid device-precision differences in old caches.

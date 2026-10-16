@@ -1,14 +1,14 @@
 # Installation
 
-Install NeuralJAXlib from the repository to use its layers, optimizers, and
+Install JAXsaw from the repository to use its layers, optimizers, and
 training utilities. The commands below include dependencies for development
 and the worked examples.
 
 ## Install a checkout
 
 ```bash
-git clone https://github.com/rgs2151/NeuralJAXlib.git
-cd NeuralJAXlib
+git clone https://github.com/rgs2151/JAXsaw.git
+cd JAXsaw
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[dev,examples]'
@@ -21,9 +21,9 @@ and Flax NNX 0.10.4; see the [compatibility guide](compatibility.md) for limits.
 
 ```python
 import jax.numpy as jnp
-import neuraljaxlib as nj
-from neuraljaxlib import nn, optim
-from neuraljaxlib.nn import functional as F
+import jaxsaw as js
+from jaxsaw import nn, optim
+from jaxsaw.nn import functional as F
 
 class Regressor(nn.Module):
     def __init__(self, *, rngs):
@@ -34,12 +34,12 @@ class Regressor(nn.Module):
     def forward(self, x):
         return self.head(F.relu(self.hidden(x)))
 
-model = Regressor(rngs=nj.Rngs(params=42))
+model = Regressor(rngs=js.Rngs(params=42))
 optimizer = optim.Adam(model.parameters(), lr=0.01)
 
-@nj.jit
+@js.jit
 def step(model, optimizer, x, y):
-    loss, grads = nj.value_and_grad(lambda m: F.mse_loss(m(x), y))(model)
+    loss, grads = js.value_and_grad(lambda m: F.mse_loss(m(x), y))(model)
     optimizer.step(grads)
     return loss
 
@@ -53,7 +53,7 @@ print(model.eval()(x))
 
 The module owns weights and buffers. The optimizer owns update state. Gradients
 are returned explicitly: there is no `loss.backward()` or persistent `.grad`.
-`nj.jit` preserves the relationships among modules, optimizers, and RNG objects.
+`js.jit` preserves the relationships among modules, optimizers, and RNG objects.
 
 ## Run a tutorial
 

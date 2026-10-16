@@ -8,10 +8,10 @@ import jax
 import jax.numpy as jnp
 import numpy as np
 
-import neuraljaxlib as nj
-from neuraljaxlib import checkpoint, data, inspection, models, nn, optim
-from neuraljaxlib.experiments import Run
-from neuraljaxlib.nn import functional as F
+import jaxsaw as js
+from jaxsaw import checkpoint, data, inspection, models, nn, optim
+from jaxsaw.experiments import Run
+from jaxsaw.nn import functional as F
 
 from . import forecast_data, plots
 
@@ -40,15 +40,15 @@ class ForecastModel(nn.Module):
         return baseline + correction
 
 
-@nj.jit
+@js.jit
 def train_step(model, optimizer, x, y):
-    loss, grads = nj.value_and_grad(lambda candidate: F.mse_loss(candidate(x), y))(model)
+    loss, grads = js.value_and_grad(lambda candidate: F.mse_loss(candidate(x), y))(model)
     grads, norm = optim.clip_grad_norm(grads, 1.0)
     optimizer.step(grads)
     return loss, norm
 
 
-@nj.jit
+@js.jit
 def predict(model, x):
     return model(x)
 
@@ -189,7 +189,7 @@ def run_forecast(
     )
     run = Run(output, config)
     (output / "data.json").write_text(json.dumps(metadata, indent=2))
-    model = ForecastModel(task, hidden=hidden, rngs=nj.Rngs(params=seed))
+    model = ForecastModel(task, hidden=hidden, rngs=js.Rngs(params=seed))
     optimizer = optim.AdamW(model.parameters(), lr=0.001, weight_decay=0.001)
     inspection.write_json(model, output / "architecture.json")
     (output / "summary.txt").write_text(inspection.summary(model))

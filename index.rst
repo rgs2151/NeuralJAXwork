@@ -1,11 +1,11 @@
-NeuralJAXlib
-=============
+JAXsaw: Visualizing Composable Neural Architectures in JAX
+==========================================================
 
 .. image:: /gallery/neuroscience/gallery.gif
    :alt: CNN, RNN, Autoencoder, GAN, and Transformer animations
    :width: 100%
 
-NeuralJAXlib is a lightweight, GPU-accelerated framework for building and exploring
+JAXsaw is a lightweight, GPU-accelerated framework for building and exploring
 neural networks in JAX. Its modular building blocks support architectures ranging
 from dense networks and CNNs to transformers, autoencoders, and GANs.
 

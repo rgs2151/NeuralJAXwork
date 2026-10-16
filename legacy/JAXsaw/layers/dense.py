@@ -5,7 +5,7 @@ import jax.numpy as jnp
 from jax import random
 
 # Import the Layer class
-from NeuralJAXlib.layer import Layer
+from JAXsaw.layer import Layer
 
 # Set the JAX random number generator's seed
 jax_key = random.PRNGKey(0)

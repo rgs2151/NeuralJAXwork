@@ -5,7 +5,7 @@ import jax.numpy as jnp
 from jax import jit
 
 # Import the Activation Layer class
-from NeuralJAXlib.activation import Activation
+from JAXsaw.activation import Activation
 
 class Tanh(Activation):
     """

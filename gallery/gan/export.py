@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
-import neuraljaxlib as nj
-from neuraljaxlib import models
+import jaxsaw as js
+from jaxsaw import models
 
 ROOT = Path(__file__).resolve().parents[2]
 RUN = ROOT / "runs/gallery/gan"
@@ -53,7 +53,7 @@ frames = [recover(RUN / f"samples-{epoch:03}.png") for epoch in range(30)]
 error = np.abs(frames[-1].astype(float) - final)
 assert error.mean() < 5, f"Grid registration failed: mean pixel error {error.mean()}"
 # Epoch zero is the same initialized generator and same latent batch as the run.
-model = models.FashionGenerator(rngs=nj.Rngs(params=0)).eval()
+model = models.FashionGenerator(rngs=js.Rngs(params=0)).eval()
 initial = np.rint(np.clip(np.asarray(model(noise))[:, 0] / 2 + 0.5, 0, 1) * 255).astype(np.uint8)
 frames.insert(0, initial)
 frames[-1] = final

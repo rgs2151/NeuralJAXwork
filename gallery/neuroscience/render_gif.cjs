@@ -3,7 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),os=require('node:os');
 const {spawnSync}=require('node:child_process');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 (async()=>{
- const dir=fs.mkdtempSync(path.join(os.tmpdir(),'neuraljaxlib-mri-'));
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'jaxsaw-mri-'));
  const only=process.argv.includes('--composite-only');
  const fps=15,frames=Math.ceil((only?18:43.5)*fps);
  const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{}),args:['--no-sandbox']});

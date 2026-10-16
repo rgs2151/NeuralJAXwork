@@ -1,4 +1,4 @@
-"""NeuralJAXlib: a lightweight, GPU-accelerated framework for neural networks in JAX."""
+"""JAXsaw: a lightweight, GPU-accelerated framework for neural networks in JAX."""
 
 from . import nn, optim
 from .core import (

@@ -1,4 +1,4 @@
-# NeuralJAXlib: proposed API design
+# JAXsaw: proposed API design
 
 This folder preserves the original API proposal from 2026-10-14. Code blocks
 describe proposed contracts and may include unsupported interfaces. For release
@@ -43,23 +43,23 @@ sample galleries. Plotting and notebooks remain optional consumers of this data.
 | `nn.Module` | Composable computation, parameters, buffers, child modules |
 | `nn.Parameter` | A trainable JAX array with stable identity |
 | `nn.Buffer` | Non-parameter state, such as running statistics |
-| `nj.Rngs` | Explicit named random streams and checkpointable counters |
-| `nj.value_and_grad` | Differentiate selected parameters; return gradients |
+| `js.Rngs` | Explicit named random streams and checkpointable counters |
+| `js.value_and_grad` | Differentiate selected parameters; return gradients |
 | `optim.Optimizer` | Update parameters and optimizer state from explicit gradients |
-| `nj.jit` | Transform graph-aware code into pure JAX computation |
+| `js.jit` | Transform graph-aware code into pure JAX computation |
 | `data.DataLoader` | Produce batches outside the compiled computation |
 | `training.Task` / `Trainer` | Optional experiment orchestration around the same step |
 | `inspection` / `Run` | Describe models and persist structured experiment evidence |
 
-Examples use `neuraljaxlib` with the alias `nj`, as adopted in version 0.1.0.
+Examples use `jaxsaw` with the alias `js`, as adopted in version 0.1.0.
 The uppercase prototype is archived under `legacy/`.
 
 ## Model and training API
 
 ```python
-import neuraljaxlib as nj
-from neuraljaxlib import nn, optim
-from neuraljaxlib.nn import functional as F
+import jaxsaw as js
+from jaxsaw import nn, optim
+from jaxsaw.nn import functional as F
 
 class Classifier(nn.Module):
     def __init__(self, in_features, classes, *, rngs):
@@ -70,10 +70,10 @@ class Classifier(nn.Module):
     def forward(self, x):
         return self.output(F.relu(self.hidden(x)))
 
-model = Classifier(784, 10, rngs=nj.Rngs(params=42))
+model = Classifier(784, 10, rngs=js.Rngs(params=42))
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
-@nj.jit
+@js.jit
 def train_step(model, optimizer, batch):
     x, y = batch
 
@@ -81,7 +81,7 @@ def train_step(model, optimizer, batch):
         logits = candidate(x)
         return F.cross_entropy(logits, y)
 
-    loss, grads = nj.value_and_grad(objective)(model)
+    loss, grads = js.value_and_grad(objective)(model)
     optimizer.step(grads)
     return {"loss": loss}
 

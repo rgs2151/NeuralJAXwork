@@ -15,8 +15,8 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from examples import datasets
-import neuraljaxlib as nj
-from neuraljaxlib import nn, models, optim, training, checkpoint
+import jaxsaw as js
+from jaxsaw import nn, models, optim, training, checkpoint
 
 class ImageAutoencoder(nn.Module):
     def __init__(self, shape, *, rngs):
@@ -73,9 +73,9 @@ def run(name, classes, pairs):
     x = x[rng.permutation(len(x))]
     validation_count = min(2000, len(x)//5)
     val, x = x[:validation_count], x[validation_count:]
-    model = ImageAutoencoder(tuple(x.shape[1:]), rngs=nj.Rngs(params=0))
+    model = ImageAutoencoder(tuple(x.shape[1:]), rngs=js.Rngs(params=0))
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
-    @nj.jit
+    @js.jit
     def evaluate(m, a):
         return m(a)
     history, best = [], float('inf')

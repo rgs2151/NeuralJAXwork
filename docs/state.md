@@ -3,7 +3,7 @@
 ## Save and restore the next update
 
 ```python
-from neuraljaxlib import checkpoint
+from jaxsaw import checkpoint
 
 checkpoint.save(
     'runs/experiment/last.npz',
@@ -56,7 +56,7 @@ prefetch queue or distributed sampler to reconstruct.
 ## Inspection
 
 ```python
-from neuraljaxlib import inspection
+from jaxsaw import inspection
 
 print(inspection.summary(model))
 inspection.write_json(model, 'architecture.json')

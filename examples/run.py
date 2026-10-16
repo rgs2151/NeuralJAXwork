@@ -9,10 +9,10 @@ import jax
 import jax.numpy as jnp
 import numpy as np
 
-import neuraljaxlib as nj
-from neuraljaxlib import checkpoint, data, inspection, models, optim, training
-from neuraljaxlib.experiments import Run
-from neuraljaxlib.nn import functional as F
+import jaxsaw as js
+from jaxsaw import checkpoint, data, inspection, models, optim, training
+from jaxsaw.experiments import Run
+from jaxsaw.nn import functional as F
 
 from . import datasets, plots
 
@@ -71,8 +71,8 @@ def run_experiment(
         model_depth=model_depth,
     )
     run = Run(output, config)
-    rngs = nj.Rngs(params=seed)
-    runtime = nj.Rngs(dropout=seed + 1, sample=seed + 2)
+    rngs = js.Rngs(params=seed)
+    runtime = js.Rngs(dropout=seed + 1, sample=seed + 2)
     metadata = {"synthetic_smoke": smoke}
     if task == "titanic":
         if smoke:
@@ -173,13 +173,13 @@ def run_experiment(
     )
     if task == "gan":
         d_optimizer = optim.Adam(discriminator.parameters(), lr=2e-4, betas=(0.5, 0.999))
-        fixed_z = nj.random.normal(jax.random.key(seed + 100), (32, latent_size))
+        fixed_z = js.random.normal(jax.random.key(seed + 100), (32, latent_size))
     loader = data.DataLoader(
         data.TensorDataset(*train), batch_size=batch_size, shuffle=True, seed=seed
     )
     history, best = [], float("inf")
 
-    @nj.jit
+    @js.jit
     def evaluate(candidate, x, y):
         prediction = candidate(x)
         if task == "autoencoder":
@@ -298,12 +298,12 @@ def run_experiment(
         elif task == "transformer":
             report["perplexity"] = float(np.exp(min(report["test_loss"], 80)))
             tokens = [ord(c) for c in "First Citizen:\n"]
-            sample_rng = nj.Rngs(sample=seed + 101)
+            sample_rng = js.Rngs(sample=seed + 101)
 
-            @nj.jit
+            @js.jit
             def sample_next(candidate, context, valid, index, key):
                 logits = candidate(context, valid=valid)[0, index] / 0.8
-                return nj.random.categorical(key, logits)
+                return js.random.categorical(key, logits)
 
             for _ in range(400):
                 context = tokens[-model.max_length :]
